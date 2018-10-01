@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Portail fournisseur Willemse</title> 
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+
+    <nav class="navbar navbar-light bg-light fixed-top navbar-expand-md">
+        <div class="container">
+                <a href="@Url.Action("Index", "Home", routeValues: null)" class="navbar-brand" style="margin : auto" </a>
+                <img src="~/Content/Images/logo-willemse-france-2018.png"/>
+
+                   @* @Html.ActionLink("Portail fournisseur", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "color : darkgreen; font-weight : bold; hover : black;" })*@
+
+
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                       @* <li class="nav-item">
+                            @Html.ActionLink("Accueil", "Index", "Home", routeValues: null, htmlAttributes: new { style = "color:darkslategrey; font-weight: bold;"})
+                        </li>
+                        
+                        <li class="nav-item">
+
+                        @Html.ActionLink("A propos de", "About", "Home", routeValues: null, htmlAttributes: new { style = "color:darkslategrey; font-weight: bold;" })
+                    </li>
+                    <li class="nav-item">
+
+                        @Html.ActionLink("Contact", "Contact", "Home", routeValues: null, htmlAttributes: new { style = "color:darkslategrey; font-weight: bold;" })
+
+                    </li> *@
+
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+        </div>
+    </nav>
+
+
+
+
+    @if (Request.IsAuthenticated && (!User.IsInRole("Admin")))
+    {
+
+        <div class="panel align-content-xl-center " style="text-align:center; padding : 5px;" role="group" aria-label="Basic example">
+            @Html.ActionLink("Catalogue de produits", "../Produits", routeValues: null, htmlAttributes: new { @class = "btn btn-default", style = "color:darkgreen; font-weight: bold;", id = "pageFournisseurs" })
+            @Html.ActionLink("Suivi de commandes", "Index", "Commandes", routeValues: null, htmlAttributes: new { @class = "btn btn-default", style = "color:darkgreen; font-weight: bold;", id = "pageCommandes" })
+            @*@Html.ActionLink("Paramètres", "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-default", style = "color:darkgreen; font-weight: bold;", id = "pageExportCSV" })*@
+        </div>
+
+
+
+    }
+
+    else if (User.IsInRole("Admin") && Request.IsAuthenticated)
+    {
+        <div class="panel align-content-xl-center " style="text-align:center; padding : 5px;" role="group" aria-label="Basic example">
+            @Html.ActionLink("Interface administrateur", "../Admin", routeValues: null, htmlAttributes: new { @class = "btn btn-default", style = "color:darkgreen; font-weight: bold;", id = "Admin" })
+        </div>
+
+    }
+
+        <div class="container body-content">
+            <br />
+             
+
+            @RenderBody()
+
+            <hr />
+
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Portail fournisseur - Willemse France</p>
+            </footer>
+
+        </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

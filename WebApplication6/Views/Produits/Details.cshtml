@@ -1,0 +1,28 @@
+﻿@model WebApplication6.Models.F_ARTICLE
+@using WebApplication6.Models
+
+
+@{
+    ViewBag.Title = "Détails produit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h2 style="color:darkgreen;">Details du produit @Model.AR_Design</h2>
+
+<br />
+<div class="row">
+    <div class="col-xs-3">
+        <ul>
+            <li><b style="color:darkgreen;">Désignation produit</b><br />@Model.AR_Design</li>
+        </ul>
+    </div>
+</div>
+
+
+
+<br />
+
+<a href="javascript:history.back()"><span class="glyphicon glyphicon-arrow-left"></span></a>
+<a href="javascript:history.back()"> Retour aux produits</a>

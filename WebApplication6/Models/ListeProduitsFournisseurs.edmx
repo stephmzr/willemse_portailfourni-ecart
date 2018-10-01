@@ -1,0 +1,598 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ListeProduitsFournisseursModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="F_ARTFOURNISS">
+          <Key>
+            <PropertyRef Name="cbMarq" />
+          </Key>
+          <Property Name="AR_Ref" Type="varchar" MaxLength="19" Nullable="false" />
+          <Property Name="cbAR_Ref" Type="varbinary" MaxLength="20" StoreGeneratedPattern="Computed" />
+          <Property Name="CT_Num" Type="varchar" MaxLength="17" Nullable="false" />
+          <Property Name="cbCT_Num" Type="varbinary" MaxLength="18" StoreGeneratedPattern="Computed" />
+          <Property Name="AF_RefFourniss" Type="varchar" MaxLength="19" />
+          <Property Name="cbAF_RefFourniss" Type="varbinary" MaxLength="20" StoreGeneratedPattern="Computed" />
+          <Property Name="AF_PrixAch" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AF_Unite" Type="smallint" />
+          <Property Name="AF_Conversion" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AF_DelaiAppro" Type="smallint" />
+          <Property Name="AF_Garantie" Type="smallint" />
+          <Property Name="AF_Colisage" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AF_QteMini" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AF_QteMont" Type="smallint" />
+          <Property Name="EG_Champ" Type="smallint" />
+          <Property Name="AF_Principal" Type="smallint" />
+          <Property Name="AF_PrixDev" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AF_Devise" Type="smallint" />
+          <Property Name="AF_Remise" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AF_ConvDiv" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AF_TypeRem" Type="smallint" />
+          <Property Name="AF_CodeBarre" Type="varchar" MaxLength="19" />
+          <Property Name="cbAF_CodeBarre" Type="varbinary" MaxLength="20" StoreGeneratedPattern="Computed" />
+          <Property Name="AF_PrixAchNouv" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AF_PrixDevNouv" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AF_RemiseNouv" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AF_DateApplication" Type="datetime" />
+          <Property Name="cbProt" Type="smallint" />
+          <Property Name="cbMarq" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cbCreateur" Type="char" MaxLength="4" />
+          <Property Name="cbModification" Type="smalldatetime" />
+          <Property Name="cbReplication" Type="int" />
+          <Property Name="cbFlag" Type="smallint" />
+        </EntityType>
+        <EntityType Name="F_ARTICLE">
+          <Key>
+            <PropertyRef Name="cbMarq" />
+          </Key>
+          <Property Name="AR_Ref" Type="varchar" MaxLength="19" Nullable="false" />
+          <Property Name="cbAR_Ref" Type="varbinary" MaxLength="20" StoreGeneratedPattern="Computed" />
+          <Property Name="AR_Design" Type="varchar" MaxLength="69" />
+          <Property Name="cbAR_Design" Type="varbinary" MaxLength="70" StoreGeneratedPattern="Computed" />
+          <Property Name="FA_CodeFamille" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="cbFA_CodeFamille" Type="varbinary" MaxLength="12" StoreGeneratedPattern="Computed" />
+          <Property Name="AR_Substitut" Type="varchar" MaxLength="19" />
+          <Property Name="cbAR_Substitut" Type="varbinary" MaxLength="20" StoreGeneratedPattern="Computed" />
+          <Property Name="AR_Raccourci" Type="varchar" MaxLength="7" />
+          <Property Name="cbAR_Raccourci" Type="varbinary" MaxLength="8" StoreGeneratedPattern="Computed" />
+          <Property Name="AR_Garantie" Type="smallint" />
+          <Property Name="AR_UnitePoids" Type="smallint" />
+          <Property Name="AR_PoidsNet" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AR_PoidsBrut" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AR_UniteVen" Type="smallint" />
+          <Property Name="AR_PrixAch" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AR_Coef" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AR_PrixVen" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AR_PrixTTC" Type="smallint" />
+          <Property Name="AR_Gamme1" Type="smallint" />
+          <Property Name="AR_Gamme2" Type="smallint" />
+          <Property Name="AR_SuiviStock" Type="smallint" />
+          <Property Name="AR_Nomencl" Type="smallint" />
+          <Property Name="AR_Stat01" Type="varchar" MaxLength="21" />
+          <Property Name="AR_Stat02" Type="varchar" MaxLength="21" />
+          <Property Name="AR_Stat03" Type="varchar" MaxLength="21" />
+          <Property Name="AR_Stat04" Type="varchar" MaxLength="21" />
+          <Property Name="AR_Stat05" Type="varchar" MaxLength="21" />
+          <Property Name="AR_Escompte" Type="smallint" />
+          <Property Name="AR_Delai" Type="smallint" />
+          <Property Name="AR_HorsStat" Type="smallint" />
+          <Property Name="AR_VteDebit" Type="smallint" />
+          <Property Name="AR_NotImp" Type="smallint" />
+          <Property Name="AR_Sommeil" Type="smallint" />
+          <Property Name="AR_Langue1" Type="varchar" MaxLength="69" />
+          <Property Name="AR_Langue2" Type="varchar" MaxLength="69" />
+          <Property Name="AR_EdiCode" Type="varchar" MaxLength="45" />
+          <Property Name="cbAR_EdiCode" Type="varbinary" MaxLength="46" StoreGeneratedPattern="Computed" />
+          <Property Name="AR_CodeBarre" Type="varchar" MaxLength="19" />
+          <Property Name="cbAR_CodeBarre" Type="varbinary" MaxLength="20" StoreGeneratedPattern="Computed" />
+          <Property Name="AR_CodeFiscal" Type="varchar" MaxLength="25" />
+          <Property Name="AR_Pays" Type="varchar" MaxLength="35" />
+          <Property Name="AR_Frais01FR_Denomination" Type="varchar" MaxLength="21" />
+          <Property Name="AR_Frais01FR_Rem01REM_Valeur" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AR_Frais01FR_Rem01REM_Type" Type="smallint" />
+          <Property Name="AR_Frais01FR_Rem02REM_Valeur" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AR_Frais01FR_Rem02REM_Type" Type="smallint" />
+          <Property Name="AR_Frais01FR_Rem03REM_Valeur" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AR_Frais01FR_Rem03REM_Type" Type="smallint" />
+          <Property Name="AR_Frais02FR_Denomination" Type="varchar" MaxLength="21" />
+          <Property Name="AR_Frais02FR_Rem01REM_Valeur" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AR_Frais02FR_Rem01REM_Type" Type="smallint" />
+          <Property Name="AR_Frais02FR_Rem02REM_Valeur" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AR_Frais02FR_Rem02REM_Type" Type="smallint" />
+          <Property Name="AR_Frais02FR_Rem03REM_Valeur" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AR_Frais02FR_Rem03REM_Type" Type="smallint" />
+          <Property Name="AR_Frais03FR_Denomination" Type="varchar" MaxLength="21" />
+          <Property Name="AR_Frais03FR_Rem01REM_Valeur" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AR_Frais03FR_Rem01REM_Type" Type="smallint" />
+          <Property Name="AR_Frais03FR_Rem02REM_Valeur" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AR_Frais03FR_Rem02REM_Type" Type="smallint" />
+          <Property Name="AR_Frais03FR_Rem03REM_Valeur" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AR_Frais03FR_Rem03REM_Type" Type="smallint" />
+          <Property Name="AR_Condition" Type="smallint" />
+          <Property Name="AR_PUNet" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AR_Contremarque" Type="smallint" />
+          <Property Name="AR_FactPoids" Type="smallint" />
+          <Property Name="AR_FactForfait" Type="smallint" />
+          <Property Name="AR_DateCreation" Type="datetime" />
+          <Property Name="AR_SaisieVar" Type="smallint" />
+          <Property Name="AR_Transfere" Type="smallint" />
+          <Property Name="AR_Publie" Type="smallint" />
+          <Property Name="AR_DateModif" Type="datetime" />
+          <Property Name="AR_Photo" Type="varchar" MaxLength="259" />
+          <Property Name="AR_PrixAchNouv" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AR_CoefNouv" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AR_PrixVenNouv" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AR_DateApplication" Type="datetime" />
+          <Property Name="AR_CoutStd" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AR_QteComp" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AR_QteOperatoire" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="CO_No" Type="int" />
+          <Property Name="cbCO_No" Type="int" />
+          <Property Name="AR_Prevision" Type="smallint" />
+          <Property Name="CL_No1" Type="int" />
+          <Property Name="cbCL_No1" Type="int" />
+          <Property Name="CL_No2" Type="int" />
+          <Property Name="cbCL_No2" Type="int" />
+          <Property Name="CL_No3" Type="int" />
+          <Property Name="cbCL_No3" Type="int" />
+          <Property Name="CL_No4" Type="int" />
+          <Property Name="cbCL_No4" Type="int" />
+          <Property Name="AR_Type" Type="smallint" />
+          <Property Name="RP_CodeDefaut" Type="varchar" MaxLength="11" />
+          <Property Name="AR_Nature" Type="smallint" />
+          <Property Name="AR_DelaiFabrication" Type="smallint" />
+          <Property Name="AR_NbColis" Type="smallint" />
+          <Property Name="AR_DelaiPeremption" Type="smallint" />
+          <Property Name="AR_DelaiSecurite" Type="smallint" />
+          <Property Name="AR_Fictif" Type="smallint" />
+          <Property Name="AR_SousTraitance" Type="smallint" />
+          <Property Name="AR_TypeLancement" Type="smallint" />
+          <Property Name="AR_Cycle" Type="smallint" />
+          <Property Name="AR_Criticite" Type="smallint" />
+          <Property Name="cbProt" Type="smallint" />
+          <Property Name="cbMarq" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cbCreateur" Type="char" MaxLength="4" />
+          <Property Name="cbModification" Type="smalldatetime" />
+          <Property Name="cbReplication" Type="int" />
+          <Property Name="cbFlag" Type="smallint" />
+          <Property Name="DEBUT_LIVRABILITE_PRINTEMPS" Type="varchar" MaxLength="5" />
+          <Property Name="FIN_LIVRABILITE_PRINTEMPS" Type="varchar" MaxLength="5" />
+          <Property Name="DEBUT_LIVRABILITE_AUTOMNE" Type="varchar" MaxLength="5" />
+          <Property Name="FIN_LIVRABILITE_AUTOMNE" Type="varchar" MaxLength="5" />
+          <Property Name="LIVRABLE_TOUTE_ANNEE" Type="varchar" MaxLength="21" />
+          <Property Name="MARQUE" Type="varchar" MaxLength="69" />
+          <Property Name="NB_PIECES_PAQUET" Type="varchar" MaxLength="6" />
+          <Property Name="HAUTEUR" Type="varchar" MaxLength="10" />
+          <Property Name="LARGEUR" Type="varchar" MaxLength="10" />
+          <Property Name="LONGUEUR" Type="varchar" MaxLength="10" />
+          <Property Name="HORS_NORME" Type="varchar" MaxLength="21" />
+          <Property Name="LDF" Type="varchar" MaxLength="1" />
+          <Property Name="BLOCAGE_CORSE" Type="varchar" MaxLength="21" />
+          <Property Name="BLOCAGE_BELGIQUE" Type="varchar" MaxLength="21" />
+          <Property Name="BLOCAGE_PAYS_BAS" Type="varchar" MaxLength="21" />
+          <Property Name="BLOCAGE_GRANDE_BRETAGNE" Type="varchar" MaxLength="21" />
+          <Property Name="BLOCAGE_ALLEMAGNE" Type="varchar" MaxLength="21" />
+          <Property Name="BLOCAGE_AUTRICHE" Type="varchar" MaxLength="21" />
+          <Property Name="BLOCAGE_PAYS_ETRANGERS" Type="varchar" MaxLength="21" />
+          <Property Name="EMPLACEMENT_PICKING" Type="varchar" MaxLength="10" />
+          <Property Name="CODE_STATUT" Type="varchar" MaxLength="21" />
+          <Property Name="INTITULE_FACTURE" Type="varchar" MaxLength="69" />
+          <Property Name="INTITULE_LATIN" Type="varchar" MaxLength="69" />
+          <Property Name="JYG" Type="varchar" MaxLength="21" />
+          <Property Name="VISIBLE" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="POIDS_PLASTIQUE" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="VENTE_SUGGESTIVE" Type="varchar" MaxLength="69" />
+        </EntityType>
+        <!--Erreurs détectées durant la génération :
+avertissement 6035: La relation 'FKA_F_ARTFOURNISS_AR_Ref' a des colonnes qui ne font pas partie de la clé de la table du côté primaire de la relation. La relation a été exclue.
+        <Association Name="FKA_F_ARTFOURNISS_AR_Ref" />-->
+        <!--Erreurs détectées durant la génération :
+avertissement 6035: La relation 'FKA_F_ARTICLE_AR_Ref' a des colonnes qui ne font pas partie de la clé de la table du côté primaire de la relation. La relation a été exclue.
+        <Association Name="FKA_F_ARTICLE_AR_Ref" />-->
+        <EntityContainer Name="ListeProduitsFournisseursModelStoreContainer">
+          <EntitySet Name="F_ARTFOURNISS" EntityType="Self.F_ARTFOURNISS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="F_ARTICLE" EntityType="Self.F_ARTICLE" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ListeProduitsFournisseursModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="F_ARTFOURNISS">
+          <Key>
+            <PropertyRef Name="cbMarq" />
+          </Key>
+          <Property Name="AR_Ref" Type="String" MaxLength="19" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cbAR_Ref" Type="Binary" MaxLength="20" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CT_Num" Type="String" MaxLength="17" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cbCT_Num" Type="Binary" MaxLength="18" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AF_RefFourniss" Type="String" MaxLength="19" FixedLength="false" Unicode="false" />
+          <Property Name="cbAF_RefFourniss" Type="Binary" MaxLength="20" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AF_PrixAch" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AF_Unite" Type="Int16" />
+          <Property Name="AF_Conversion" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AF_DelaiAppro" Type="Int16" />
+          <Property Name="AF_Garantie" Type="Int16" />
+          <Property Name="AF_Colisage" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AF_QteMini" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AF_QteMont" Type="Int16" />
+          <Property Name="EG_Champ" Type="Int16" />
+          <Property Name="AF_Principal" Type="Int16" />
+          <Property Name="AF_PrixDev" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AF_Devise" Type="Int16" />
+          <Property Name="AF_Remise" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AF_ConvDiv" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AF_TypeRem" Type="Int16" />
+          <Property Name="AF_CodeBarre" Type="String" MaxLength="19" FixedLength="false" Unicode="false" />
+          <Property Name="cbAF_CodeBarre" Type="Binary" MaxLength="20" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AF_PrixAchNouv" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AF_PrixDevNouv" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AF_RemiseNouv" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AF_DateApplication" Type="DateTime" Precision="3" />
+          <Property Name="cbProt" Type="Int16" />
+          <Property Name="cbMarq" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cbCreateur" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="cbModification" Type="DateTime" Precision="0" />
+          <Property Name="cbReplication" Type="Int32" />
+          <Property Name="cbFlag" Type="Int16" />
+        </EntityType>
+        <EntityType Name="F_ARTICLE">
+          <Key>
+            <PropertyRef Name="cbMarq" />
+          </Key>
+          <Property Name="AR_Ref" Type="String" MaxLength="19" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cbAR_Ref" Type="Binary" MaxLength="20" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AR_Design" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
+          <Property Name="cbAR_Design" Type="Binary" MaxLength="70" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="FA_CodeFamille" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cbFA_CodeFamille" Type="Binary" MaxLength="12" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AR_Substitut" Type="String" MaxLength="19" FixedLength="false" Unicode="false" />
+          <Property Name="cbAR_Substitut" Type="Binary" MaxLength="20" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AR_Raccourci" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="cbAR_Raccourci" Type="Binary" MaxLength="8" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AR_Garantie" Type="Int16" />
+          <Property Name="AR_UnitePoids" Type="Int16" />
+          <Property Name="AR_PoidsNet" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AR_PoidsBrut" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AR_UniteVen" Type="Int16" />
+          <Property Name="AR_PrixAch" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AR_Coef" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AR_PrixVen" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AR_PrixTTC" Type="Int16" />
+          <Property Name="AR_Gamme1" Type="Int16" />
+          <Property Name="AR_Gamme2" Type="Int16" />
+          <Property Name="AR_SuiviStock" Type="Int16" />
+          <Property Name="AR_Nomencl" Type="Int16" />
+          <Property Name="AR_Stat01" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="AR_Stat02" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="AR_Stat03" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="AR_Stat04" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="AR_Stat05" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="AR_Escompte" Type="Int16" />
+          <Property Name="AR_Delai" Type="Int16" />
+          <Property Name="AR_HorsStat" Type="Int16" />
+          <Property Name="AR_VteDebit" Type="Int16" />
+          <Property Name="AR_NotImp" Type="Int16" />
+          <Property Name="AR_Sommeil" Type="Int16" />
+          <Property Name="AR_Langue1" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
+          <Property Name="AR_Langue2" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
+          <Property Name="AR_EdiCode" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="cbAR_EdiCode" Type="Binary" MaxLength="46" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AR_CodeBarre" Type="String" MaxLength="19" FixedLength="false" Unicode="false" />
+          <Property Name="cbAR_CodeBarre" Type="Binary" MaxLength="20" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AR_CodeFiscal" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="AR_Pays" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="AR_Frais01FR_Denomination" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="AR_Frais01FR_Rem01REM_Valeur" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AR_Frais01FR_Rem01REM_Type" Type="Int16" />
+          <Property Name="AR_Frais01FR_Rem02REM_Valeur" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AR_Frais01FR_Rem02REM_Type" Type="Int16" />
+          <Property Name="AR_Frais01FR_Rem03REM_Valeur" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AR_Frais01FR_Rem03REM_Type" Type="Int16" />
+          <Property Name="AR_Frais02FR_Denomination" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="AR_Frais02FR_Rem01REM_Valeur" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AR_Frais02FR_Rem01REM_Type" Type="Int16" />
+          <Property Name="AR_Frais02FR_Rem02REM_Valeur" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AR_Frais02FR_Rem02REM_Type" Type="Int16" />
+          <Property Name="AR_Frais02FR_Rem03REM_Valeur" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AR_Frais02FR_Rem03REM_Type" Type="Int16" />
+          <Property Name="AR_Frais03FR_Denomination" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="AR_Frais03FR_Rem01REM_Valeur" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AR_Frais03FR_Rem01REM_Type" Type="Int16" />
+          <Property Name="AR_Frais03FR_Rem02REM_Valeur" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AR_Frais03FR_Rem02REM_Type" Type="Int16" />
+          <Property Name="AR_Frais03FR_Rem03REM_Valeur" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AR_Frais03FR_Rem03REM_Type" Type="Int16" />
+          <Property Name="AR_Condition" Type="Int16" />
+          <Property Name="AR_PUNet" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AR_Contremarque" Type="Int16" />
+          <Property Name="AR_FactPoids" Type="Int16" />
+          <Property Name="AR_FactForfait" Type="Int16" />
+          <Property Name="AR_DateCreation" Type="DateTime" Precision="3" />
+          <Property Name="AR_SaisieVar" Type="Int16" />
+          <Property Name="AR_Transfere" Type="Int16" />
+          <Property Name="AR_Publie" Type="Int16" />
+          <Property Name="AR_DateModif" Type="DateTime" Precision="3" />
+          <Property Name="AR_Photo" Type="String" MaxLength="259" FixedLength="false" Unicode="false" />
+          <Property Name="AR_PrixAchNouv" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AR_CoefNouv" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AR_PrixVenNouv" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AR_DateApplication" Type="DateTime" Precision="3" />
+          <Property Name="AR_CoutStd" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AR_QteComp" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AR_QteOperatoire" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="CO_No" Type="Int32" />
+          <Property Name="cbCO_No" Type="Int32" />
+          <Property Name="AR_Prevision" Type="Int16" />
+          <Property Name="CL_No1" Type="Int32" />
+          <Property Name="cbCL_No1" Type="Int32" />
+          <Property Name="CL_No2" Type="Int32" />
+          <Property Name="cbCL_No2" Type="Int32" />
+          <Property Name="CL_No3" Type="Int32" />
+          <Property Name="cbCL_No3" Type="Int32" />
+          <Property Name="CL_No4" Type="Int32" />
+          <Property Name="cbCL_No4" Type="Int32" />
+          <Property Name="AR_Type" Type="Int16" />
+          <Property Name="RP_CodeDefaut" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="AR_Nature" Type="Int16" />
+          <Property Name="AR_DelaiFabrication" Type="Int16" />
+          <Property Name="AR_NbColis" Type="Int16" />
+          <Property Name="AR_DelaiPeremption" Type="Int16" />
+          <Property Name="AR_DelaiSecurite" Type="Int16" />
+          <Property Name="AR_Fictif" Type="Int16" />
+          <Property Name="AR_SousTraitance" Type="Int16" />
+          <Property Name="AR_TypeLancement" Type="Int16" />
+          <Property Name="AR_Cycle" Type="Int16" />
+          <Property Name="AR_Criticite" Type="Int16" />
+          <Property Name="cbProt" Type="Int16" />
+          <Property Name="cbMarq" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cbCreateur" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="cbModification" Type="DateTime" Precision="0" />
+          <Property Name="cbReplication" Type="Int32" />
+          <Property Name="cbFlag" Type="Int16" />
+          <Property Name="DEBUT_LIVRABILITE_PRINTEMPS" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="FIN_LIVRABILITE_PRINTEMPS" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="DEBUT_LIVRABILITE_AUTOMNE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="FIN_LIVRABILITE_AUTOMNE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="LIVRABLE_TOUTE_ANNEE" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="MARQUE" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
+          <Property Name="NB_PIECES_PAQUET" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="HAUTEUR" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="LARGEUR" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="LONGUEUR" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="HORS_NORME" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="LDF" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="BLOCAGE_CORSE" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="BLOCAGE_BELGIQUE" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="BLOCAGE_PAYS_BAS" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="BLOCAGE_GRANDE_BRETAGNE" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="BLOCAGE_ALLEMAGNE" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="BLOCAGE_AUTRICHE" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="BLOCAGE_PAYS_ETRANGERS" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="EMPLACEMENT_PICKING" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CODE_STATUT" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="INTITULE_FACTURE" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
+          <Property Name="INTITULE_LATIN" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
+          <Property Name="JYG" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="VISIBLE" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="POIDS_PLASTIQUE" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="VENTE_SUGGESTIVE" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="ListeProduitsFournisseursEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="F_ARTFOURNISS" EntityType="Self.F_ARTFOURNISS" />
+          <EntitySet Name="F_ARTICLE" EntityType="Self.F_ARTICLE" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ListeProduitsFournisseursModelStoreContainer" CdmEntityContainer="ListeProduitsFournisseursEntities">
+          <EntitySetMapping Name="F_ARTFOURNISS">
+            <EntityTypeMapping TypeName="ListeProduitsFournisseursModel.F_ARTFOURNISS">
+              <MappingFragment StoreEntitySet="F_ARTFOURNISS">
+                <ScalarProperty Name="AR_Ref" ColumnName="AR_Ref" />
+                <ScalarProperty Name="cbAR_Ref" ColumnName="cbAR_Ref" />
+                <ScalarProperty Name="CT_Num" ColumnName="CT_Num" />
+                <ScalarProperty Name="cbCT_Num" ColumnName="cbCT_Num" />
+                <ScalarProperty Name="AF_RefFourniss" ColumnName="AF_RefFourniss" />
+                <ScalarProperty Name="cbAF_RefFourniss" ColumnName="cbAF_RefFourniss" />
+                <ScalarProperty Name="AF_PrixAch" ColumnName="AF_PrixAch" />
+                <ScalarProperty Name="AF_Unite" ColumnName="AF_Unite" />
+                <ScalarProperty Name="AF_Conversion" ColumnName="AF_Conversion" />
+                <ScalarProperty Name="AF_DelaiAppro" ColumnName="AF_DelaiAppro" />
+                <ScalarProperty Name="AF_Garantie" ColumnName="AF_Garantie" />
+                <ScalarProperty Name="AF_Colisage" ColumnName="AF_Colisage" />
+                <ScalarProperty Name="AF_QteMini" ColumnName="AF_QteMini" />
+                <ScalarProperty Name="AF_QteMont" ColumnName="AF_QteMont" />
+                <ScalarProperty Name="EG_Champ" ColumnName="EG_Champ" />
+                <ScalarProperty Name="AF_Principal" ColumnName="AF_Principal" />
+                <ScalarProperty Name="AF_PrixDev" ColumnName="AF_PrixDev" />
+                <ScalarProperty Name="AF_Devise" ColumnName="AF_Devise" />
+                <ScalarProperty Name="AF_Remise" ColumnName="AF_Remise" />
+                <ScalarProperty Name="AF_ConvDiv" ColumnName="AF_ConvDiv" />
+                <ScalarProperty Name="AF_TypeRem" ColumnName="AF_TypeRem" />
+                <ScalarProperty Name="AF_CodeBarre" ColumnName="AF_CodeBarre" />
+                <ScalarProperty Name="cbAF_CodeBarre" ColumnName="cbAF_CodeBarre" />
+                <ScalarProperty Name="AF_PrixAchNouv" ColumnName="AF_PrixAchNouv" />
+                <ScalarProperty Name="AF_PrixDevNouv" ColumnName="AF_PrixDevNouv" />
+                <ScalarProperty Name="AF_RemiseNouv" ColumnName="AF_RemiseNouv" />
+                <ScalarProperty Name="AF_DateApplication" ColumnName="AF_DateApplication" />
+                <ScalarProperty Name="cbProt" ColumnName="cbProt" />
+                <ScalarProperty Name="cbMarq" ColumnName="cbMarq" />
+                <ScalarProperty Name="cbCreateur" ColumnName="cbCreateur" />
+                <ScalarProperty Name="cbModification" ColumnName="cbModification" />
+                <ScalarProperty Name="cbReplication" ColumnName="cbReplication" />
+                <ScalarProperty Name="cbFlag" ColumnName="cbFlag" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="F_ARTICLE">
+            <EntityTypeMapping TypeName="ListeProduitsFournisseursModel.F_ARTICLE">
+              <MappingFragment StoreEntitySet="F_ARTICLE">
+                <ScalarProperty Name="AR_Ref" ColumnName="AR_Ref" />
+                <ScalarProperty Name="cbAR_Ref" ColumnName="cbAR_Ref" />
+                <ScalarProperty Name="AR_Design" ColumnName="AR_Design" />
+                <ScalarProperty Name="cbAR_Design" ColumnName="cbAR_Design" />
+                <ScalarProperty Name="FA_CodeFamille" ColumnName="FA_CodeFamille" />
+                <ScalarProperty Name="cbFA_CodeFamille" ColumnName="cbFA_CodeFamille" />
+                <ScalarProperty Name="AR_Substitut" ColumnName="AR_Substitut" />
+                <ScalarProperty Name="cbAR_Substitut" ColumnName="cbAR_Substitut" />
+                <ScalarProperty Name="AR_Raccourci" ColumnName="AR_Raccourci" />
+                <ScalarProperty Name="cbAR_Raccourci" ColumnName="cbAR_Raccourci" />
+                <ScalarProperty Name="AR_Garantie" ColumnName="AR_Garantie" />
+                <ScalarProperty Name="AR_UnitePoids" ColumnName="AR_UnitePoids" />
+                <ScalarProperty Name="AR_PoidsNet" ColumnName="AR_PoidsNet" />
+                <ScalarProperty Name="AR_PoidsBrut" ColumnName="AR_PoidsBrut" />
+                <ScalarProperty Name="AR_UniteVen" ColumnName="AR_UniteVen" />
+                <ScalarProperty Name="AR_PrixAch" ColumnName="AR_PrixAch" />
+                <ScalarProperty Name="AR_Coef" ColumnName="AR_Coef" />
+                <ScalarProperty Name="AR_PrixVen" ColumnName="AR_PrixVen" />
+                <ScalarProperty Name="AR_PrixTTC" ColumnName="AR_PrixTTC" />
+                <ScalarProperty Name="AR_Gamme1" ColumnName="AR_Gamme1" />
+                <ScalarProperty Name="AR_Gamme2" ColumnName="AR_Gamme2" />
+                <ScalarProperty Name="AR_SuiviStock" ColumnName="AR_SuiviStock" />
+                <ScalarProperty Name="AR_Nomencl" ColumnName="AR_Nomencl" />
+                <ScalarProperty Name="AR_Stat01" ColumnName="AR_Stat01" />
+                <ScalarProperty Name="AR_Stat02" ColumnName="AR_Stat02" />
+                <ScalarProperty Name="AR_Stat03" ColumnName="AR_Stat03" />
+                <ScalarProperty Name="AR_Stat04" ColumnName="AR_Stat04" />
+                <ScalarProperty Name="AR_Stat05" ColumnName="AR_Stat05" />
+                <ScalarProperty Name="AR_Escompte" ColumnName="AR_Escompte" />
+                <ScalarProperty Name="AR_Delai" ColumnName="AR_Delai" />
+                <ScalarProperty Name="AR_HorsStat" ColumnName="AR_HorsStat" />
+                <ScalarProperty Name="AR_VteDebit" ColumnName="AR_VteDebit" />
+                <ScalarProperty Name="AR_NotImp" ColumnName="AR_NotImp" />
+                <ScalarProperty Name="AR_Sommeil" ColumnName="AR_Sommeil" />
+                <ScalarProperty Name="AR_Langue1" ColumnName="AR_Langue1" />
+                <ScalarProperty Name="AR_Langue2" ColumnName="AR_Langue2" />
+                <ScalarProperty Name="AR_EdiCode" ColumnName="AR_EdiCode" />
+                <ScalarProperty Name="cbAR_EdiCode" ColumnName="cbAR_EdiCode" />
+                <ScalarProperty Name="AR_CodeBarre" ColumnName="AR_CodeBarre" />
+                <ScalarProperty Name="cbAR_CodeBarre" ColumnName="cbAR_CodeBarre" />
+                <ScalarProperty Name="AR_CodeFiscal" ColumnName="AR_CodeFiscal" />
+                <ScalarProperty Name="AR_Pays" ColumnName="AR_Pays" />
+                <ScalarProperty Name="AR_Frais01FR_Denomination" ColumnName="AR_Frais01FR_Denomination" />
+                <ScalarProperty Name="AR_Frais01FR_Rem01REM_Valeur" ColumnName="AR_Frais01FR_Rem01REM_Valeur" />
+                <ScalarProperty Name="AR_Frais01FR_Rem01REM_Type" ColumnName="AR_Frais01FR_Rem01REM_Type" />
+                <ScalarProperty Name="AR_Frais01FR_Rem02REM_Valeur" ColumnName="AR_Frais01FR_Rem02REM_Valeur" />
+                <ScalarProperty Name="AR_Frais01FR_Rem02REM_Type" ColumnName="AR_Frais01FR_Rem02REM_Type" />
+                <ScalarProperty Name="AR_Frais01FR_Rem03REM_Valeur" ColumnName="AR_Frais01FR_Rem03REM_Valeur" />
+                <ScalarProperty Name="AR_Frais01FR_Rem03REM_Type" ColumnName="AR_Frais01FR_Rem03REM_Type" />
+                <ScalarProperty Name="AR_Frais02FR_Denomination" ColumnName="AR_Frais02FR_Denomination" />
+                <ScalarProperty Name="AR_Frais02FR_Rem01REM_Valeur" ColumnName="AR_Frais02FR_Rem01REM_Valeur" />
+                <ScalarProperty Name="AR_Frais02FR_Rem01REM_Type" ColumnName="AR_Frais02FR_Rem01REM_Type" />
+                <ScalarProperty Name="AR_Frais02FR_Rem02REM_Valeur" ColumnName="AR_Frais02FR_Rem02REM_Valeur" />
+                <ScalarProperty Name="AR_Frais02FR_Rem02REM_Type" ColumnName="AR_Frais02FR_Rem02REM_Type" />
+                <ScalarProperty Name="AR_Frais02FR_Rem03REM_Valeur" ColumnName="AR_Frais02FR_Rem03REM_Valeur" />
+                <ScalarProperty Name="AR_Frais02FR_Rem03REM_Type" ColumnName="AR_Frais02FR_Rem03REM_Type" />
+                <ScalarProperty Name="AR_Frais03FR_Denomination" ColumnName="AR_Frais03FR_Denomination" />
+                <ScalarProperty Name="AR_Frais03FR_Rem01REM_Valeur" ColumnName="AR_Frais03FR_Rem01REM_Valeur" />
+                <ScalarProperty Name="AR_Frais03FR_Rem01REM_Type" ColumnName="AR_Frais03FR_Rem01REM_Type" />
+                <ScalarProperty Name="AR_Frais03FR_Rem02REM_Valeur" ColumnName="AR_Frais03FR_Rem02REM_Valeur" />
+                <ScalarProperty Name="AR_Frais03FR_Rem02REM_Type" ColumnName="AR_Frais03FR_Rem02REM_Type" />
+                <ScalarProperty Name="AR_Frais03FR_Rem03REM_Valeur" ColumnName="AR_Frais03FR_Rem03REM_Valeur" />
+                <ScalarProperty Name="AR_Frais03FR_Rem03REM_Type" ColumnName="AR_Frais03FR_Rem03REM_Type" />
+                <ScalarProperty Name="AR_Condition" ColumnName="AR_Condition" />
+                <ScalarProperty Name="AR_PUNet" ColumnName="AR_PUNet" />
+                <ScalarProperty Name="AR_Contremarque" ColumnName="AR_Contremarque" />
+                <ScalarProperty Name="AR_FactPoids" ColumnName="AR_FactPoids" />
+                <ScalarProperty Name="AR_FactForfait" ColumnName="AR_FactForfait" />
+                <ScalarProperty Name="AR_DateCreation" ColumnName="AR_DateCreation" />
+                <ScalarProperty Name="AR_SaisieVar" ColumnName="AR_SaisieVar" />
+                <ScalarProperty Name="AR_Transfere" ColumnName="AR_Transfere" />
+                <ScalarProperty Name="AR_Publie" ColumnName="AR_Publie" />
+                <ScalarProperty Name="AR_DateModif" ColumnName="AR_DateModif" />
+                <ScalarProperty Name="AR_Photo" ColumnName="AR_Photo" />
+                <ScalarProperty Name="AR_PrixAchNouv" ColumnName="AR_PrixAchNouv" />
+                <ScalarProperty Name="AR_CoefNouv" ColumnName="AR_CoefNouv" />
+                <ScalarProperty Name="AR_PrixVenNouv" ColumnName="AR_PrixVenNouv" />
+                <ScalarProperty Name="AR_DateApplication" ColumnName="AR_DateApplication" />
+                <ScalarProperty Name="AR_CoutStd" ColumnName="AR_CoutStd" />
+                <ScalarProperty Name="AR_QteComp" ColumnName="AR_QteComp" />
+                <ScalarProperty Name="AR_QteOperatoire" ColumnName="AR_QteOperatoire" />
+                <ScalarProperty Name="CO_No" ColumnName="CO_No" />
+                <ScalarProperty Name="cbCO_No" ColumnName="cbCO_No" />
+                <ScalarProperty Name="AR_Prevision" ColumnName="AR_Prevision" />
+                <ScalarProperty Name="CL_No1" ColumnName="CL_No1" />
+                <ScalarProperty Name="cbCL_No1" ColumnName="cbCL_No1" />
+                <ScalarProperty Name="CL_No2" ColumnName="CL_No2" />
+                <ScalarProperty Name="cbCL_No2" ColumnName="cbCL_No2" />
+                <ScalarProperty Name="CL_No3" ColumnName="CL_No3" />
+                <ScalarProperty Name="cbCL_No3" ColumnName="cbCL_No3" />
+                <ScalarProperty Name="CL_No4" ColumnName="CL_No4" />
+                <ScalarProperty Name="cbCL_No4" ColumnName="cbCL_No4" />
+                <ScalarProperty Name="AR_Type" ColumnName="AR_Type" />
+                <ScalarProperty Name="RP_CodeDefaut" ColumnName="RP_CodeDefaut" />
+                <ScalarProperty Name="AR_Nature" ColumnName="AR_Nature" />
+                <ScalarProperty Name="AR_DelaiFabrication" ColumnName="AR_DelaiFabrication" />
+                <ScalarProperty Name="AR_NbColis" ColumnName="AR_NbColis" />
+                <ScalarProperty Name="AR_DelaiPeremption" ColumnName="AR_DelaiPeremption" />
+                <ScalarProperty Name="AR_DelaiSecurite" ColumnName="AR_DelaiSecurite" />
+                <ScalarProperty Name="AR_Fictif" ColumnName="AR_Fictif" />
+                <ScalarProperty Name="AR_SousTraitance" ColumnName="AR_SousTraitance" />
+                <ScalarProperty Name="AR_TypeLancement" ColumnName="AR_TypeLancement" />
+                <ScalarProperty Name="AR_Cycle" ColumnName="AR_Cycle" />
+                <ScalarProperty Name="AR_Criticite" ColumnName="AR_Criticite" />
+                <ScalarProperty Name="cbProt" ColumnName="cbProt" />
+                <ScalarProperty Name="cbMarq" ColumnName="cbMarq" />
+                <ScalarProperty Name="cbCreateur" ColumnName="cbCreateur" />
+                <ScalarProperty Name="cbModification" ColumnName="cbModification" />
+                <ScalarProperty Name="cbReplication" ColumnName="cbReplication" />
+                <ScalarProperty Name="cbFlag" ColumnName="cbFlag" />
+                <ScalarProperty Name="DEBUT_LIVRABILITE_PRINTEMPS" ColumnName="DEBUT_LIVRABILITE_PRINTEMPS" />
+                <ScalarProperty Name="FIN_LIVRABILITE_PRINTEMPS" ColumnName="FIN_LIVRABILITE_PRINTEMPS" />
+                <ScalarProperty Name="DEBUT_LIVRABILITE_AUTOMNE" ColumnName="DEBUT_LIVRABILITE_AUTOMNE" />
+                <ScalarProperty Name="FIN_LIVRABILITE_AUTOMNE" ColumnName="FIN_LIVRABILITE_AUTOMNE" />
+                <ScalarProperty Name="LIVRABLE_TOUTE_ANNEE" ColumnName="LIVRABLE_TOUTE_ANNEE" />
+                <ScalarProperty Name="MARQUE" ColumnName="MARQUE" />
+                <ScalarProperty Name="NB_PIECES_PAQUET" ColumnName="NB_PIECES_PAQUET" />
+                <ScalarProperty Name="HAUTEUR" ColumnName="HAUTEUR" />
+                <ScalarProperty Name="LARGEUR" ColumnName="LARGEUR" />
+                <ScalarProperty Name="LONGUEUR" ColumnName="LONGUEUR" />
+                <ScalarProperty Name="HORS_NORME" ColumnName="HORS_NORME" />
+                <ScalarProperty Name="LDF" ColumnName="LDF" />
+                <ScalarProperty Name="BLOCAGE_CORSE" ColumnName="BLOCAGE_CORSE" />
+                <ScalarProperty Name="BLOCAGE_BELGIQUE" ColumnName="BLOCAGE_BELGIQUE" />
+                <ScalarProperty Name="BLOCAGE_PAYS_BAS" ColumnName="BLOCAGE_PAYS_BAS" />
+                <ScalarProperty Name="BLOCAGE_GRANDE_BRETAGNE" ColumnName="BLOCAGE_GRANDE_BRETAGNE" />
+                <ScalarProperty Name="BLOCAGE_ALLEMAGNE" ColumnName="BLOCAGE_ALLEMAGNE" />
+                <ScalarProperty Name="BLOCAGE_AUTRICHE" ColumnName="BLOCAGE_AUTRICHE" />
+                <ScalarProperty Name="BLOCAGE_PAYS_ETRANGERS" ColumnName="BLOCAGE_PAYS_ETRANGERS" />
+                <ScalarProperty Name="EMPLACEMENT_PICKING" ColumnName="EMPLACEMENT_PICKING" />
+                <ScalarProperty Name="CODE_STATUT" ColumnName="CODE_STATUT" />
+                <ScalarProperty Name="INTITULE_FACTURE" ColumnName="INTITULE_FACTURE" />
+                <ScalarProperty Name="INTITULE_LATIN" ColumnName="INTITULE_LATIN" />
+                <ScalarProperty Name="JYG" ColumnName="JYG" />
+                <ScalarProperty Name="VISIBLE" ColumnName="VISIBLE" />
+                <ScalarProperty Name="POIDS_PLASTIQUE" ColumnName="POIDS_PLASTIQUE" />
+                <ScalarProperty Name="VENTE_SUGGESTIVE" ColumnName="VENTE_SUGGESTIVE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

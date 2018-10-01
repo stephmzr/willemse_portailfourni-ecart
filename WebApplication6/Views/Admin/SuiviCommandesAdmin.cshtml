@@ -1,0 +1,109 @@
+﻿@model PagedList.IPagedList<WebApplication6.Models.F_DOCENTETE>
+@using PagedList.Mvc
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Votre suivi de Commandes";
+}
+
+
+<div class="container">
+    <h2 style="color:darkgreen;">@ViewBag.Title</h2>
+    <br /><br />
+    @if (Model.Count() == 0)
+    {
+        <p class="text-danger">Aucune commande enregistrée.</p>
+    }
+    else
+    { 
+
+        <div class="row">
+            <div class="col-xs-3 form-inline">
+                @using (Html.BeginForm("SuiviCommandesAdmin", "Admin", FormMethod.Get))
+                {
+                    <label>Trouver un produit:</label><br />
+                    <input type="text" id="pro" name="pro" placeholder="Code produit" style="width:10em;" class="form-control" />
+                    <input type="submit" value="Rechercher" class="btn btn-success active" />
+                }
+            </div>
+
+
+            <div class="col-xs-3 form-inline">
+                @using (Html.BeginForm("SuiviCommandesAdmin", "Admin", FormMethod.Get))
+                        {
+                    <label> Commandes à partir d'une date:</label><br />
+                       <input type = "date" id = "datecm" name = "datecm" placeholder = "aaaa-mm-jj" style = "width:10em;" class="form-control"/>
+                    <input type="submit" value="Rechercher" class="btn btn-success active" />
+                }
+            </div>
+
+        </div>
+        <br /><br />
+
+       
+        <table class="table table-striped table-hover list-group">
+            <tr style="color:darkgreen">
+                <th>
+                    N° commande
+                </th>
+                <th>
+                    Date de la commande
+                </th>               
+                <th>
+                    Montant HT
+                </th>
+                <th>
+                    &nbsp;
+                </th>
+                <th>
+                    &nbsp;
+                </th>
+                <th>
+                    &nbsp;
+                </th>
+
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr style="cursor: pointer" onclick="location.href='@(Url.Action("DetailsCommandeAdmin", new { id = item.DO_Piece }))'">
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DO_Piece)
+                    </td>
+                    <td>
+                        @{
+                            string parameterValue = item.DO_Date.ToString().Remove(10, 9);
+                        }
+                        @Html.DisplayFor(modelItem => parameterValue)
+
+                    </td>
+                    @*<td>
+                        @WebApplication6.Controllers.CommandesController.StatusCommande(Html.DisplayFor(modelItem => item.DO_Type).ToString())
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DO_TotalHT)
+                        &euro;
+                    </td>
+                    <td>
+                        <a href="/Manage"><span class="glyphicon glyphicon-eye-open"></span></a>
+                        @Html.ActionLink("Détails", "DetailsCommandeAdmin", new { id = item.DO_Piece })
+                    </td>
+                    <td>
+                        <a href="~/Views/Commandes/ExportCSV"><span class="glyphicon glyphicon-file"></span></a>
+                        <a href="@Url.Action("ExportToCSV", "ExportToCSV", new { Id = item.DO_Piece})">Export CSV</a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("BonLivraisonPDF", "BonLivraisonPDF", new { Id = item.DO_Piece, target = "_blank"})"><span class="glyphicon glyphicon-file"></span></a>
+                        <a href="@Url.Action("BonLivraisonPDF", "BonLivraisonPDF", new { Id = item.DO_Piece, target = "_blank"})">Bon livraison</a>
+                    </td>
+
+                    <td style="text-align:center"></td>
+                </tr>
+            }
+
+        </table>
+    }
+    <span class="text-info">Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) sur @Model.PageCount</span>
+    @Html.PagedListPager(Model, page => Url.Action("SuiviCommandesAdmin", new { page, currentFilter = ViewBag.CurrentFilter }))
+</div>
+

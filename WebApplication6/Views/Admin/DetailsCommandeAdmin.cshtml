@@ -1,0 +1,74 @@
+﻿@model IEnumerable<WebApplication6.Models.F_DOCLIGNE>
+@using WebApplication6.Models
+
+
+@{
+    ViewBag.Title = "Suivi commandes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="color:darkgreen;">Détails de la commande</h2>
+
+
+
+<br />
+<table class="table table-striped table-hover table-striped">
+    <tr>
+        <th style="color:darkgreen;">
+            Code Produit
+        </th>
+        <th style="color:darkgreen;">
+            Designation
+        </th>
+        <th style="color:darkgreen;">
+            Prix unitaire
+        </th>
+        <th style="color:darkgreen;">
+            Quantité
+        </th>
+        <th style="color:darkgreen;">
+            Conditionnement
+        </th>
+        <th style="color:darkgreen;">
+            Montant Total
+        </th>
+        <th style="color:darkgreen;">
+            &nbsp;
+        </th>
+
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.AF_RefFourniss)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DL_Design)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DL_PrixUnitaire)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EU_Qte)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EU_Enumere)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DL_MontantHT)
+                &euro;
+            </td>
+          
+        </tr>
+
+    }
+
+</table>
+
+<a href="javascript:history.back()"><span class="glyphicon glyphicon-arrow-left"></span></a>
+<a href="javascript:history.back()"> Retour au suivi des commandes</a>
