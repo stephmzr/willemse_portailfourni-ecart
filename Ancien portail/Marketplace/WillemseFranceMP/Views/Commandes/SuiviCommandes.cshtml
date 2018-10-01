@@ -1,0 +1,197 @@
+﻿@model PagedList.IPagedList<WillemseFranceMP.Models.Commande>
+@using PagedList.Mvc
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Suivi des commandes";
+}
+<div class="container">
+    <h2 style="color:darkgreen;">@ViewBag.Title</h2>
+    <br /><hr />
+    @{
+        if (ViewBag.errormessage != null)
+        {
+            if (ViewBag.errormessage.Contains("Erreur"))
+            {
+                <div class="alert alert-danger">@ViewBag.errormessage!</div>
+            }
+            else if (ViewBag.errormessage.Contains("bien"))
+            {
+                <div class="alert alert-success">@ViewBag.errormessage</div>
+            }
+            else if (ViewBag.errormessage.Contains("mais"))
+            {
+                <div class="alert alert-info">@ViewBag.errormessage</div>
+            }
+        }
+    }
+        @if (Model.Count() == 0)
+            {
+            <p class="text-danger">Aucune commande enregistrée.</p>
+            <br /><br />
+            <span class="glyphicon glyphicon-arrow-left" style="color:steelblue"></span>
+                @Html.ActionLink("Retour", "Index")
+        }
+        else
+        {
+            <div class="row">
+                <!-- importer fichier de suivi de commandes-->
+                 @*
+                 <div class="col-xs-3" style="padding-top:25px">
+                    <a href="@Url.Action("SuiviCommandesFichier", "Commandes")" class="btn btn-success active">
+                        <span class="glyphicon glyphicon-download-alt"></span>
+                        Importer un fichier de suivi
+                    </a>
+                </div>
+                *@
+               
+                <!-- recherche par numéro de commande-->
+                <div class="col-xs-3 form-inline">
+                        @using (Html.BeginForm("SuiviCommandes", "Commandes", FormMethod.Get))
+                        {
+                            <label>Trouver une commande:</label><br />
+                            <input type="text" name="num" placeholder="N° commande" style="width:10em;" class="form-control"/>
+                            <input type="submit" value="Rechercher" class="btn btn-success active" />
+                        }
+                </div>
+                <!-- recherche par code produit-->
+                <div class="col-xs-3 form-inline">
+                    @using (Html.BeginForm("SuiviCommandes", "Commandes", FormMethod.Get))
+                    {
+                        <label>Trouver un produit:</label><br />
+                        <input type="text" name="pro" placeholder="Code produit" style="width:10em;" class="form-control" />
+                            <input type="submit" value="Rechercher" class="btn btn-success active" />
+                    }
+                </div>
+                <!-- filtre par date-->
+                <div class="col-xs-3 form-inline">
+                    @using (Html.BeginForm("SuiviCommandes", "Commandes", FormMethod.Get))
+                    {
+                        <label>Commandes à partir d'une date:</label><br />
+                        <input type="date" name="datecm" placeholder="aaaa-mm-jj" style="width:10em;" class="form-control" />
+                            <input type="submit" value="Filtrer" class="btn btn-success active" />
+                    }
+                </div>
+            </div>
+            <br /><hr />
+            <div class="row" id="change">            
+                <script type="text/javascript">
+                    $("#change").hide();
+                </script>
+                <div class="col-xs-10">
+                    <h4 class="text-danger">
+                        Vous avez modifié une ou plusieurs commandes.<br />
+                        Une fois que vous aurez terminé toutes les modifications, vous pouvez cliquer sur "Fin des modifications" afin de notifier Willemse des dernières mises à jour.
+                    </h4>
+                </div>
+                <div class="col-xs-2" style="margin-top:20px">
+                    <input type="button" onClick="notifier()" value="Fin des modifications" class="btn btn-success active" />
+                </div>
+            </div>
+            <br /><br />
+            <div>
+                <table class="table table-hover">
+                    <tr style="color:darkgreen">
+                        <th>
+                            Numéro commande
+                        </th>
+                        <th>
+                            Référence produit
+                        </th>
+                        <th>
+                            Date de commande
+                        </th>
+                        <th>
+                            Date d'expédition
+                        </th>
+                        <th>
+                            N° Tracking
+                        </th>
+                        <th>
+                            Transporteur
+                        </th>
+                        <th>
+                            Date de réception
+                        </th>
+                        <th>
+                            Retour
+                        </th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                {
+                        <tr style="cursor: pointer" onclick="location.href='@(Url.Action("SuiviCommande", new { id = item.idcmnd }))'">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.numcmnd)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.reffou)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.datecmnd)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.datexp)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.tracking)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.transporteur)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.datrec)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.colisretour)
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+                <span class="text-info">Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) sur @Model.PageCount</span>
+                @Html.PagedListPager(Model, page => Url.Action("SuiviCommandes", new { page, currentFilter = ViewBag.CurrentFilter }))
+
+                <br /><br />
+                <span class="glyphicon glyphicon-arrow-left" style="color:steelblue"></span>
+                @Html.ActionLink("Retour", "SuiviCommandes/")
+            </div>
+        }
+           
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        function notifier() {
+            $.ajax({
+                url: "Notify",
+                error: function (xhr, status, error) {
+                    alert('Erreur d\'envoi. \n Veuillez réessayer plus tard. ' + xhr.status);
+                },
+                success: function (response) {
+                    changements = false;
+                    window.location.reload();
+                    alert('Vos modifications ont bien été prises en compte.');
+                }
+            });
+        }
+
+        @*
+        $(document).ready(function changements() {
+            $.ajax({
+                url: "CommandesUpdated",
+                error: function (xhr, status, error) {
+                    alert('Erreur  ' + xhr.status + ' ' + error);
+                },
+                success: function (response) {
+                    if(response == "True")
+                    {
+                        $("#change").show();
+                    }
+                }
+            });
+        });
+            *@
+
+    </script>
+}

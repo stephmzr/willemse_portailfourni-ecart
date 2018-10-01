@@ -1,0 +1,70 @@
+﻿@model WillemseFranceMP.Models.Commande
+
+@{
+    ViewBag.Title = "Commande N° "+ Model.numcmnd;
+}
+<div class="container">
+    <br /><br /><br /><br />
+    <h2 class="text-danger" >@ViewBag.Title</h2>
+    <br /><br />
+    <h3>Voulez-vous ne plus afficher cette commande?</h3>
+    <br /><br />
+    <div class="form-group">
+        <div class="row">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-3">
+                <label class="control-label">@Html.DisplayNameFor(model => model.codproerp)</label>
+                @Html.DisplayFor(model => model.codproerp)
+            </div>
+            <div class="col-xs-3">
+                <label class="control-label">@Html.DisplayNameFor(model => model.datecmnd)</label>
+                @Html.DisplayFor(model => model.datecmnd)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-3">
+                <label class="control-label">@Html.DisplayNameFor(model => model.qt)</label>
+                @Html.DisplayFor(model => model.qt)
+            </div>
+            <div class="col-xs-3">
+                <label class="control-label">@Html.DisplayNameFor(model => model.datefact)</label>
+                @Html.DisplayFor(model => model.datefact)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-3">
+                <label class="control-label">@Html.DisplayNameFor(model => model.nomc)</label>
+                @Html.DisplayFor(model => model.nomc)
+            </div>
+            <div class="col-xs-3">
+                <label class="control-label">@Html.DisplayNameFor(model => model.prenomc)</label>
+                @Html.DisplayFor(model => model.prenomc)
+            </div>
+        </div>
+    </div>
+    <br /><br /><br /><br />
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-xs-10">
+                    <span class="glyphicon glyphicon-arrow-left" style="color:steelblue"></span>
+                    @Html.ActionLink("Retour à la liste de commandes", "Index")
+                </div>
+                <div class="form-actions no-color">
+                    <input type="submit" value="Confirmer" class="btn btn-danger active" />
+                </div>
+            </div>
+
+        }
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        $("#pageCommandes").addClass('active');
+    </script>
+}

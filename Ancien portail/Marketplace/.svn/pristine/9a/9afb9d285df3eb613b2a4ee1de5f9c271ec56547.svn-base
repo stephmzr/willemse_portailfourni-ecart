@@ -1,0 +1,274 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.OleDb;
+using System.Data.SqlClient;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Web;
+
+using System.Web.Mvc;
+
+namespace WillemseFranceMP.Models
+{
+    public class Arb1
+    {
+        public string Arb1Code { get; set; }
+        public string Arb1Name { get; set; }
+        private static ProduitDBContext dbt = new ProduitDBContext();
+        public bool Equals(Arb1 p)
+        {
+            if ((object)p == null)    {   return false; }
+            return (Arb1Code == p.Arb1Code) && (Arb1Name == p.Arb1Name);
+        }
+        public static IQueryable<Arb1> GetArb1 ()
+        {
+            var arb1 = dbt.Arbors.Select(u => new Arb1
+            {
+                Arb1Code = u.Secteur, Arb1Name = u.Secteur
+            }).Distinct();
+            return  arb1.AsQueryable();           
+        }     
+    }
+    public class Arb2
+    {
+        public string Arb1Code { get; set; }
+        public string Arb2ID { get; set; }
+        public string Arb2Name { get; set; }
+        private static ProduitDBContext dbt = new ProduitDBContext();
+        public bool Equals(Arb2 p)
+        {
+            if ((object)p == null) {  return false; }
+
+            return (Arb1Code == p.Arb1Code) && (Arb2Name == p.Arb2Name) && (Arb2ID == p.Arb2ID);
+        }
+        public static IQueryable<Arb2> GetArb2(string secteurnom)
+        {
+           var arb2 = dbt.Arbors.Where(u => u.Secteur == secteurnom).Select(u => new Arb2
+            { Arb2ID = u.SousArb1, Arb1Code = u.Secteur, Arb2Name = u.SousArb1 }).Distinct();
+             
+            return arb2.AsQueryable();
+        }
+    }
+    public class Arb3
+    {
+        public string Arb1Code { get; set; }
+        public string Arb2Code { get; set; }
+        public string Arb3ID { get; set; }
+        public string Arb3Name { get; set; }
+        private static ProduitDBContext dbt = new ProduitDBContext();
+        public bool Equals(Arb3 p)
+        {
+            if ((object)p == null) { return false; }
+            return (Arb1Code==p.Arb1Code)&& (Arb2Code == p.Arb2Code) && (Arb3Name == p.Arb3Name) && (Arb3ID == p.Arb3ID);
+        }
+        public static IQueryable<Arb3> GetArb3(string secteurnom,string arb1nom)
+        {
+            
+            var arb3 = dbt.Arbors.Where(u => (u.Secteur==secteurnom && u.SousArb1 == arb1nom )).Select(u => new Arb3
+            { Arb1Code=u.Secteur, Arb2Code = u.SousArb1, Arb3ID = u.SousArb2, Arb3Name = u.SousArb2 }).Distinct();
+            return arb3.AsQueryable();
+        }
+    }
+
+    public class Arb4
+    {
+        public string Arb1Code { get; set; }
+        public string Arb2Code { get; set; }
+        public string Arb3Code { get; set; }
+        public string Arb4ID { get; set; }
+        public string Arb4Name { get; set; }
+        private static ProduitDBContext dbt = new ProduitDBContext();
+        public bool Equals(Arb4 p)
+        {
+            if ((object)p == null) { return false; }
+            return (Arb1Code == p.Arb1Code) && (Arb2Code == p.Arb2Code) && (Arb3Code == p.Arb3Code) &&(Arb4Name == p.Arb4Name) && (Arb4ID == p.Arb4ID);
+        }
+
+        public static IQueryable<Arb4> GetArb4(string secteurnom, string arb1nom, string arb2nom)
+        {
+
+            var arb4 = dbt.Arbors.Where(u => (u.Secteur == secteurnom && u.SousArb1 == arb1nom && u.SousArb2 == arb2nom)).Select(u => new Arb4
+            { Arb1Code = u.Secteur, Arb2Code = u.SousArb1,Arb3Code=u.SousArb2, Arb4ID = u.SousArb3, Arb4Name = u.SousArb3 }).Distinct();
+
+            return arb4.AsQueryable();
+        }
+    }
+
+    public class ImportExcelFile
+    {
+        private string monfichier;
+        public ImportExcelFile(string fic)
+        {
+            this.monfichier = fic;
+        }
+        public ImportExcelFile()
+        {
+        }
+
+        public  DataTable ConvertExcelToDataTable(string FileName,int i)
+        {
+           DataTable dtResult = null;
+            int totalSheet = 0; //No of sheets on excel file  
+            using (OleDbConnection objConn = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + FileName + ";Extended Properties='Excel 12.0;HDR=YES;IMEX=1;';"))
+            {
+                objConn.Open();
+                OleDbCommand cmd = new OleDbCommand();
+                OleDbDataAdapter oleda = new OleDbDataAdapter();
+                DataSet ds = new DataSet();
+                DataTable dt = objConn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+                string sheetName = string.Empty;
+                if (dt != null)
+                {
+                    var tempDataTable = (from dataRow in dt.AsEnumerable()
+                                         where !dataRow["TABLE_NAME"].ToString().Contains("FilterDatabase")
+                                         select dataRow).CopyToDataTable();
+                    dt = tempDataTable;
+                    totalSheet = dt.Rows.Count;
+                    sheetName = dt.Rows[0]["TABLE_NAME"].ToString();
+                }
+                cmd.Connection = objConn;
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT * FROM [FluxProduit$]";
+                oleda = new OleDbDataAdapter(cmd);
+                oleda.Fill(ds, "excelData");
+                dtResult = ds.Tables["excelData"];
+                objConn.Close();
+                return dtResult; //Returning Datatable  
+            }
+        }
+        // Vérification du fichier télécharger par le fournisseur
+        public  void checkFile(DataTable dtresult,string filename)
+        {
+            string texte;
+            using (StreamWriter file = new StreamWriter(File.Open(filename + @"/Rapport001.txt", FileMode.Create), Encoding.GetEncoding("iso-8859-1")))
+            {
+                file.WriteLine("########  -- Journal des Erreurs  " + DateTime.Now.ToString() + " --  ##########\n");
+                for(int i=1; i<dtresult.Rows.Count;i++)
+                {
+                    texte = testuneligne(dtresult.Rows[i],i+1);
+                    file.WriteLine(texte);
+                }
+                file.WriteLine("Fin");
+            }
+        }
+        // Vérifie que le champ n'est pas vide
+        private string valideForOblig (string contenuchamp, string nomchamp)
+        {
+            if (string.IsNullOrEmpty(contenuchamp) || string.IsNullOrWhiteSpace(contenuchamp))
+            {
+                return "Le champ " + nomchamp.ToUpper() +  " ne peut pas être vide\n";
+            }
+            return null;
+        }
+        // Vérifie que le nombre de caractères dépasse pas le max
+        private string valideForTaille(string contenuchamp, string nomchamp,int taillechamp)
+        {
+            if (contenuchamp.Length>taillechamp)
+            {
+                return "Le champ " + nomchamp.ToUpper() + " prend au maximum " +taillechamp+"  caractères\n";
+            }
+            return null;
+        }
+        // Vérifie que les champs à cocher(EX. Type sol, Per. recolt,...) respectent le format 01-03-05
+        private string valideForRegex(string contenuchamp, string nomchamp)
+        {
+            Regex myRegex = new Regex(@"^[-0-9]*$");
+            if (!string.IsNullOrEmpty(contenuchamp) && ! string.IsNullOrWhiteSpace(contenuchamp) && !myRegex.IsMatch(contenuchamp))
+            {
+                return "Le champ " + nomchamp.ToUpper() + " doit être sous la forme 01-03-05 par exemple\n";
+            }
+            return null;
+        }
+        // Vérifie que le champ contient bien un nombre
+        private string validfornbre(string contenuchamp, string nomchamp)
+        {
+            long number1 = 0;
+            bool canConvert = long.TryParse(contenuchamp, out number1);
+            if (!string.IsNullOrEmpty(contenuchamp) && string.IsNullOrWhiteSpace(contenuchamp) && !canConvert) 
+            {
+                return "Le champ " + nomchamp.ToUpper() + " doit être un nombre\n";
+            }
+            return null;
+        }
+        // Verifie que la restriction de valeurs sur certains champs est respectée
+        private string validValPossible(string contenuchamp, string nomchamp, string[] choixVal )
+        {
+            if (!string.IsNullOrEmpty(contenuchamp) && !string.IsNullOrWhiteSpace(contenuchamp)&&!choixVal.Contains(contenuchamp))
+            {
+                
+                return "Les valeurs possibles dans " + nomchamp.ToUpper() + " sont : [ " +string.Join(",",choixVal)+" ]\n";
+            }
+            return null;
+        }
+
+        // Vérifie l'extension d'un champ image du fichier
+        private string ValidExtIm(string contenuchamp, string nomchamp)
+        {
+            char[] pt = { '.' };
+            if (!string.IsNullOrEmpty(contenuchamp) && !string.IsNullOrWhiteSpace(contenuchamp) && !()
+        }
+
+        // Vérifie qu'une ligne du fichier(un produit) est bien valide et affiche les erreurs
+        private string testuneligne(DataRow maligne,int i)
+        {
+            string sstitre = "------------  Ligne " + i + " : Référence Produit *** " + maligne[1].ToString() + " *** ---------------\n";
+            string res = sstitre;
+           // res = res + valideForOblig(maligne[0].ToString(), "Identifiant fournisseur");
+          //  res = res + validfornbre(maligne[0].ToString(), "Identifiant fournisseur");
+            res = res + valideForOblig(maligne[1].ToString(), "Code produit Fournisseur");
+            res = res + valideForOblig(maligne[2].ToString(), "Désignation du produit");
+            res = res + valideForTaille(maligne[2].ToString(), "Désignation du produit",40);
+            res = res + valideForOblig(maligne[3].ToString(), "Libellé bon de livraison");
+            res = res + valideForTaille(maligne[3].ToString(), "Libellé bon de livraison", 40);
+            res = res + valideForOblig(maligne[4].ToString(), "Descriptif du produit");
+            res = res + valideForTaille(maligne[4].ToString(), "Descriptif du produit", 600);
+            res = res + valideForOblig(maligne[5].ToString(), "Durée de garantie");
+            res = res + valideForOblig(maligne[6].ToString(), "Catégorie Arborescence");
+            res = res + validfornbre(maligne[6].ToString(), "Catégorie Arborescence");
+            res = res + valideForOblig(maligne[8].ToString(), "Qualité Livrée");
+            res = res +valideForTaille(maligne[8].ToString(), "Qualité Livrée", 40);
+            res = res + valideForOblig(maligne[9].ToString(), "Couleur");
+            res = res + valideForTaille(maligne[12].ToString(), "Les Plus du produit (1)", 30);
+            res = res + valideForTaille(maligne[13].ToString(), "Les Plus du produit (2)", 30);
+            res = res + valideForTaille(maligne[14].ToString(), "Les Plus du produit (3)", 30);
+            res = res + valideForOblig(maligne[15].ToString(), "Image principale");
+            res = res + valideForRegex(maligne[23].ToString(), "Période de plantation");
+            res = res + valideForRegex(maligne[24].ToString(), "Période de floraison");
+            res = res + valideForRegex(maligne[25].ToString(), "Période de semis");
+            res = res + valideForRegex(maligne[26].ToString(), "Période de récolte");
+            res = res + valideForRegex(maligne[27].ToString(), "Période de livraison");
+            res = res + valideForRegex(maligne[28].ToString(), "Type de sol");
+            res = res + valideForRegex(maligne[29].ToString(), "Exposition");
+            res = res + valideForRegex(maligne[30].ToString(), "Type d'utilisation");
+            if(res.Equals(sstitre)) {
+                return "Ce produit est correct. Il sera bientôt visible sur votre catalogue en ligne\n";
+            }
+            return res;
+        }
+        //string[] dinosaurs = new string[] { "Aeolosaurus",  "Deinonychus", "Jaxartosaurus", "Segnosaurus" };
+
+    // Vérifie que le fichier téléchargé respecte bien notre modèle
+    public Boolean respecteModele(DataTable dt)
+        {
+            Boolean rep = true;
+            return rep; 
+        }
+
+
+
+
+
+
+
+    }
+   
+
+
+
+
+
+}

@@ -1,0 +1,201 @@
+﻿    @model WillemseFranceMP.Models.Produit
+    @using WillemseFranceMP.Models
+
+
+    @{
+        ViewBag.Title = "Details";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h2>Details Produit</h2>
+    <hr/>
+    <div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-xs-3">
+                    <label class="control-label">Fournisseur :</label>
+                    @Html.DisplayFor(model => model.IdFou)
+                </div>
+
+                <div class="col-xs-3">
+                    <label class="control-label">Code Produit :</label>
+                    @Html.DisplayFor(model => model.CodProFou)
+                </div>
+                <div class="col-xs-3">
+                    <label class="control-label">Designation Produit :</label>
+                    @Html.DisplayFor(model => model.DesignationPro)
+                </div>
+            
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <label class="control-label">Bon de livraison :</label>
+                    @Html.DisplayFor(model => model.LibBonLiv)
+                </div>
+
+                <div class="col-xs-3">
+                    <label class="control-label">Descriptif Produit :</label>
+                    @Html.DisplayFor(model => model.DescPro)
+                </div>
+                <div class="col-xs-3">
+                    <label class="control-label">Categorie Arboresence :</label>
+                    @Html.DisplayFor(model => model.CatArborIn)
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <label class="control-label">Garantie :</label>
+                    @Html.DisplayFor(model => model.DureeGarantie)
+                </div>
+
+                <div class="col-xs-3">
+                    <label class="control-label">Couleur :</label>
+                    @Html.DisplayFor(model => model.Couleur)
+                </div>
+                <div class="col-xs-3">
+                    <label class="control-label">Pièce/paquet :</label>
+                    @Html.DisplayFor(model => model.NbrePcsPaq)
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <label class="control-label">Qualité livrée :</label>
+                    @Html.DisplayFor(model => model.QuaLiv)
+                </div>
+
+                <div class="col-xs-3">
+                    <label class="control-label">Hauteur adulte :</label>
+                    @Html.DisplayFor(model => model.Hauteur)
+                </div>
+                <div class="col-xs-3">
+                    <label class="control-label">Slogan :</label>
+                    @Html.DisplayFor(model => model.Slogan)
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <label class="control-label">Période de plantation :</label>
+                    @Html.DisplayFor(model => model.PerPlant)
+                </div>
+
+                <div class="col-xs-3">
+                    <label class="control-label">Période de floraison :</label>
+                    @Html.DisplayFor(model => model.PerFlo)
+                </div>
+                <div class="col-xs-3">
+                    <label class="control-label">Période de livraison :</label>
+                    @Html.DisplayFor(model => model.PerLiv)
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <label class="control-label">Période semis :</label>
+                    @Html.DisplayFor(model => model.PerSemis)
+                </div>
+
+                <div class="col-xs-3">
+                    <label class="control-label">Période de recolte :</label>
+                    @Html.DisplayFor(model => model.PerRecolte)
+                </div>
+                <div class="col-xs-3">
+                    <label class="control-label">Type d'utilisation :</label>
+                    @Html.DisplayFor(model => model.TypUtil)
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <label class="control-label">Type de sol :</label>
+                    @Html.DisplayFor(model => model.TypSol)
+                </div>
+
+                
+                <div class="col-xs-3">
+                    <label class="control-label">Zone d'exposition :</label>
+                    @Html.DisplayFor(model => model.Exposition)
+                </div>
+                <div class="col-xs-3">
+                    <label class="control-label">Lien YouTube:</label>
+                    @Html.DisplayFor(model => model.LienYoutube)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <label class="control-label">Plus(1) produit :</label>
+                    @Html.DisplayFor(model => model.PlusProd1)
+                </div>
+
+                <div class="col-xs-3">
+                    <label class="control-label">Plus(2) produit :</label>
+                    @Html.DisplayFor(model => model.PlusProd2)
+                </div>
+                <div class="col-xs-3">
+                    <label class="control-label">Plus(3) produit :</label>
+                    @Html.DisplayFor(model => model.PlusProd3)
+                </div>
+                <div class="col-xs-3">
+                    <label class="control-label">Fiche PDF</label>
+                    @Html.DisplayFor(model => model.FichePDF)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <label class="control-label">Type de Livraison :</label>
+                    @Html.DisplayFor(model => model.DFO)
+                </div>
+                <div class="col-xs-3">
+                    <label class="control-label">Création produit :</label>
+                    @Html.DisplayFor(model => model.DateCre)
+                </div>
+                <div class="col-xs-3">
+                    <label class="control-label">Dernière modification :</label>
+                    @Html.DisplayFor(model => model.DateMod)
+                </div>
+                <div class="col-xs-3">
+                    <label class="control-label">Créé par Formulaire</label>
+                    @Html.DisplayFor(model => model.FicOrForm)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <label class="control-label">Image principale :</label>
+                    <img src="~/DossierMP/@Model.IdFou/Images/@Model.ImgPrinc" alt="@Model.ImgPrinc" width="250" height="200"  />
+                </div>
+
+                <div class="col-xs-3">
+                    <label class="control-label">Image secondaire 1 :</label>
+                    <img src="~/DossierMP/@Model.IdFou/Images/@Model.ImgSecond1" alt="@Model.ImgSecond1" width="200" height="100" />
+                </div>
+                <div class="col-xs-3">
+                    <label class="control-label">Image secondaire 2 :</label>
+                    <img src="~/DossierMP/@Model.IdFou/Images/@Model.ImgSecond2" alt="@Model.ImgSecond2" width="200" height="100" />
+                </div>
+                <div class="col-xs-3">
+                    <label class="control-label">Image secondaire 3 :</label>
+                    <img src="~/DossierMP/@Model.IdFou/Images/@Model.ImgSecond3" alt="@Model.ImgSecond3" width="200" height="100" />
+                </div>
+           </div>
+           <div class="row">          
+                <div class="col-xs-3">
+                    <label class="control-label">Image secondaire 4 :</label>
+                    <img src="~/DossierMP/@Model.IdFou/Images/@Model.ImgSecond4" alt="@Model.ImgSecond4" width="200" height="100" />
+                </div>
+                <div class="col-xs-3">
+                    <label class="control-label">Image secondaire 5 :</label>
+                    <img src="~/DossierMP/@Model.IdFou/Images/@Model.ImgSecond5" alt="@Model.ImgSecond5" width="200" height="100" />
+                </div>                
+            </div>
+        
+</div>  
+        </div>    
+    <br/>
+    <p>
+        <div>
+        <a href="#"><span class="glyphicon glyphicon-arrow-left"></span></a>
+        @Html.ActionLink("Retour", "Index")
+        </div>
+    </p>

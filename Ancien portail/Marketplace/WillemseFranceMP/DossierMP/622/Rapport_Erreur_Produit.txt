@@ -1,0 +1,13 @@
+########  -- Journal des Erreurs  12/10/2016 15:46:54 --  ##########
+
+------------  Ligne 53 : Référence Produit *** PHBI6C02 *** ---------------
+L'extension dans IMAGE SECONDAIRE 2 doit être en 'jpg' 
+------------  Ligne 94 : Référence Produit *** SEYAKI2C03 *** ---------------
+L'extension dans IMAGE SECONDAIRE 1 doit être en 'jpg' 
+------------  Ligne 96 : Référence Produit *** SEYAKI6C03 *** ---------------
+L'extension dans IMAGE SECONDAIRE 2 doit être en 'jpg' 
+------------  Ligne 98 : Référence Produit *** SEYAKI1C07 *** ---------------
+L'extension dans IMAGE SECONDAIRE 2 doit être en 'jpg' 
+------------  Ligne 99 : Référence Produit *** SEYAKI2C07 *** ---------------
+L'extension dans IMAGE SECONDAIRE 1 doit être en 'jpg' 
+Fin

@@ -1,0 +1,28 @@
+########  -- Journal des Erreurs  07/12/2016 14:28:24 --  ##########
+
+
+
+------------  Ligne 3 : Référence Produit ***  *** ---------------
+Le champ CODE PRODUIT FOURNISSEUR ne peut pas être vide
+Le champ DÉSIGNATION DU PRODUIT ne peut pas être vide
+Le champ LIBELLÉ BON DE LIVRAISON ne peut pas être vide
+Le champ DESCRIPTIF DU PRODUIT ne peut pas être vide
+Le champ CATÉGORIE ARBORESCENCE ne peut pas être vide
+Le champ QUALITÉ LIVRÉE ne peut pas être vide
+Le champ IMAGE PRINCIPALE ne peut pas être vide
+
+
+------------  Ligne 4 : Référence Produit ***  *** ---------------
+Le champ CODE PRODUIT FOURNISSEUR ne peut pas être vide
+Le champ DÉSIGNATION DU PRODUIT ne peut pas être vide
+Le champ LIBELLÉ BON DE LIVRAISON ne peut pas être vide
+Le champ DESCRIPTIF DU PRODUIT ne peut pas être vide
+Le champ DURÉE DE GARANTIE ne peut pas être vide
+Le champ CATÉGORIE ARBORESCENCE ne peut pas être vide
+Le champ QUALITÉ LIVRÉE ne peut pas être vide
+Le champ COULEUR ne peut pas être vide
+Le champ IMAGE PRINCIPALE ne peut pas être vide
+Le champ TYPE DE LIVRAISON ne peut pas être vide
+
+
+Fin

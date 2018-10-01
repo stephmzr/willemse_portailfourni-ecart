@@ -1,0 +1,6 @@
+########  -- Journal des Erreurs : Images   30/05/2016 12:19:18 --  ##########
+
+Le produit LC30052016 n'a pas trouvé d'image principale avec plante_modif.jpg 
+
+------------------------  FIN  -----------------------------------
+

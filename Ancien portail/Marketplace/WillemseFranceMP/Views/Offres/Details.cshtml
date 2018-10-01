@@ -1,0 +1,72 @@
+﻿@model WillemseFranceMP.Models.Offre
+
+@{
+    ViewBag.Title = "Details offre";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="color:darkgreen">Détails Offre :</h2>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-xs-3">
+                    <label class="control-label" style="color:darkgreen;">Produit :</label>
+                    @Html.DisplayFor(m => m.Produit.CodProFou)
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-xs-4">
+                    <label class="control-label" style="color:darkgreen;">Prix Cession HT :</label>
+                    @Html.DisplayFor(m => m.PrixAchtHT)
+                    &euro;
+                </div>
+                <div class="col-xs-4">
+                    <label class="control-label" style="color:darkgreen;">Prix de Vente conseillé :</label>
+                    @Html.DisplayFor(m => m.PrixVtTtc)
+                    &euro;
+                </div>
+                <div class="col-xs-4">
+                    <label class="control-label" style="color:darkgreen;">Frais de Livraison :</label>
+                    @Html.DisplayFor(m => m.FraisLiv)
+                    &euro;
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    <label class="control-label" style="color:darkgreen;">TVA :</label>
+                    @Html.DisplayFor(m => m.Tva)
+                </div>
+                <div class="col-xs-4">
+                    <label class="control-label" style="color:darkgreen;">Délai de livraison :</label>
+                    @Html.DisplayFor(m => m.Delailiv)
+                </div>
+                <div class="col-xs-4">
+                    <label class="control-label" style="color:darkgreen;">Disponibilité :</label>
+                    @Html.DisplayFor(m => m.Dispo)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    <label class="control-label" style="color:darkgreen;">Ecotaxe :</label>
+                    @Html.DisplayFor(m => m.EcoTaxe)
+                </div>
+            </div>
+
+            <br />
+        </div>
+
+@Html.ActionLink("Retour", "Index", "Produits") &nbsp;| &nbsp;
+@Html.ActionLink("Modifier l'offre", "Edit", new { id = Model.ProduitID }) &nbsp;| &nbsp;
+@Html.ActionLink("Supprimer l'offre", "Delete", new { id = Model.ProduitID }) 
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,60 @@
+﻿using System.Data.Entity;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.ComponentModel.DataAnnotations;
+using System;
+
+namespace WillemseFranceMP.Models
+{
+    // Vous pouvez ajouter des données de profil pour l'utilisateur en ajoutant plus de propriétés à votre classe ApplicationUser ; consultez http://go.microsoft.com/fwlink/?LinkID=317594 pour en savoir davantage.
+    public class ApplicationUser : IdentityUser
+    {
+        public string Nom { get; set; }
+        public string Prenom { get; set; }
+        public string Telephone { get; set; }
+        public string Societe { get; set; }
+        public string Adresse { get; set; }
+        public string CodePostal { get; set; }
+        public string Ville { get; set; }
+        public string Pays { get; set; }
+        public string Message { get; set; }
+        public string Sigtie { get; set; }
+        public string IdFou { get; set; }
+
+        public static  Boolean estAdmin(ApplicationUser user)
+        {
+            if (user != null && user.UserName.Equals("adminMP@willemsefrance.fr") && user.Nom.Equals("WillemseFrance")) return true;
+            return false;
+        }
+
+        public static Boolean estEnAttente(ApplicationUser user)
+        {
+            if (user.Sigtie.Equals("Non") || string.IsNullOrEmpty(user.Sigtie)) return true;
+            return false;
+        }
+
+
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
+        {
+            // Notez qu'authenticationType doit correspondre à l'élément défini dans CookieAuthenticationOptions.AuthenticationType
+            var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+            // Ajouter les revendications personnalisées de l’utilisateur ici
+            return userIdentity;
+        }
+    }
+
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    {
+        public ApplicationDbContext()
+            : base("name=OracleConnectionMP", throwIfV1Schema: false)
+        {
+        }
+
+        public static ApplicationDbContext Create()
+        {
+            return new ApplicationDbContext();
+        }
+    }
+}

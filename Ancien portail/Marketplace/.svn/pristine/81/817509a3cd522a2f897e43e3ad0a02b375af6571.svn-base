@@ -1,0 +1,1119 @@
+﻿using Microsoft.AspNet.Identity;
+using PagedList;
+using System;
+using System.Data;
+using System.Data.Entity;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Web.Mvc;
+using WillemseFranceMP.Models;
+using System.Net.Mail;
+using System.Web.Services;
+using System.Web.Script.Services;
+using System.Globalization;
+
+namespace WillemseFranceMP.Controllers
+{
+    /*
+    * Ce controller gère les différentes fonctionnalités sur les produits
+    */
+    [Authorize]
+    public  class ProduitsController : Controller
+    {
+        private ProduitDbOracleContext db = new ProduitDbOracleContext();
+        private ApplicationDbOracleContext dbA = new ApplicationDbOracleContext();
+        private CommandeDbOracleContext dbc = new CommandeDbOracleContext();
+        private Parametres p = new Parametres();
+        private UtilCommandes util = new UtilCommandes();
+        private UtilNotifications notif = new UtilNotifications();
+        private string dossiersFournisseurs, ektas;
+        // Récupère les informations de l'utilisateur connecté en termes de données 
+        private ApplicationUser CurrentUser
+        {
+            get
+            {
+                string currentUserId = User.Identity.GetUserId();
+                return dbA.Users.FirstOrDefault(x => x.Id == currentUserId);
+            }
+        }
+        public ProduitsController()
+        {
+            this.dossiersFournisseurs = p.DossiersFournisseurs;
+            this.ektas = p.ektas;
+        }
+        /*
+        private ApplicationUser getFou()
+        {
+             string currentUserId = User.Identity.GetUserId();
+             return  dbA.Users.FirstOrDefault(x => x.Id == currentUserId);
+        }
+        */
+        // La page d'accueil du catalogue de produits
+        [HttpGet]
+        [Authorize(Roles = "Utilisateur")]
+        public ActionResult Index(string currentFilter,string recherche,int ? page)
+        {
+            // ApplicationUser currentUser = getFou();
+            if (ApplicationUser.estEnAttente(CurrentUser)) 
+                return RedirectToAction("Attente");
+            if (recherche != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                recherche = currentFilter;
+            }
+            // Affiche la liste des produits d'un catalogue fournisseur sur un ensemble de pages
+            ViewBag.CurrentFilter = recherche;
+            var produits = db.Produits.Where(d => d.IdFou == CurrentUser.IdFou && d.ACTIVE == "Oui").OrderByDescending(x => x.DateMod).ToList();
+            if (!string.IsNullOrEmpty(recherche)&&!string.IsNullOrWhiteSpace(recherche))
+            {
+                produits = produits.Where(d => ((d.IdFou == CurrentUser.IdFou) && (d.CodProFou.Equals(recherche)))).ToList() ;
+            }
+            int pageSize = 50;
+            int pageNumber = (page ?? 1);
+            return View(produits.ToPagedList(pageNumber,pageSize));
+            //   return View(db.Produits.ToList());
+        }
+
+        // Gère les fournisseurs en attente de validation
+        [HttpGet]
+        [Authorize(Roles = "Utilisateur")]
+        public ActionResult Attente()
+        {
+             return View("AttenteValidation");
+        }
+
+        // Details d'un produit 
+        // GET: Produits/Details/5
+        public ActionResult Details(int? id)
+        {
+            // Test privilèges modification
+            if (ApplicationUser.estAdmin(CurrentUser) || ApplicationUser.estSuperAdmin(CurrentUser))
+            {
+                ViewBag.Message = "a";
+                if (User.IsInRole("Super"))
+                {
+                    ViewBag.Message = "p";
+                }
+            }
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Produit produit = db.Produits.Find(id);
+            if (produit == null)
+            {
+                return HttpNotFound();
+            }
+            // Règles de sécurité : eviter qu'un fournisseur ne consulte des produits qui lui appartiennent pas
+            if (!ApplicationUser.estAdmin(CurrentUser) && !ApplicationUser.estSuperAdmin(CurrentUser) && (produit.IdFou != CurrentUser.IdFou))
+                return HttpNotFound();
+
+            produit.CatArborIn = Arb4.libelleArbor(produit.CodeSecteur);
+            produit.PerPlant = FormatDonnees.getCheckboxValues(produit.PerPlant, 1);
+            produit.PerFlo = FormatDonnees.getCheckboxValues(produit.PerFlo, 1);
+            produit.PerSemis = FormatDonnees.getCheckboxValues(produit.PerSemis, 1);
+            produit.PerRecolte = FormatDonnees.getCheckboxValues(produit.PerRecolte, 1);
+            produit.PerLiv = FormatDonnees.getCheckboxValues(produit.PerLiv, 1);
+            produit.TypSol = FormatDonnees.getCheckboxValues(produit.TypSol, 2);
+            produit.Exposition = FormatDonnees.getCheckboxValues(produit.Exposition,3);
+            produit.TypUtil = FormatDonnees.getCheckboxValues(produit.TypUtil, 4);
+            ViewBag.TYPUSER = ApplicationUser.estAdmin(CurrentUser);
+            return View(produit);
+        }
+
+        // Gère les listes déroulantes dynamiques de l'arborescence produit
+        // Niveau 1
+        public ActionResult Arb1List()
+        {
+            IQueryable arb1 = Arb1.GetArb1();
+                if (HttpContext.Request.IsAjaxRequest())
+                {
+                    return Json(new SelectList(
+                                arb1,
+                                "Arb1Code",
+                                "Arb1Name"), JsonRequestBehavior.AllowGet
+                                );
+
+                }              
+            return View(arb1);         
+        }
+        // Niveau 2
+        public ActionResult Arb2List(string Arb1Code)
+        {
+            IQueryable arb2 = Arb2.GetArb2(Arb1Code.Replace("xxx", "&"));
+            {
+                if (HttpContext.Request.IsAjaxRequest())
+                {
+                    return Json(new SelectList(arb2,"Arb2ID","Arb2Name"), JsonRequestBehavior.AllowGet);
+                }
+            }
+            return View(arb2);
+        }
+         // Niveau 3
+        public ActionResult Arb3List(string Arb1Code,  string Arb2Code)
+        {
+            IQueryable arb3 = Arb3.GetArb3(Arb1Code.Replace("xxx", "&"), Arb2Code.Replace("xxx","&"));
+            {
+                if (HttpContext.Request.IsAjaxRequest())
+                {
+                    return Json(new SelectList(arb3, "Arb3ID", "Arb3Name"), JsonRequestBehavior.AllowGet);
+                }
+
+            }
+            return View(arb3);
+        }
+        // Niveau 4
+        public ActionResult Arb4List(string Arb1Code, string Arb2Code, string Arb3Code)
+        {
+            IQueryable arb4 = Arb4.GetArb4(Arb1Code.Replace("xxx", "&"), Arb2Code.Replace("xxx", "&"), Arb3Code.Replace("xxx", "&"));
+            {
+                if (HttpContext.Request.IsAjaxRequest())
+                {
+                    return Json(new SelectList(arb4, "Arb4ID", "Arb4Name"), JsonRequestBehavior.AllowGet);
+                }
+            }
+            return View(arb4);
+        }
+        
+        // Création d'un nouveau produit
+        [Authorize(Roles = "Utilisateur")]
+        public ActionResult Create()
+        {
+            if (ApplicationUser.estEnAttente(CurrentUser))
+                return RedirectToAction("Attente");
+            return View();
+        }
+        // POST: Produits/Create
+        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
+        // Controle création produits
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Utilisateur")]
+        public ActionResult Create(CreateProduitViewModel model,string[] Perplant,string[] Perflo,string[] Perrec, string[] Persem, string[] Perliv, string[] Expo, string[] Typutil, string[] Typsol) {
+
+            Produit produit; 
+            //=new Produit();        
+            if (ModelState.IsValid)
+            {
+                string idfou = CurrentUser.IdFou;
+                string sigimg = CurrentUser.Valzn1;
+                // Test de l'unicité du code produit fournisseur pour chaque fournisseur 
+                produit = db.Produits.SingleOrDefault(u => (u.IdFou == idfou && u.CodProFou == model.CodProFou));
+                if (produit == null)
+                {
+                    produit = new Produit();
+                }
+                else
+                {
+                    ModelState.AddModelError("CodProFou", "Vous disposez déjà d'un produit avec le code fournisseur : " + model.CodProFou);
+                    return View(model);
+                }
+
+                string fich1 = null; string fich2 = null; string fich3 = null; string fich4 = null; string fich5 = null; string fich6 = null;
+                string fichpdf = null;
+                string codeSect = "0";
+
+                NewArbor sect = new NewArbor();
+                string sect1 = model.Arb1;
+                string sect2 = model.Arb2;
+
+                DirectoryInfo res = new DirectoryInfo(@ektas); //???
+                
+                if (string.IsNullOrEmpty(sect1) || string.IsNullOrWhiteSpace(sect1))
+                {
+                    sect1 = sect2 = "";
+                }
+                if (string.IsNullOrEmpty(sect2) || string.IsNullOrWhiteSpace(sect2))
+                {
+                    sect2 = "";
+                }
+                sect = db.NewArbors.FirstOrDefault(u => (u.Secteur == sect1 && u.SousSecteur == sect2));
+                if (sect != null)
+                {
+                    codeSect = sect.CodeSecteur;
+                }
+                else
+                {
+                    codeSect = "-1";
+                }
+                
+                string pplant = null; string pflo = null; string psemis=null; string prec = null; string pliv = null;  string typsol = null;
+                string expo = null; string typutil = null;
+
+                // Traitrement et Transformation de certaines données provenant des champs du formulaire de création de produits
+                // L'image principale
+                
+                if (model.ImgPrinc != null && model.ImgPrinc.ContentLength>0)
+                {
+                        fich1 = sigimg + "-" + Path.GetFileName(model.ImgPrinc.FileName) ;
+                        var path_f1 = Path.Combine(Server.MapPath(dossiersFournisseurs + "/" + idfou + "/Images"), fich1);
+                    Console.Out.WriteLine(path_f1);
+                        model.ImgPrinc.SaveAs(path_f1);
+                        System.IO.File.Copy(path_f1, Path.Combine(@ektas, fich1), true);
+                }
+                if (model.ImgSecond1 != null && model.ImgSecond1.ContentLength > 0)
+                {
+                        fich2 = sigimg + "-" + Path.GetFileName(model.ImgSecond1.FileName);
+                        var path_f2 = Path.Combine(Server.MapPath(dossiersFournisseurs + "/" + idfou + "/Images"), fich2);
+                        model.ImgSecond1.SaveAs(path_f2);
+                        System.IO.File.Copy(path_f2, Path.Combine(@ektas, fich2), true);
+
+                }
+                if (model.ImgSecond2 != null && model.ImgSecond2.ContentLength > 0)
+                {
+                        fich3 = sigimg + "-"  + Path.GetFileName(model.ImgSecond2.FileName);
+                        var path_f3 = Path.Combine(Server.MapPath(dossiersFournisseurs + "/" + idfou + "/Images"), fich3);
+                        model.ImgSecond2.SaveAs(path_f3);
+                        System.IO.File.Copy(path_f3, Path.Combine(@ektas, fich3), true);
+                }
+                if (model.ImgSecond3 != null && model.ImgSecond3.ContentLength > 0)
+                {
+                        fich4 = sigimg + "-" + Path.GetFileName(model.ImgSecond3.FileName);
+                        var path_f4 = Path.Combine(Server.MapPath(dossiersFournisseurs + "/" + idfou + "/Images"), fich4);
+                        model.ImgSecond3.SaveAs(path_f4);
+                        System.IO.File.Copy(path_f4, Path.Combine(@ektas, fich4), true);
+                }
+                if (model.ImgSecond4 != null && model.ImgSecond4.ContentLength > 0)
+                {
+                        fich5 = sigimg + "-" + Path.GetFileName(model.ImgSecond4.FileName);
+                        var path_f5 = Path.Combine(Server.MapPath(dossiersFournisseurs + "/" + idfou + "/Images"), fich5);
+                        model.ImgSecond4.SaveAs(path_f5);
+                        System.IO.File.Copy(path_f5, Path.Combine(@ektas, fich5), true);
+                }
+                if (model.ImgSecond5 != null && model.ImgSecond5.ContentLength > 0)
+                {
+                        fich6 = sigimg + "-" + Path.GetFileName(model.ImgSecond5.FileName);
+                        var path_f6 = Path.Combine(Server.MapPath(dossiersFournisseurs + "/" + idfou + "/Images"), fich6);
+                        model.ImgSecond5.SaveAs(path_f6);
+                        System.IO.File.Copy(path_f6, Path.Combine(@ektas, fich6), true);
+                }
+                if (model.FichePDF != null && model.FichePDF.ContentLength > 0)
+                {
+                        fichpdf = Path.GetFileName(model.FichePDF.FileName);
+                        var path_pdf = Path.Combine(Server.MapPath(dossiersFournisseurs + "/" + idfou + "/"), fichpdf);
+                        model.FichePDF.SaveAs(path_pdf);
+                        System.IO.File.Copy(path_pdf, Path.Combine(@"\\rho\EKTAS\Vrac\Fiches infos\PDF", fichpdf), true);
+                }
+                if(Perplant !=null)
+                {
+                    pplant = string.Join("-", Perplant.ToArray());
+                }
+                if (Perflo != null)
+                {
+                    pflo = string.Join("-", Perflo.ToArray());
+                }
+                if (Perrec != null)
+                {
+                    prec = string.Join("-", Perrec.ToArray());
+                }
+                if (Perliv != null)
+                {
+                    pliv = string.Join("-", Perliv.ToArray());
+                }
+                if (Typsol != null)
+                {
+                    typsol = string.Join("-", Typsol.ToArray());
+                }
+                
+                if (Typutil != null)
+                {
+                    typutil = string.Join("-", Typutil.ToArray());
+                }
+                if (Expo != null)
+                {
+                    expo = string.Join("-", Expo.ToArray());
+                }
+                if (Persem != null)
+                {
+                    psemis = string.Join("-", Persem.ToArray());
+                }               
+                produit = new Produit
+                {
+                    IdFou = idfou, CodProFou = model.CodProFou, DesignationPro = model.DesignationPro, LibBonLiv = model.LibBonLiv, DescPro = FormatDonnees.echapp(model.DescPro),
+                    DureeGarantie = model.DureeGarantie, CodeSecteur = codeSect, Slogan = model.Slogan, QuaLiv = model.QuaLiv, Couleur = model.Couleur,
+                    EAN = model.EAN, Marque = model.Marque, DesignationLat = model.DesignationLat,
+                    DFO = model.DFO, FicOrForm = "Oui",DateCre=DateTime.Now,DateMod=DateTime.Now,
+                    NbrePcsPaq= model.NbrePcsPaq.ToString(),Hauteur= model.Hauteur,PlusProd1= model.PlusProd1,PlusProd2= model.PlusProd2,PlusProd3=model.PlusProd3,
+                    ImgPrinc=fich1,ImgSecond1=fich2,ImgSecond2=fich3,ImgSecond3=fich4,ImgSecond4=fich5,ImgSecond5=fich6,FichePDF=fichpdf,LienYoutube=model.LienYoutube,
+                    ValdFou="Oui",ValdWill="Non", FlagExportErp = "0",
+                    PerPlant = pplant,PerFlo=pflo,PerSemis=psemis,PerLiv=pliv,Exposition=expo,TypUtil=typutil,TypSol=typsol,PerRecolte=prec,ACTIVE="Oui"
+                };
+
+                string[] line = { "", "", ""};
+                line[0] = idfou;
+                line[1] = produit.CodProFou;
+                line[2] = produit.DesignationPro;
+                notif.NewProduits(line);
+
+                db.Produits.Add(produit);
+                db.SaveChanges();
+                
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
+       
+        // GET: Produits/Edit/5
+        // Modification d'un produit
+        public ActionResult Edit(int? id)
+        {
+
+            // Test privilèges modification
+            if (ApplicationUser.estAdmin(CurrentUser) || ApplicationUser.estSuperAdmin(CurrentUser))
+            {
+                ViewBag.Message = "a";
+                if (User.IsInRole("Super"))
+                {
+                    ViewBag.Message = "p";
+                }
+            }
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Produit produit = db.Produits.Find(id);
+            if (produit == null)
+            {
+                return HttpNotFound();
+            }
+            // Règles de sécurité : eviter qu'un fournisseur ne consulte des produits qui lui appartiennent pas
+            if (!ApplicationUser.estAdmin(CurrentUser) && !ApplicationUser.estSuperAdmin(CurrentUser) && (produit.IdFou != CurrentUser.IdFou))
+                return HttpNotFound();
+            var model = new EditProduitViewModel
+            {
+                CodProFou = produit.CodProFou,
+                EAN = produit.EAN,
+                DesignationPro = produit.DesignationPro,
+                DesignationLat = produit.DesignationLat,
+                LibBonLiv = produit.LibBonLiv,
+                DescPro = produit.DescPro,
+                DureeGarantie = produit.DureeGarantie,
+                Slogan = produit.Slogan,
+                QuaLiv = produit.QuaLiv,
+                Couleur = produit.Couleur,
+                Hauteur = produit.Hauteur,
+                PlusProd1 = produit.PlusProd1,
+                PlusProd2 = produit.PlusProd2,
+                PlusProd3 = produit.PlusProd3,
+                LienYoutube = produit.LienYoutube,
+                Marque = produit.Marque,
+                ActualArbor = Arb4.libelleArbor(produit.CodeSecteur),
+                //checkboxes
+                PerPlant = produit.PerPlant !=null ? produit.PerPlant : "",
+                PerFlo = produit.PerFlo !=null ? produit.PerFlo : "",
+                TypUtil = produit.TypUtil !=null ? produit.TypUtil : "",
+                PerSemis = produit.PerSemis != null ? produit.PerSemis : "",
+                PerLiv = produit.PerLiv != null ? produit.PerLiv : "",
+                TypSol = produit.TypSol != null  ? produit.TypSol : "",
+                Exposition = produit.Exposition != null ? produit.Exposition : "",
+                PerRecolte = produit.PerRecolte != null ? produit.PerRecolte : ""
+            };
+            if (string.IsNullOrEmpty(produit.NbrePcsPaq) || string.IsNullOrWhiteSpace(produit.NbrePcsPaq))
+            {
+                model.NbrePcsPaq = 0;
+            }
+            else
+            {
+                model.NbrePcsPaq = int.Parse(produit.NbrePcsPaq);
+            }
+
+           
+            return View(model);
+        }
+
+        // POST: Produits/Edit/5
+        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
+        // Controle sur modification des produits
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int ? id,EditProduitViewModel model, string[] Perplant, string[] Perflo, string[] Perrec, string[] Persem, string[] Perliv, string[] Expo, string[] Typutil, string[] Typsol)
+        {
+            Produit produit = db.Produits.Find(id);
+            // Règles de sécurité : eviter qu'un fournisseur ne consulte des produits qui lui appartiennent pas
+            if (!ApplicationUser.estAdmin(CurrentUser) && !ApplicationUser.estSuperAdmin(CurrentUser) && (produit.IdFou != CurrentUser.IdFou))
+                return HttpNotFound();
+            if (ModelState.IsValid)
+            {
+                string[] line = { "", "", "", ""};
+                string idfou = CurrentUser.IdFou;
+                line[0] = idfou;
+                string sigimg = CurrentUser.Valzn1;
+                string fich1 = produit.ImgPrinc ; string fich2 = produit.ImgSecond1; string fich3 = produit.ImgSecond2; string fich4 = produit.ImgSecond3;
+                string fich5 = produit.ImgSecond4; string fich6 = produit.ImgSecond5; string fichpdf = produit.FichePDF;
+                string codeSect = produit.CodeSecteur; //Arbor arb = new Arbor();
+                NewArbor sect = new NewArbor();
+                string arb1 = model.Arb1; string arb2 = model.Arb2; //string arb3 = model.Arb3; string arb4 = model.Arb4;
+
+
+                string pplant = produit.PerPlant; string pflo = produit.PerFlo; string psemis = produit.PerSemis; string prec = produit.PerRecolte;
+                string pliv = produit.PerLiv; string typsol = produit.TypSol;string expo = produit.Exposition; string typutil = produit.TypUtil;                
+
+                if (string.IsNullOrEmpty(arb1) || string.IsNullOrWhiteSpace(arb1))
+                {
+                    arb1 = arb2 = "";
+                }
+                if (string.IsNullOrEmpty(arb2) || string.IsNullOrWhiteSpace(arb2))
+                {
+                    arb2 = "";
+                }
+                sect = db.NewArbors.FirstOrDefault(u => (u.Secteur == arb1 && u.SousSecteur == arb2));
+                if (sect != null)
+                {
+                    codeSect = sect.CodeSecteur;
+                }
+                else
+                {
+                    codeSect = produit.CodeSecteur;
+                }
+
+
+                // Traitrement et Transformation de certaines données provenant des champs du formulaire de création de produits
+                // L'image principale
+                if (model.ImgPrinc != null && model.ImgPrinc.ContentLength > 0)
+                {
+                    fich1 = sigimg + "-" + Path.GetFileName(model.ImgPrinc.FileName);
+                    var path_f1 = Path.Combine(Server.MapPath(dossiersFournisseurs + "/" + idfou + "/Images"), fich1);
+                    model.ImgPrinc.SaveAs(path_f1);
+                    System.IO.File.Copy(path_f1, Path.Combine(@ektas, fich1), true);
+                }
+                if (model.ImgSecond1 != null && model.ImgSecond1.ContentLength > 0)
+                {
+                    fich2 = sigimg + "-" + Path.GetFileName(model.ImgSecond1.FileName);
+                    var path_f2 = Path.Combine(Server.MapPath(dossiersFournisseurs + "/" + idfou + "/Images"), fich2);
+                    model.ImgSecond1.SaveAs(path_f2);
+                    System.IO.File.Copy(path_f2, Path.Combine(@ektas, fich2), true);
+
+                }
+                if (model.ImgSecond2 != null && model.ImgSecond2.ContentLength > 0)
+                {
+                    fich3 = sigimg + "-" + Path.GetFileName(model.ImgSecond2.FileName);
+                    var path_f3 = Path.Combine(Server.MapPath(dossiersFournisseurs + "/" + idfou + "/Images"), fich3);
+                    model.ImgSecond2.SaveAs(path_f3);
+                    System.IO.File.Copy(path_f3, Path.Combine(@ektas, fich3), true);
+                }
+                if (model.ImgSecond3 != null && model.ImgSecond3.ContentLength > 0)
+                {
+                    fich4 = sigimg + "-" + Path.GetFileName(model.ImgSecond3.FileName);
+                    var path_f4 = Path.Combine(Server.MapPath(dossiersFournisseurs + "/" + idfou + "/Images"), fich4);
+                    model.ImgSecond3.SaveAs(path_f4);
+                    System.IO.File.Copy(path_f4, Path.Combine(@ektas, fich4), true);
+                }
+                if (model.ImgSecond4 != null && model.ImgSecond4.ContentLength > 0)
+                {
+                    fich5 = sigimg + "-" + Path.GetFileName(model.ImgSecond4.FileName);
+                    var path_f5 = Path.Combine(Server.MapPath(dossiersFournisseurs + "/" + idfou + "/Images"), fich5);
+                    model.ImgSecond4.SaveAs(path_f5);
+                    System.IO.File.Copy(path_f5, Path.Combine(@ektas, fich5), true);
+                }
+                if (model.ImgSecond5 != null && model.ImgSecond5.ContentLength > 0)
+                {
+                    fich6 = sigimg + "-" + Path.GetFileName(model.ImgSecond5.FileName);
+                    var path_f6 = Path.Combine(Server.MapPath(dossiersFournisseurs + "/" + idfou + "/Images"), fich6);
+                    model.ImgSecond5.SaveAs(path_f6);
+                    System.IO.File.Copy(path_f6, Path.Combine(@ektas, fich6), true);
+                }
+                if (model.FichePDF != null && model.FichePDF.ContentLength > 0)
+                {
+                    fichpdf = Path.GetFileName(model.FichePDF.FileName);
+                    var path_pdf = Path.Combine(Server.MapPath(dossiersFournisseurs + "/" + idfou + "/"), fichpdf);
+                    model.FichePDF.SaveAs(path_pdf);
+                    System.IO.File.Copy(path_pdf, Path.Combine(@"\\rho\EKTAS\Vrac\Fiches infos\PDF", fichpdf), true);
+                }
+                if (Perplant != null)
+                {
+                    pplant = string.Join("-", Perplant.ToArray());
+                }
+                if (Perflo != null)
+                {
+                    pflo = string.Join("-", Perflo.ToArray());
+                }
+                if (Perrec != null)
+                {
+                    prec = string.Join("-", Perrec.ToArray());
+                }
+                if (Perliv != null)
+                {
+                    pliv = string.Join("-", Perliv.ToArray());
+                }
+                if (Typsol != null)
+                {
+                    typsol = string.Join("-", Typsol.ToArray());
+                }
+
+                if (Typutil != null)
+                {
+                    typutil = string.Join("-", Typutil.ToArray());
+                }
+                if (Expo != null)
+                {
+                    expo = string.Join("-", Expo.ToArray());
+                }
+                if (Persem != null)
+                {
+                    psemis = string.Join("-", Persem.ToArray());
+                }
+
+
+                line[1] = produit.CodProFou;
+                line[2] = produit.DesignationPro;
+
+                // produit.CodProFou = model.CodProFou;
+                if (!String.Equals(produit.DesignationPro, model.DesignationPro))
+                    line[3] += " - Designation produit";
+                produit.DesignationPro = model.DesignationPro;
+
+                if (!String.Equals(produit.DesignationLat, model.DesignationLat))
+                    line[3] += " - Designation latine";
+                produit.DesignationLat = model.DesignationLat;
+
+                if (!String.Equals(produit.EAN, model.EAN))
+                    line[3] += " - EAN";
+                produit.EAN = model.EAN;
+
+                if (!String.Equals(produit.LibBonLiv, model.LibBonLiv))
+                    line[3] += " - Libelle bon livraison";
+                produit.LibBonLiv = model.LibBonLiv;
+
+                if (!String.Equals(produit.DescPro, model.DescPro))
+                    line[3] += " - Description du produit";
+                produit.DescPro = FormatDonnees.echapp(model.DescPro);
+
+                if (!String.Equals(produit.DureeGarantie, model.DureeGarantie))
+                    line[3] += " - Duree garantie";
+                produit.DureeGarantie = model.DureeGarantie;
+
+                if (!String.Equals(produit.CodeSecteur, codeSect))
+                    line[3] += " - Secteur";
+                //produit.CatArborIn = codeArb;
+                produit.CodeSecteur = codeSect;
+
+                if (!String.Equals(produit.Slogan, model.Slogan))
+                    line[3] += " - Slogan";
+                produit.Slogan = model.Slogan;
+
+                if (!String.Equals(produit.QuaLiv, model.QuaLiv))
+                    line[3] += " - Qualitee livree";
+                produit.QuaLiv = model.QuaLiv;
+
+                if (!String.Equals(produit.Couleur, model.Couleur))
+                    line[3] += " - Couleur";
+                produit.Couleur = model.Couleur;
+
+                if (!String.Equals(produit.DFO, model.DFO))
+                    line[3] += " - Type de livraison";
+                produit.DFO = model.DFO;
+
+                produit.FicOrForm = "Oui";
+                produit.DateMod = DateTime.Now;
+
+                if (!String.Equals(produit.NbrePcsPaq, model.NbrePcsPaq))
+                    line[3] += " - Nombre de pieces par paquet";
+                produit.NbrePcsPaq = model.NbrePcsPaq.ToString();
+
+                if (!String.Equals(produit.Hauteur, model.Hauteur))
+                    line[3] += " - Dimension";
+                produit.Hauteur = model.Hauteur;
+
+                if (!String.Equals(produit.PlusProd1, model.PlusProd1))
+                    line[3] += " - Les plus du produit 1";
+                produit.PlusProd1 = model.PlusProd1;
+
+                if (!String.Equals(produit.PlusProd2, model.PlusProd2))
+                    line[3] += " - Les plus du produit 2";
+                produit.PlusProd2 = model.PlusProd2;
+
+                if (!String.Equals(produit.PlusProd3, model.PlusProd3))
+                    line[3] += " - Les plus du produit 3";
+                produit.PlusProd3 = model.PlusProd3;
+
+                if (!String.Equals(produit.ImgPrinc, model.ImgPrinc))
+                    line[3] += " - Image principale";
+                produit.ImgPrinc = fich1;
+
+                if (!String.Equals(produit.ImgSecond1, fich2))
+                    line[3] += " - Image secondaire 1";
+                produit.ImgSecond1 = fich2;
+
+                if (!String.Equals(produit.ImgSecond2, fich3))
+                    line[3] += " - Image secondaire 2";
+                produit.ImgSecond2 = fich3;
+
+                if (!String.Equals(produit.ImgSecond3, fich4))
+                    line[3] += " - Image secondaire 3";
+                produit.ImgSecond3 = fich4;
+
+                if (!String.Equals(produit.ImgSecond4, fich5))
+                    line[3] += " - Image secondaire 4";
+                produit.ImgSecond4 = fich5;
+
+                if (!String.Equals(produit.ImgSecond5, fich6))
+                    line[3] += " - Image secondaire 5";
+                produit.ImgSecond5 = fich6;
+
+                if (!String.Equals(produit.FichePDF, fichpdf))
+                    line[3] += " - Fiche PDF";
+                produit.FichePDF = fichpdf;
+
+                if (!String.Equals(produit.LienYoutube, model.LienYoutube))
+                    line[3] += " - Lien Youtube";
+                produit.LienYoutube = model.LienYoutube;
+
+                if (!String.Equals(produit.Marque, model.Marque))
+                    line[3] += " - Marque";
+                produit.Marque = model.Marque;
+
+
+                produit.ValdFou = "Oui";
+                produit.ValdWill = "Non";
+                produit.FlagExportErp = "0";
+
+                if (!String.Equals(produit.PerPlant, pplant))
+                    line[3] += " - Periode plantation";
+                produit.PerPlant = pplant;
+
+                if (!String.Equals(produit.PerFlo, pflo))
+                    line[3] += " - Periode floraison";
+                produit.PerFlo = pflo;
+
+                if (!String.Equals(produit.PerSemis, psemis))
+                    line[3] += " - Periode semis";
+                produit.PerSemis = psemis;
+
+                if (!String.Equals(produit.PerLiv, pliv))
+                    line[3] += " - Periode livraison";
+                produit.PerLiv = pliv;
+
+                if (!String.Equals(produit.Exposition, expo))
+                    line[3] += " - Exposition";
+                produit.Exposition = expo;
+
+                if (!String.Equals(produit.TypUtil, typutil))
+                    line[3] += " - Type d'utilisation";
+                produit.TypUtil = typutil;
+
+                if (!String.Equals(produit.TypSol, typsol))
+                    line[3] += " - Type de sol";
+                produit.TypSol = typsol;
+
+                if (!String.Equals(produit.PerRecolte, prec))
+                    line[3] += " - Periode de recolte";
+                produit.PerRecolte = prec;
+
+
+
+                // Test privilèges modification
+                if (ApplicationUser.estAdmin(CurrentUser) || ApplicationUser.estSuperAdmin(CurrentUser)) 
+                {
+                    ViewBag.Message = "a";
+                    if (User.IsInRole("Super"))
+                    {
+                        ViewBag.Message = "p";
+                    }
+                    produit.ValdWill = "Oui";
+                    db.Entry(produit).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("ValidPro", "Admin", new { recherche = produit.IdFou });                  
+                }
+                else
+                {
+                    notif.UpdateProduits(line);
+                    if (produit.Offre != null) produit.Offre.ValdWill = "Non"; produit.FlagExportErp = "0";
+                }
+                db.Entry(produit).State = EntityState.Modified;
+                db.SaveChanges();
+                
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
+
+        // Suppression des produits
+        // GET: Produits/Delete/5
+        [Authorize(Roles = "Utilisateur")]
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Produit produit = db.Produits.Find(id);
+            if (produit == null)
+            {
+                return HttpNotFound();
+            }
+            // Règles de sécurité : eviter qu'un fournisseur ne consulte des produits qui lui appartiennent pas
+            if (!ApplicationUser.estAdmin(CurrentUser) && !ApplicationUser.estSuperAdmin(CurrentUser) && (produit.IdFou != CurrentUser.IdFou))
+                return HttpNotFound();
+            return View(produit);
+        }
+        // POST: Produits/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Utilisateur")]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            string idfou = CurrentUser.IdFou;
+            Offre offre = db.Offres.Find(id);
+            Produit produit = db.Produits.Find(id);
+            /*
+            // Règles de sécurité : eviter qu'un fournisseur ne consulte des produits qui lui appartiennent pas
+            if (!ApplicationUser.estAdmin(CurrentUser) && !ApplicationUser.estSuperAdmin(CurrentUser) && (produit.IdFou != CurrentUser.IdFou))
+                return HttpNotFound();
+            string fullPath1 = Request.MapPath(dossiersFournisseurs+ "/" + idfou + "/Images/" + produit.ImgPrinc);
+            string fullPath2 = Request.MapPath(dossiersFournisseurs + "/" + idfou + "/Images/" + produit.ImgSecond1);
+            string fullPath3 = Request.MapPath(dossiersFournisseurs + "/" + idfou + "/Images/" + produit.ImgSecond2);
+            string fullPath4 = Request.MapPath(dossiersFournisseurs + "/" + idfou + "/Images/" + produit.ImgSecond3);
+            string fullPath5 = Request.MapPath(dossiersFournisseurs + "/" + idfou + "/Images/" + produit.ImgSecond4);
+            string fullPath6 = Request.MapPath(dossiersFournisseurs + "/" + idfou + "/Images/" + produit.ImgSecond5);
+            string fullPath7 = Request.MapPath(dossiersFournisseurs + "/" + idfou + "/" + produit.FichePDF);
+            if (System.IO.File.Exists(fullPath1)) System.IO.File.Delete(fullPath1);
+            if (System.IO.File.Exists(fullPath2)) System.IO.File.Delete(fullPath2);
+            if (System.IO.File.Exists(fullPath3)) System.IO.File.Delete(fullPath3);
+            if (System.IO.File.Exists(fullPath4)) System.IO.File.Delete(fullPath4);
+            if (System.IO.File.Exists(fullPath5)) System.IO.File.Delete(fullPath5);
+            if (System.IO.File.Exists(fullPath6)) System.IO.File.Delete(fullPath6);
+            if (System.IO.File.Exists(fullPath7)) System.IO.File.Delete(fullPath7);
+            if (offre!=null)     db.Offres.Remove(offre);
+            db.Produits.Remove(produit);
+            */
+            produit.ACTIVE = "Non";
+            produit.Offre.Dispo = "Epuisé/Supprimé";
+            db.Entry(produit).State = EntityState.Modified;
+            db.SaveChanges();
+            notif.DeleteProduits(CurrentUser.IdFou, produit.CodProERP, produit.CodProFou, produit.DesignationPro);
+            return RedirectToAction("Index");
+        } 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+                dbA.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+        
+        //Envoi d'un email aux administrateurs avec un rapport sur les dernières modifications
+        public void Validate()
+        {
+            try
+            {
+                notif.MailAdmins(CurrentUser.IdFou, CurrentUser.Societe, CurrentUser.Nom, CurrentUser.Prenom);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception caught while sending mail ",
+                  ex.ToString());
+            }
+        }
+
+        public bool ChangeOccured()
+        {
+            if(System.IO.File.Exists(Server.MapPath(dossiersFournisseurs + "/" + CurrentUser.IdFou + "/Modifications_Offres_" + CurrentUser.IdFou + ".csv"))
+                || System.IO.File.Exists(Server.MapPath(dossiersFournisseurs + "/" + CurrentUser.IdFou + "/Modifications_Produits_" + CurrentUser.IdFou + ".csv"))
+                || System.IO.File.Exists(Server.MapPath(dossiersFournisseurs + "/" + CurrentUser.IdFou + "/Nouveaux_Produits_" + CurrentUser.IdFou + ".csv"))
+                || System.IO.File.Exists(Server.MapPath(dossiersFournisseurs + "/" + CurrentUser.IdFou + "/Nouvelles_Offres_" + CurrentUser.IdFou + ".csv"))
+                || System.IO.File.Exists(Server.MapPath(dossiersFournisseurs + "/" + CurrentUser.IdFou + "/Dispo_Produits_" + CurrentUser.IdFou + ".csv"))
+                || System.IO.File.Exists(Server.MapPath(dossiersFournisseurs + "/" + CurrentUser.IdFou + "/Suppression_Produits_" + CurrentUser.IdFou + ".csv")))
+                return true;
+            return false;
+        }
+
+
+        [HttpGet]
+        public ActionResult SuiviCommandes(int? page, int? id, string num, string pro, DateTime? datecm)
+        {
+            var commandes = dbc.Commandes.Where(d => d.idfou == CurrentUser.IdFou).OrderBy(d => d.datappliv).ToList();
+            int pageSize = 50;
+            if (id != null)
+            {
+                commandes = dbc.Commandes.Where(d => d.idcmnd == id && d.idfou == CurrentUser.IdFou).OrderBy(d => d.datecmnd).ToList();
+                pageSize = commandes.Count();
+            }
+            if(pro != null)
+            {
+                if (!string.IsNullOrEmpty(pro) && (!string.IsNullOrWhiteSpace(pro)))
+                    commandes = dbc.Commandes.Where(d => d.reffou == pro && d.idfou == CurrentUser.IdFou).OrderBy(d => d.datecmnd).ToList();
+                pageSize = commandes.Count();
+            }
+            if(num != null)
+            {
+                if (!string.IsNullOrEmpty(num) && (!string.IsNullOrWhiteSpace(num)))
+                    commandes = dbc.Commandes.Where(d => d.numcmnd == num && d.idfou == CurrentUser.IdFou).OrderBy(d => d.datecmnd).ToList();
+                pageSize = commandes.Count();
+            }
+            if(datecm != null)
+            {
+                commandes = dbc.Commandes.Where(d => d.datecmnd >= datecm && d.idfou == CurrentUser.IdFou).OrderBy(d => d.datecmnd).ToList();
+                pageSize = commandes.Count();
+            }
+            if (pageSize == 0)
+                pageSize = 1;
+            int pageNumber = (page ?? 1);
+            return View(commandes.ToPagedList(pageNumber, pageSize));
+
+        }
+
+        [HttpGet]
+        public ActionResult SuiviCommande(int? id)
+        {
+            if (id != null)
+            {
+                var commande = dbc.Commandes.Where(d => d.idcmnd == id && d.idfou == CurrentUser.IdFou).SingleOrDefault();
+                if (commande != null)
+                    return View(commande);
+                else
+                {
+                    ViewBag.message = "Commande indisponible.";
+                    return View();
+                }
+            }
+            return RedirectToAction("Commandes");
+        }
+
+        // Page de chargement d'un ficier de commandes
+        public ActionResult SuiviCommandesFichier()
+        {
+            return View();
+        }
+
+        // Télécharger le modele de suivi de commandes à remplir par le fournisseur
+        public FileResult DownloadModeleSuivi()
+        {
+            string filepath = p.appData + "/" + p.modeleSuiviCommandes;
+            return File(Server.MapPath(filepath), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", p.modeleSuiviCommandes);
+        }
+
+        // Importer le fichier de suivi de commandes enrichi par le fournisseur
+        [HttpPost]
+        public ActionResult ImporterFichierCommandes()
+        {
+            try
+            {
+                // TODO 
+                // vérification du fichier
+                if (Request.Files.Count > 0)
+                {
+                    var file = Request.Files[0];
+                    string filepath = Path.Combine(Server.MapPath(p.repCommandes), file.FileName);
+                    file.SaveAs(filepath);
+                    //traitement du fichier
+                    int resultat = util.TraitementCSVSuiviCommandes(filepath, CurrentUser.IdFou);
+                    if (resultat == 0)
+                    {
+                        System.IO.File.Delete(filepath);
+                        try
+                        {
+                            TempData["errormessage"] = "Fichier ajouté avec succes!";
+                            //enregistrer le fichier
+                            file.SaveAs(Path.Combine(Server.MapPath(p.repCommandes), CurrentUser.IdFou + "_Suivi_" + DateTime.Now.ToString("yyyy-MM-dd") + ".csv"));
+                        }
+                        catch
+                        {
+                            TempData["errormessage"] = "Une erreur s'est produite, le fichier n'a pas été enregistré.";
+                            return RedirectToAction("SuiviCommandes");
+                        }
+                    }
+                    else if (resultat == 1)
+                    {
+                        TempData["errormessage"] = "Erreur lors de la lecture du fichier : Le fichier doit contenir 9 colonnes";
+                    }
+                    else if (resultat == 2)
+                    {
+                        TempData["errormessage"] = "Erreur lors de la lecture du fichier : Le fichier est vide";
+                    }
+                    else
+                    {
+                        TempData["errormessage"] = "Erreur lors de la lecture du fichier : Des champs obligatoires sont vides";
+                    }
+                }
+                // notifier les admins
+               // Parametres p = new Parametres();
+                MailMessage mailContact = new MailMessage();
+                mailContact.IsBodyHtml = true;
+                mailContact.From = new MailAddress(p.MailMP, p.MailMpName);
+                foreach (String mail in p.Recipients)
+                {
+                    mailContact.To.Add(mail);
+                }
+                mailContact.Subject = "[Portail Fournisseur] Suivi de commandes " + CurrentUser.IdFou + " " + CurrentUser.Societe;
+                string textmsg = "Bonjour, <br/><br/>Mr/Mme " + "<b>" + CurrentUser.Nom + " " + CurrentUser.Prenom + " </b> a ajouté un fichier de suivi de commandes sur le portail fournisseur. <br/><br/>";
+                textmsg += "<b>Fournisseur:</b> " + CurrentUser.IdFou + " - <b>Société:</b> " + CurrentUser.Societe + "<br/>";
+                textmsg += "<b>Email: </b>" + CurrentUser.Email + "<br/><br/>";
+                textmsg += "<br/><br/> Veuillez trouver ci-joint le fichier ajouté, vous pouvez consulter toutes les commandes à partir de la page Admnistrateur.";
+                textmsg += "<br/><br/><br/><br/>Portail Fournisseur";
+                mailContact.Body = textmsg;
+                var smtp = new SmtpClient
+                {
+                    Host = p.Host,
+                    Port = p.Port,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    Timeout = 10000,
+                    Credentials = new NetworkCredential(p.MailUser, p.MailPass)
+                };
+                System.Net.Mail.Attachment attachment = new System.Net.Mail.Attachment(Path.Combine(Server.MapPath(p.repCommandes), CurrentUser.IdFou + "_Suivi_Commandes_Fournisseur_" + DateTime.Now.ToString("yyyy-MM-dd") + ".csv"));
+                mailContact.Attachments.Add(attachment);
+                try
+                {
+                    smtp.Send(mailContact);
+                    mailContact.Attachments.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Exception caught while sending mail ",
+                      ex.ToString());
+                }
+                // mettre à jour les fichiers de suivi dans le repertoire Commandes
+                return RedirectToAction("SuiviCommandesFichier");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                ViewBag.message = "Une erreur s'est produite. \nVeuillez vérifier le format et les champs du fichier importé.";
+                return RedirectToAction("SuiviCommandesFichier");
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult MAJCommandes(int idcmnd, DateTime? datappliv, DateTime? datexp, DateTime? datrec, string tracking, string motifretour, string colisretour, string transporteur)
+        {
+            if (ModelState.IsValid)
+            {
+                Commande c = dbc.Commandes.Find(idcmnd);
+                string[] line = { "", "", "", "" ,"","","","","",""};
+                bool changed = false;
+                line[0] = c.idfou;
+                line[1] = c.numcmnd;
+                line[2] = c.codproerp;
+                if ( datappliv.HasValue )
+                {
+                    c.datappliv = datappliv; 
+                    line[3] = datappliv.Value.ToString("dd|MM|yyyy", CultureInfo.InvariantCulture);
+                    changed = true;
+                }                    
+                if (datexp.HasValue)
+                {
+                    c.datexp = datexp;
+                    line[4] = datexp.Value.ToString("dd|MM|yyyy", CultureInfo.InvariantCulture);
+                    changed = true;
+                }                    
+                if (tracking != null)
+                {
+                    c.tracking = tracking;
+                    line[5] = tracking;
+                    changed = true;
+                }                    
+                if (datrec.HasValue )
+                {
+                    c.datrec = datrec;
+                    line[6] = datrec.Value.ToString("dd|MM|yyyy", CultureInfo.InvariantCulture);
+                    changed = true;
+                }                    
+                if (motifretour != null)
+                {
+                    c.motifretour = motifretour;
+                    line[7] = motifretour;
+                    changed = true;
+                }                    
+                if (colisretour != null)
+                {
+                    c.colisretour = colisretour;
+                    line[8] = colisretour;
+                    changed = true;
+                }                    
+                if (transporteur != null)
+                {
+                    c.transporteur = transporteur;
+                    line[9] = transporteur;
+                    changed = true;
+                }
+                if (changed)
+                {
+                    dbc.Entry(c).State = EntityState.Modified;
+                    dbc.SaveChanges();
+                    WriteCommandesChanges(line);
+                }
+            }
+            return RedirectToAction("SuiviCommandes");
+        }
+
+        private void WriteCommandesChanges(string[] line)
+        {
+            string file = Server.MapPath(dossiersFournisseurs + "/" + CurrentUser.IdFou + "/Commandes_" + CurrentUser.IdFou + "_Retour.csv");
+            Console.Out.WriteLine(file);
+            if (!System.IO.File.Exists(file))
+            {
+                using (StreamWriter sw = System.IO.File.AppendText(file))
+                {
+                    sw.WriteLine("Id Fournisseur;Numero de commande;Code produit ERP;Date approximative de livraison;Date expedition reelle;Numero de Tracking;Transporteur;Date reception client;Colis en retour;Motif retour");
+                }
+            }
+            using (StreamWriter sw = System.IO.File.AppendText(file))
+            {
+                sw.WriteLine(line[0] + ";" + line[1] + ";" + line[2] + ";" + line[3] + ";" + line[4] + ";" + line[5] + ";" + line[6] + ";" + line[7] + ";" + line[8] + ";" + line[9]);
+            }
+        }
+
+        public bool CommandesUpdated()
+        {
+            if (System.IO.File.Exists(Server.MapPath(dossiersFournisseurs + "/" + CurrentUser.IdFou + "/Commandes_" + CurrentUser.IdFou + "_Retour.csv")))
+                return true;
+            return false;
+        }
+
+        //Envoi d'un email aux administrateurs avec un rapport sur les mises à jour des commandes
+        public void Notify()
+        {
+            Parametres p = new Parametres();
+            MailMessage mailContact = new MailMessage();
+            mailContact.IsBodyHtml = true;
+            mailContact.From = new MailAddress(p.MailMP, p.MailMpName);
+            foreach (String mail in p.Recipients)
+            {
+                mailContact.To.Add(mail);
+            }
+            mailContact.Subject = "[Portail Fournisseur] Validation de produits fournisseur " + CurrentUser.IdFou + " " + CurrentUser.Societe;
+
+            string textmsg = "Bonjour, <br/><br/>Mr/Mme " + "<b>" + CurrentUser.Nom + " " + CurrentUser.Prenom + " </b> a ajouté ou modifié des produits dans le Portail Fournisseur. <br/><br/>";
+            textmsg += "<b>Fournisseur:</b> " + CurrentUser.IdFou + " - <b>Société:</b> " + CurrentUser.Societe + "<br/>";
+            textmsg += "<b>Email: </b>" + CurrentUser.Email + "<br/><br/>";
+            textmsg += "<br/><br/> Veuillez trouver les mises à jour des commandes dans le document ci-joint.";
+            textmsg += "<br/><br/> Vous pouvez accéder au suivi de commandes à partir de la page : http://market.partage-willemse.com:8888/Admin/Commandes";
+            textmsg += "<br/><br/><br/><br/>Portail Fournisseur";
+            mailContact.Body = textmsg;
+            var smtp = new SmtpClient
+            {
+                Host = p.Host,
+                Port = p.Port,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                Timeout = 10000,
+                Credentials = new NetworkCredential(p.MailUser, p.MailPass)
+            };
+            Attachment attachment;
+            if (System.IO.File.Exists(Server.MapPath(dossiersFournisseurs + "/" + CurrentUser.IdFou + "/Commandes_" + CurrentUser.IdFou + "_Retour.csv")))
+            {
+                attachment = new System.Net.Mail.Attachment(Server.MapPath(dossiersFournisseurs + "/" + CurrentUser.IdFou + "/Commandes_" + CurrentUser.IdFou + "_Retour.csv"));
+                mailContact.Attachments.Add(attachment);
+            }
+            try
+            {
+                smtp.Send(mailContact);
+                mailContact.Attachments.Dispose();
+                if (System.IO.File.Exists(Server.MapPath(dossiersFournisseurs + "/" + CurrentUser.IdFou + "/Commandes_" + CurrentUser.IdFou + "_Retour.csv")))
+                {
+                    System.IO.File.Delete(Server.MapPath(dossiersFournisseurs + "/" + CurrentUser.IdFou + "/Commandes_" + CurrentUser.IdFou + "_Retour.csv"));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception caught while sending mail ",
+                  ex.ToString());
+            }
+        }
+    }
+}

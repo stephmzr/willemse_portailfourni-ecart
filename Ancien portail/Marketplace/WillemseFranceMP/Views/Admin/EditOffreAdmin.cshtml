@@ -1,0 +1,106 @@
+﻿@model WillemseFranceMP.Models.CreateOffreViewModel
+
+@using WillemseFranceMP.Controllers.Helpers
+
+
+@{
+    ViewBag.Title = "Validation de l'offre sur le produit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <br /><br />
+    <h2 style="color:darkgreen;">@ViewBag.Title</h2>
+    <br />
+    <div>
+
+        @if (ViewBag.ExisteOffre)
+        {
+            using (Html.BeginForm("EditOffreAdmin", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-horizontal">
+                    <br /><br />
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                @Html.LabelFor(m => m.PrixAchtHT, new { @class = " control-label" })
+                                @Html.TextBoxFor(m => m.PrixAchtHT, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.PrixAchtHT, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-xs-4">
+                                @Html.LabelFor(m => m.FraisLiv, new { @class = "control-label" })
+                                @Html.TextBoxFor(m => m.FraisLiv, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.FraisLiv, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-xs-4">
+                                @Html.LabelFor(m => m.PrixAchtTsp, new { @class = " control-label" })
+                                @Html.TextBoxFor(m => m.PrixAchtTsp, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.PrixAchtTsp, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                @Html.LabelFor(m => m.PrixVtTtc, new { @class = " control-label" })
+                                @Html.TextBoxFor(m => m.PrixVtTtc, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.PrixVtTtc, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-xs-4">
+                                @Html.RequiredLabelFor(m => m.Dispo, new { @class = " control-label" })
+                                @Html.DropDownListFor(m => m.Dispo, new SelectList(new string[] { "Oui", "Epuisé/Supprimé", "Momentanément indisponible" }), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Dispo, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-xs-4">
+                                @Html.RequiredLabelFor(m => m.Delailiv, new { @class = " control-label" })
+                                @Html.DropDownListFor(m => m.Delailiv, new SelectList(new string[] { "1 Semaine", "1 à 2 Semaines", "2 à 3 Semaines", "3 à 4 Semaines", "4 à 6 Semaines", "6 à 8 Semaines" }), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Delailiv, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-4">
+                            @Html.RequiredLabelFor(m => m.Tva, new { @class = "control-label" })
+                            <div class="radio">
+                                <label><input type="radio" name="Tva" value="6" checked>Taux normal (20%)</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="Tva" value="5">Taux réduit (10%)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <br /><br />
+                    <div class="form-group text-center">
+                        <div class="col-xs-2 col-xs-offset-4">
+                            <a><span class="glyphicon glyphicon-arrow-left"></span></a>
+                            @Html.ActionLink("Retour", "ValidPro", "Admin", new { recherche = ViewBag.IDFOU }, null)
+                        </div>
+                        <div class="col-xs-2">
+                            <input type="submit" value="Valider" class="btn btn-success active" />
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="alert alert-danger">
+                <p>Le fournisseur n'a pas renseigné d'offres sur ce produit</p>
+            </div>
+            @Html.ActionLink("Retour", "ValidPro", "Admin", new { recherche = ViewBag.IDFOU }, null)
+        }
+        </div>
+    </div>
+
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+            <script>
+                $(document).ready(function () {
+                    $('[data-toggle="tooltip"]').tooltip();
+                });
+                $("#pageProduits").addClass('active');
+            </script>
+        }

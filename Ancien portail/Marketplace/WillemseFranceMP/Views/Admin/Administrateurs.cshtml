@@ -1,0 +1,109 @@
+﻿@model IEnumerable<WillemseFranceMP.Models.ApplicationUser>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Administrateurs";
+}
+<div class="container">
+    <br /><br />
+    <h2 style="color:darkgreen;">@ViewBag.Title</h2>
+    <br />
+    <div>
+        <!-- Liste des fournisseurs -->
+        @{
+            if (Model.Count() == 0)
+            {
+                <table class="table table-hover">
+                    <tr>
+                        <th>
+                            Prénom
+                        </th>
+                        <th>
+                            Nom
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Notifications
+                        </th>
+                    </tr>
+                    <tr><td colspan="5"><p class="text-danger">Aucun Administrateur n'est enregistré</p></td></tr>
+                </table>
+            }
+            else
+            {
+                using (Html.BeginForm("EditAdmins", "Admin/Administrateurs", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <table class="table table-hover">
+                    <tr>
+                        <th style="color:darkgreen;">
+                            Prénom
+                        </th>
+                        <th style="color:darkgreen;">
+                            Nom
+                        </th>
+                        <th style="color:darkgreen;">
+                            Email
+                        </th>
+                        <th style="color:darkgreen;">
+                            Notifications
+                        </th>
+                        <th style="color:darkgreen;">
+                        </th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr style="cursor: pointer;" onclick="ad('@item.Nom')">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Prenom)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nom)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ValZn2)
+                            </td>
+                            <td>
+                                <a href="#"><span class="glyphicon glyphicon-remove"></span></a>
+                                @Html.ActionLink("Supprimer", "DeleteAdmin",new { email = item.Email }, new { onclick = "return confirm('Confirmer la suppression de " + item.Nom + "?')" })
+                            </td>
+                        </tr>
+                   }
+                </table>
+                <div class="row">
+                    <div class="col-xs-10">
+                        <a href="#"><span class="glyphicon glyphicon-arrow-left"></span></a>
+                        @Html.ActionLink("Retour", "Index")
+                    </div>
+                    <div class="col-xs-2">
+                        <input type="button" value="Ajouter" class="btn btn-success active" onclick="location.href='@Url.Action("CreateAdmin")'" />
+                    </div>
+                </div>
+               }
+            }
+        }
+        
+    </div>
+</div>
+
+@section Scripts {
+
+
+
+    <script type="text/javascript">
+        function ad(nom) {
+            //window.location = '/Admin/Validpro?recherche=' + fou;
+            window.location = '/Admin/EditAdmin?nom=' + nom;
+        }
+        $("#pageAdmins").addClass('active');
+    </script>
+}
+
+
+
+

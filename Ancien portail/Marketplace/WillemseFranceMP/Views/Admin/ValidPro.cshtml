@@ -1,0 +1,222 @@
+﻿@model PagedList.IPagedList<WillemseFranceMP.Models.Produit>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Produits";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var societe = "";
+}
+<div class="container">
+    <br /><br />
+    <h2 style="color:darkgreen;">@ViewBag.Title</h2>
+    <br />
+    <div>
+        <div class="row">
+            <div class="form-inline col-xs-4">
+                @using (Html.BeginForm("Validpro", "Admin", FormMethod.Get))
+                {
+                    @Html.AntiForgeryToken()
+                    <label for="recherche">Filtrer par numéro fournisseur</label><br />
+                    <input type="text" name="recherche" id="recherche" placeholder="N° fournisseur" />
+                    <input type="submit" value="Rechercher" class="btn btn-success active" />
+                }
+            </div>
+            <div class="form-inline col-xs-4">
+                @using (Html.BeginForm("Validpro", "Admin", FormMethod.Get))
+                {
+                    @Html.AntiForgeryToken()
+                    <label for="recherchePro">Filtrer par code produit fournisseur</label><br />
+                    <input type="text" name="recherchePro" id="recherchePro" placeholder="Référence fournisseur" />
+                    <input type="submit" value="Rechercher" class="btn btn-success active" />
+                }
+            </div>
+            <div class="form-inline col-xs-4">
+                @using (Html.BeginForm("Validpro", "Admin", FormMethod.Get))
+                {
+                    @Html.AntiForgeryToken()
+                    <label for="rechercheProErp">Filtrer par code produit ERP</label><br />
+                    <input type="text" name="rechercheProErp" id="rechercheProErp" placeholder="Référence ERP" />
+                    <input type="submit" value="Rechercher" class="btn btn-success active" />
+                }
+            </div>
+        <br /><br /><br /><br />
+        </div>
+        <div class="row">
+            <div class="col-xs-3 col-xs-offset-9">
+                <div class="checkbox checkbox-primary">
+                    <input type="checkbox" id="valid" onclick="filter('valid')" />
+                    <label for="valid">Produits déjà validés</label>
+                </div>
+                <div class="checkbox checkbox-primary">
+                    <input type="checkbox" id="nonvalid" onclick="filter('nonvalid')" />
+                    <label for="nonvalid">Produits non validés</label>
+                </div>
+            </div>
+        </div>
+        <br />
+        @if (Model.Count() == 0)
+        {
+            <br />
+            <br />
+            <h3 class="text-danger">Tous les produits ont été validé!</h3>
+            <br />
+        } else{
+            using (Html.BeginForm("ValidAll", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+            {
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tr>
+                        <th style="color:darkgreen;">Fournisseur</th>
+                        <th style="color:darkgreen;">Référence ERP</th>
+                        <th style="color:darkgreen;">Référence Fournisseur</th>
+                        <th style="color:darkgreen;">Designation</th>
+                        <th style="color:darkgreen;">Prix Cession HT</th>
+                        <th style="color:darkgreen;text-align:center" width="160">Produits</th>
+                        <th style="color:darkgreen;text-align:center" width="160">Offres</th>
+                        <th style="color:darkgreen;">Valider</th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            @foreach (var fou in ViewBag.fournisseurs)
+                            {
+                                if (fou.IdFou == item.IdFou)
+                                {
+                                    societe = fou.Societe;
+                                }
+                            }
+                            <td>@Html.DisplayFor(modelItem => item.IdFou) - @societe</td>
+                            <td>@Html.DisplayFor(modelItem => item.CodProERP)</td>
+                            <td>@Html.DisplayFor(modelItem => item.CodProFou)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DesignationPro)</td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Offre.PrixAchtHT)
+                                &euro;
+                            </td>
+                            <td>
+                                <b>
+                                    @if (item.ValdWill.Equals("Oui"))
+                                    {
+                                        <a href="#" style="color:darkgreen">
+                                            <span class="glyphicon glyphicon-ok"></span>
+                                        </a>
+                                    }
+                                    @Html.ActionLink("Modifier", "Edit", "Produits", new { id = item.ProduitID }, null)
+                                    &nbsp;|&nbsp;
+                                    <a href="#"><span></span></a>
+                                    @Html.ActionLink("Details", "Details", "Produits", new { id = item.ProduitID }, null)
+                                </b>
+                            </td>
+                            <td>
+                                <b>
+                                    @if (item.Offre != null && item.Offre.ValdWill != null && item.Offre.ValdWill.Equals("Oui"))
+                                    {
+                                        <a href="#" style="color:darkgreen">
+                                            <span class="glyphicon glyphicon-ok"></span>
+                                        </a>
+                                    }
+                                    @Html.ActionLink("Modifier", "EditOffreAdmin", new { id = item.ProduitID, idFou = item.IdFou }, null)
+                                    &nbsp;|&nbsp;
+                                    <a href="#"><span ></span></a>
+                                    @Html.ActionLink("Details", "DetailsOffreAdmin", new { id = item.ProduitID }, null)
+                                </b>
+                            </td>
+                            <td>
+                                <input type="checkbox" name="validPro" value="@String.Format("{0}$$${1}", item.IdFou, item.CodProFou)"/>
+                            </td>
+                        </tr>
+                        }
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 col-xs-offset-10">
+                    <label for="check">Selectionner tout</label>
+                    <input id="check" type="checkbox" onclick="selectAll()" />
+                    <br />
+                    <input type="submit" value="Valider" class="btn btn-success active" />
+                </div>
+            </div>
+            }
+        }
+        <br />
+    <div class="row">
+        <div class="col-xs-6">
+            <a href="#"><span class="glyphicon glyphicon-arrow-left"></span></a>
+            @Html.ActionLink("Retour vers Page principale", "Index")
+        </div>
+    </div>
+        <br />
+    <span class="text-info">Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) sur @Model.PageCount</span>
+    @Html.PagedListPager(Model, page => Url.Action("ValidPro",
+                new { page, currentFilter = ViewBag.CurrentFilter }))
+
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $("#pageProduits").addClass('active');
+        function selectAll() {
+            var inputs = document.getElementsByTagName("input");
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].type == "checkbox" && document.getElementById("check").checked) {
+                    inputs[i].checked = true;
+                }
+                else {
+                    inputs[i].checked = false;
+                }
+            }
+        }
+
+
+        $(document).ready(function () {
+            var checkmaj = $_GET('valid');
+            var checksolde = $_GET('nonvalid');
+            if (checkmaj != null) {
+                if (checkmaj == 'true') {
+                    $('#valid').prop('checked', true).change();
+                } else {
+                    $('#valid').prop('checked', false).change();
+                }
+            }
+            if (checksolde != null) {
+                if (checksolde == 'true') {
+                    $('#nonvalid').prop('checked', true).change();
+                } else {
+                    $('#nonvalid').prop('checked', false).change();
+                }
+            }
+        });
+
+        function updateQueryStringParameter(uri, key, value) {
+            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+            var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+            if (uri.match(re)) {
+                return uri.replace(re, '$1' + key + "=" + value + '$2');
+            }
+            else {
+                return uri + separator + key + "=" + value;
+            }
+        }
+
+        function filter(filtre) {
+            var url = window.location.href;
+            var newfiltre = document.getElementById(filtre).checked;
+            var newurl = updateQueryStringParameter(url, filtre, newfiltre);
+            window.location.href = newurl;
+        }
+
+        function $_GET(param) {
+            var vars = {};
+            window.location.href.replace(location.hash, '').replace(
+                /[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+                function (m, key, value) { // callback
+                    vars[key] = value !== undefined ? value : '';
+                }
+            );
+            if (param) {
+                return vars[param] ? vars[param] : null;
+            }
+            return vars;
+        }
+
+    </script>
+}

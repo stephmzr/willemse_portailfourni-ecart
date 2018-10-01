@@ -1,0 +1,130 @@
+﻿@{
+    ViewBag.Title = "FAQ - Portail fournisseur";
+}
+<div class="container">
+    <h2 class="text-success">Comment fonctionne notre portail fournisseur</h2>
+
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading panel">
+                <h4>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Demande d'ouverture de compte fournisseur</a>
+                </h4>
+            </div>
+            <div id="collapse1" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    Pour une demande d'ouverture de <b>compte fournisseur</b>, cliquez sur l'onglet <button type="button" class="btn btn-default active" style="cursor:text"><b style="color : darkslategrey">s'inscrire</b></button>  situé dans la barre de menu, 
+                    complétez le formulaire en renseignant les informations sur votre entreprise. Ainsi vous pouvez vous connecter dans votre espace personnel en utilisant votre E-mail et votre mot de passe. Votre demande sera traitée dans les plus brefs délais. Renseignez une adresse E-mail et un numéro de téléphone valides.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">Accéder à mon espace fournisseur</a>
+                </h4>
+            </div>
+            <div id="collapse5" class="panel-collapse collapse">
+                <div class="panel-body">
+                    Pour accéder à votre espace personnel, vous devez vous connecter. Cliquez sur l'onglet <button type="button" class="btn btn-default" style="cursor:text"><b style="color : darkgreen">Se connecter</b></button>  situé dans la barre de menu.
+                    Renseignez votre adresse<b> E-mail</b> et votre <b>mot de passe</b>, cliquez sur le bouton <button type="button" class="btn btn-success" style="cursor:text">Connexion</button>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Est-ce que mon compte a été validé ?</a>
+                </h4>
+            </div>
+            <div id="collapse2" class="panel-collapse collapse">
+                <div class="panel-body">
+                    Après validation de votre compte fournisseur, vous recevrez un <b style="color : darkgreen">mail de confirmation avec votre numéro fournisseur interne</b> chez willemse france.
+                    Vous pouvez ensuite enregistrer votre catalogue de produits et les offres liées.
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Votre Catalogue en ligne</a>
+                </h4>
+            </div>
+            <div id="collapse4" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>
+                        Accéder à votre Catalogue en cliquant sur l'onglet <b style="color : darkgreen">Mon catalogue</b> qui est situé dans la barre de menu.
+                    </p>
+                    <p>
+                        Pour enregistrer un nouveau produit, cliquez sur le lien <button type="button" class="btn btn-link"style="cursor:text">enregistrer un nouveau produit</button>, vous accédez ainsi à la <b style="color : darkgreen">page formulaire de création de produit</b>.
+                        Remplissez les informations du produit dans les différents champs. Tous les <b>champs</b> identifiés par un astérisque <span style="color: red;font-weight : bold">*</span> sont obligatoires.
+                        Faites glisser la souris sur <span class="badge">i</span> situé en dessous du champ pour éviter les erreurs.
+                        Cliquez sur le bouton <button type="button" class="btn btn-success"style="cursor:text">créér</button> tout en bas pour valider la création du produit.
+                    </p>
+                    <p>
+                        Sur un produit, vous pouvez :
+                        <ul>
+                            <li>Lui associer une <b style="color : darkgreen">offre</b>. &nbsp; <a href="#"><span class="glyphicon glyphicon-credit-card"></span></a> </li>
+                            <li>voir les détails &nbsp;  <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a></li>
+                            <li>Le modifier &nbsp;  <a href="#"><span class="glyphicon glyphicon-edit"></span></a></li>
+                            <li>Le supprimer &nbsp; <a href="#"><span class="glyphicon glyphicon-trash"></span></a></li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Le Catalogue par fichier</a>
+                </h4>
+            </div>
+            <div id="collapse3" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>La rubrique <strong>Catalogue fichier</strong> vous permet d'importer un flux de produits ou d'offres avec un fichier Excel.
+                    Elle est surtout utile pour les fournisseurs avec un grand catalogue de produits.
+                    Cliquez sur l'onglet <button type="button" class="btn btn-default active"style="cursor:text">Mon catalogue</button> puis sur le lien: <a href="#" type="button" style="cursor:text"class="btn btn-link"><span class="glyphicon glyphicon-download-alt"></span>Importez votre Catalogue par fichier</a>
+                    </p>
+
+                    <h4 style="color : darkgreen">I - Créér votre fichier</h4>
+                    <p>
+                        Pour créer votre flux de produits ou d'offres, vous pouvez télécharger nos modèles de fichiers 
+                        <button type="button"style="cursor:text" class="btn btn-success">Télécharger fichier ... </button>. 
+                        Ils vous aident à construire un fichier Excel pour ainsi éviter les erreurs. <br/>
+                    </p>
+                    <p class="text-danger"><span class="glyphicon glyphicon-warning-sign"></span> &nbsp;Pour être valides, les  fichiers doivent respecter nos différents  modèles. <br/>
+                        Veuillez respecter les noms et l'ordre des <mark>colonnes(champs)</mark> dans votre fichier.&nbsp; 
+                        Veuillez respecter les noms et l'ordre des <mark>feuilles</mark> dans votre fichier !
+                    </p> 
+
+                    <h4 style="color : darkgreen">II - Charger votre fichier</h4>
+                    <p>
+                        Une fois que vous avez votre fichier de <b>produits</b> ou <b>offres</b>, 
+                        vous pouvez le charger en fonction du type de fichier en cliquant sur <button type="button" class="btn btn-success"style="cursor:text"> Charger fichier ... </button>
+                    </p>
+
+                    <h4 style="color : darkgreen">III - Les rapports d'erreur</h4>
+                    <p>
+                        Vous pouvez vérifier l'état de chargement de votre fichier dans un rapport d'erreurs <button type="button" class="btn btn-success"style="cursor:text">Rapport d'erreurs fichier ... </button>. Il contient toutes les erreurs présentes dans le fichier que vous avez chargé.
+                        Il vous donne le numéro de la ligne où se trouve l'erreur, le code produit fournisseur, le champ en majuscule et le texte d'erreur. 
+                        Les lignes concernées ne seront pas traitées ni intégrées dans votre catalogue. Utilisez ces informations pour corriger les erreurs.
+                    </p>
+
+                    <h4 style="color : darkgreen">IV - Les Images produits</h4>
+                    <p>
+                       Vous pouvez charger les <b>Images</b> de vos produits en utilisant un fichier ZIP. Ajoutez toutes vos images dans un seul dossier que vous compressez au format ZIP. 
+                       Cliquez sur <button type="button" class="btn btn-success"style="cursor:text">Charger vos Images</button>. Pour vérifier vos produits qui n'ont pas encore d'images disponibles cliquez sur <button type="button" class="btn btn-success" style="cursor:text">Rapport d'erreurs fichier Images</button> </p>
+                    <p class="text-danger">                      
+                        <span class="glyphicon glyphicon-warning-sign"></span>  Les noms de fichiers de vos images doivent être les mêmes que ceux indiqués dans le fichier produits. Par exemple "123.jpg".
+                    </p>  
+                    <h4 style="color : darkgreen">V - Tout votre catalogue en CSV</h4>
+                    <p>
+                        Vous pouvez récupérer tout votre catalogue dans un fichier CSV dans la section <b style="color : darkgreen">Votre Catalogue en Fichier CSV</b>. 
+                        Cliquez sur le bouton <button type="button" class="btn btn-success"style="cursor:text">Télécharger tous vos ... dans un Fichier CSV</button> en fonction du type de flux (Produits ou Offres).
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

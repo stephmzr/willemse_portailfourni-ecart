@@ -1,0 +1,86 @@
+﻿@model WillemseFranceMP.Models.RegisterViewModel
+@using WillemseFranceMP.Controllers.Helpers
+@{
+    ViewBag.Title = "Ajouter un administrateur";
+}
+<div class="container">
+    <br /><br />
+    <h2 style="color:darkgreen;">@ViewBag.Title</h2>
+    <br />
+    <div>
+        <!-- Champs infos administrateur -->
+        @{
+            using (Html.BeginForm("CreateAdmin", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+            {
+                <div class="row">
+                    <div class="col-xs-4">
+                        @Html.RequiredLabelFor(m => m.Nom, new { @class = " control-label" })
+                        @Html.TextBoxFor(m => m.Nom, new { @class = "form-control" })
+                    </div>
+                    <div class="col-xs-4">
+                        @Html.RequiredLabelFor(m => m.Prenom, new { @class = " control-label" })
+                        @Html.TextBoxFor(m => m.Prenom, new { @class = "form-control" })
+                    </div>
+                    <div class="col-xs-4">
+                        @Html.RequiredLabelFor(m => m.Email, new { @class = " control-label" })
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-xs-4">
+                        @Html.RequiredLabelFor(m => m.Password, new { @class = " control-label" })
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-xs-4">
+                        @Html.RequiredLabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-xs-4">
+                        <br />
+                        <div class="checkbox">
+                            <label>
+                                <b style="color:darkgreen;">Reçoit des notifications</b>
+                                <input type="checkbox" name="valzn2" id="notification" onclick="notif()" value="non"/>
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+                <br /><br />
+                <div class="row">
+                    <div class="col-xs-6">
+                        <a href="#"><span class="glyphicon glyphicon-arrow-left"></span></a>
+                        @Html.ActionLink("Retour", "Administrateurs")
+                    </div>
+                    <div class="col-xs-6" style="text-align:right">
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" class="btn btn-success active" value="Enregistrer" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    }
+
+        }
+
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        function notif() {
+            if (document.getElementById("notification").value == "Oui") {
+                document.getElementById("notification").value = "Non";
+            }
+            else {
+                document.getElementById("notification").value = "Oui";
+            }
+        }
+    </script>
+}
+
+

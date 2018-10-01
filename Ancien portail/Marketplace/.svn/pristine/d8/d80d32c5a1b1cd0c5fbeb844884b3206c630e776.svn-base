@@ -1,0 +1,141 @@
+﻿@model PagedList.IPagedList<WillemseFranceMP.Models.Commande>
+@using PagedList.Mvc
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    ViewBag.Title = "Suivi de Commandes";
+}
+<div class="container">
+    <br /><br />
+    <h2 style="color:darkgreen;">@ViewBag.Title</h2>
+    <br />
+    <div>
+
+        <div class="row">
+            <div class="col-xs-2">
+                <a href="@Url.Action("Create")" class="btn btn-default"  style="color:cornflowerblue">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <b>Nouvelle commande</b>
+                </a>
+            </div>
+            <div class="col-xs-3">
+                <a href="@Url.Action("Generer")" class="btn btn-default" style="color:cornflowerblue">
+                    <span class="glyphicon glyphicon-duplicate"></span>
+                    <b>Générer un fichier de commandes</b>
+                </a>
+            </div>
+            <div class="col-xs-3">
+                <a href="@Url.Action("Import")" class="btn btn-default"  style="color:cornflowerblue">
+                    <span class="glyphicon glyphicon-download-alt"></span>
+                  <b>Importer des commandes</b>
+                </a>
+            </div>
+            <div class="form-inline col-lg-offset-8">
+                @using (Html.BeginForm("Index", "Commandes", FormMethod.Get))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="text" name="recherche" placeholder="Id fournisseur ou n° commande" style="width:15em;" />
+                    <input type="submit" value="Rechercher" class="btn btn-success active" />
+                }
+            </div>
+        </div><br />
+        </div>
+            @if (Model.Count() == 0)
+            {
+                <p class="text-danger">Aucune commande enregistrée.</p>
+            }
+            else
+            {
+
+                <br />
+                <table class="table table-hover">
+                    <tr style="color:darkgreen">
+                        <th>
+                            Id fournisseur
+                        </th>
+                        <th>
+                            N° commande
+                        </th>
+                        <th>
+                            Date commande
+                        </th>
+                        <th>
+                            Code produit (ERP)
+                        </th>
+                        <th style="padding-left:20px">
+                            Mise à jour du fournisseur
+                        </th>
+                        <th>
+                            Soldé
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                {
+                        <tr style="cursor: pointer" onclick="location.href='@(Url.Action("Edit", new { id = item.idcmnd }))'">
+                            <td style="padding-left:20px">
+                                @Html.DisplayFor(modelItem => item.idfou)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.numcmnd)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.datecmnd)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.codproerp)
+                            </td>
+                            <td style="text-align:center">
+                                @if(item.datrec.Equals(null) && item.datappliv.Equals(null) && item.colisretour == null)
+                                {
+                                   @: En attente <b>...</b>
+                                }
+                                else
+                                {
+                                        <a href="#" style="color:darkgreen">
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                        Oui
+                                        </a>
+                                }
+                            </td>
+                            <td>
+                                @if (item.solder == null)
+                                {
+                                    <b>...</b>
+                                }
+                                else
+                                {
+                                    <a href="#" style="color:darkgreen">
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                        Oui
+                                    </a>
+                                }
+                            </td>
+                            <td>
+                                <b style="margin-left:20px">
+                                    <a href="#"><span class="glyphicon glyphicon-remove"></span></a>
+                                    @Html.ActionLink("Supprimer", "Delete", new { id = item.idcmnd })
+                                </b>
+
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            }
+</div>
+    <span class="text-info">Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) sur @Model.PageCount</span>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $("#pageCommandes").addClass('active');
+    </script>
+}

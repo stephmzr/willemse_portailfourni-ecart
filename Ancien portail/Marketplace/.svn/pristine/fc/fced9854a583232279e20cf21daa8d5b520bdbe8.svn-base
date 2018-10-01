@@ -1,0 +1,52 @@
+﻿@model IEnumerable<WillemseFranceMP.Models.ApplicationUser>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Info administrateur";
+}
+<div class="container">
+    @Html.ActionLink("Validation Inscription Fournisseur", "ValidFou") &nbsp;&nbsp;| &nbsp;&nbsp;
+    @Html.ActionLink("Validation des Produits", "ValidPro") &nbsp;&nbsp;| &nbsp;&nbsp;
+    @Html.ActionLink("Envoyer des produits vers l' ERP", "EnvoieERP") &nbsp;&nbsp;| &nbsp;&nbsp;
+    @Html.ActionLink("Fournisseurs", "Index")
+    @{
+        if (ViewBag.Message == "p")
+        {
+            @: &nbsp; &nbsp; | &nbsp; &nbsp;
+            @Html.ActionLink("Administrateurs", "Administrateurs")
+            @: &nbsp; &nbsp; | &nbsp; &nbsp;
+            @Html.ActionLink("Parametres", "Parametrage")
+        }
+    }
+    <br /><br />
+    <h2 style="color:darkgreen;">@ViewBag.Title</h2>
+    <br />
+    <div>
+        <!-- Champs infos administrateur -->
+        @{ using (Html.BeginForm("SaveAdmin", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+            {
+                    
+            }
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <a href="#"><span class="glyphicon glyphicon-arrow-left"></span></a>
+                            @Html.ActionLink("Retour", "Index")
+                        </div>
+                        <div class="col-xs-6" style="text-align:right">
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" class="btn btn-success active" value="Enregistrer" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        }
+
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+    </script>
+}
+
+

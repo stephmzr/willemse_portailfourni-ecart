@@ -1,0 +1,58 @@
+﻿@model IEnumerable<WillemseFranceMP.Models.Commande>
+
+@{
+    ViewBag.Title = "Commandes";
+}
+<div class="container">
+    @Html.ActionLink("Validation Inscription Fournisseur", "ValidFou") &nbsp;&nbsp;| &nbsp;&nbsp;
+    @Html.ActionLink("Validation des Produits", "ValidPro") &nbsp;&nbsp;| &nbsp;&nbsp;
+    @Html.ActionLink("Envoyer des produits vers l' ERP", "EnvoieERP") &nbsp;&nbsp;| &nbsp;&nbsp;
+    @Html.ActionLink("Fournisseurs", "Index") &nbsp;&nbsp;| &nbsp;&nbsp;
+    @Html.ActionLink("Suivi de commandes", "Index", "Commandes")
+    @{
+        if (ViewBag.Message == "p")
+        {
+            @: &nbsp; &nbsp; | &nbsp; &nbsp;
+            @Html.ActionLink("Administrateurs", "Administrateurs")
+            @: &nbsp; &nbsp; | &nbsp; &nbsp;
+            @Html.ActionLink("Parametres", "Parametrage")
+        }
+    }
+    <br /><br />
+    <h2 style="color:darkgreen;">@ViewBag.Title</h2>
+    <br />
+    <div>
+        <p>
+            @Html.ActionLink("Nouvelle commande", "Create")
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.numcmnd)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.datecmnd)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.numcmnd)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.datecmnd)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.idcmnd }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.idcmnd }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.idcmnd })
+                    </td>
+                </tr>
+            }
+
+        </table>
+        </div>
+    </div>

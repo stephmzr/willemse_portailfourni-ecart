@@ -1,0 +1,44 @@
+﻿@model WillemseFranceMP.Models.Produit
+
+@{
+    ViewBag.Title = "Suppression produits";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Suppression</h2>
+<hr />
+
+<div>
+
+
+    <h4>Produit</h4>
+    <p class="text-danger">En supprimmant un produit, toutes ses références(images,fiche PDF,...) seront supprimées aussi ! </p><br/>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-xs-3">
+                <label class="control-label">Fournisseur :</label>
+                @Html.DisplayFor(model => model.IdFou)
+            </div>
+
+            <div class="col-xs-3">
+                <label class="control-label">Code Produit :</label>
+                @Html.DisplayFor(model => model.CodProFou)
+            </div>
+            <div class="col-xs-3">
+                <label class="control-label">Designation Produit :</label>
+                @Html.DisplayFor(model => model.DesignationPro)
+            </div>
+
+        </div>
+    </div>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Supprimer" class="btn btn-success active" /> |
+                @Html.ActionLink(" Retour ", "Index")
+            </div>
+        }
+    </div>

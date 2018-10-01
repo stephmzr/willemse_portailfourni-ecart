@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewBag.Title = "Etat Chargement Flux ";
+}
+
+<h2>Etat de chargement du fichier</h2>
+
+<hr/>
+ 
+@{
+    if (ViewBag.IncorrectFile != null && ViewBag.IncorrectFile)
+    {
+        <div class="alert alert-danger">
+            <strong>Erreur ! </strong> @ViewBag.StatusFile.
+        </div>
+    }
+    else if (ViewBag.Error != null && ViewBag.Error)
+    {
+        <div class="alert alert-danger">
+            <strong>Attention!</strong> @ViewBag.StatusFile.
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-success">
+            <strong>Chargement réussi!</strong> @ViewBag.StatusFile.
+        </div>
+    }
+}
+
+
+
+<a href="#"><span class="glyphicon glyphicon-arrow-left"></span></a>
+@Html.ActionLink("Retour", "Index")

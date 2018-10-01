@@ -1,0 +1,281 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using PagedList;
+using System.Web;
+using System.Web.Mvc;
+using WillemseFranceMP.Models;
+using System.Data.Entity;
+
+namespace WillemseFranceMP.Controllers
+{
+    // CE Controller s'occupe de la gestion interne de la market place en tant qu'administrateur
+    [Authorize(Roles = "Administrateur")]
+    public class AdminController : Controller
+    {
+        private ProduitDbOracleContext db = new ProduitDbOracleContext();
+        private ApplicationDbOracleContext dbF = new ApplicationDbOracleContext();
+
+        // GET: Admin
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        // Validation des fournisseurs en attente
+        public ActionResult ValidFou()
+        {
+            var fournisseurs = dbF.Users.Where((d => ((d.Sigtie == "Non" || d.Sigtie==null) && d.Nom!="WillemseFrance")));
+            return View(fournisseurs.ToList());
+        }
+
+        // VAlidation des produits
+        [HttpGet]
+        public ActionResult ValidPro(string currentFilter, string recherche, int? page)
+        {
+            if (recherche != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                recherche = currentFilter;
+            }
+            ViewBag.CurrentFilter = recherche;
+
+            var produits = db.Produits.OrderBy(x => x.ValdWill).ToList();
+            if (!string.IsNullOrEmpty(recherche)&&(!string.IsNullOrWhiteSpace(recherche)))
+            {
+                produits = db.Produits.Where(d => (d.IdFou.Equals(recherche))).OrderBy(x => x.ValdWill).ToList();
+            }
+            int pageSize = 50;
+            int pageNumber = (page ?? 1);
+            return View(produits.ToPagedList(pageNumber, pageSize));
+        }
+
+        // Donne la liste des produits qui doivent être traités par l' ERP
+        // En lien avec la base de données Oracle et les procédures stockées pour la market place
+        [HttpGet]
+        public ActionResult EnvoieERP(string currentFilter, string recherche, int? page)
+        {
+            if (recherche != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                recherche = currentFilter;
+            }
+            ViewBag.CurrentFilter = recherche;
+
+            var produits = new List<Produit>();
+            if (!string.IsNullOrEmpty(recherche) && (!string.IsNullOrWhiteSpace(recherche)))
+            {
+                produits = db.Produits.Where(d => (d.IdFou.Equals(recherche)&&(d.ValdWill.Equals("Oui"))&& (d.Offre.ValdWill.Equals("Oui")) && !(d.FlagExportErp.Equals("1")))).OrderBy(x => x.DateMod).ToList();
+            }
+            int pageSize = 50;
+            int pageNumber = (page ?? 1);
+            return View(produits.ToPagedList(pageNumber, pageSize));
+        }
+
+        [HttpPost]
+        public ActionResult EnvoieERPPost(string[] FluxERP)
+        {
+            string idredirect = "";
+            foreach(string f in FluxERP ?? new string[0])
+            {
+                string i1 = f.Split(new string[] { "$$$" }, StringSplitOptions.None)[0];
+                string i2 = f.Split(new string[] { "$$$" }, StringSplitOptions.None)[1];
+                var p = db.Produits.Where(d => ( (d.IdFou.Equals(i1)) && (d.CodProFou.Equals(i2)) )).SingleOrDefault();
+                if (p!=null)
+                {
+                    p.FlagExportErp = "1";
+                    db.Entry(p).State = EntityState.Modified;
+                    db.SaveChanges();
+                    idredirect = i1;
+                }
+            }
+            return RedirectToAction("EnvoieERP", "Admin",new { recherche = idredirect });
+        }
+
+        // Affichage d'une offre et possibilité de validation directe par l'administrateur du site
+        public ActionResult DetailsOffreAdmin(int ? id)
+        {
+            if (id == null)    return View("Error");
+            Produit p = db.Produits.Find(id);
+            if(p==null) return View("Error");
+            Offre offre = p.Offre;
+            ViewBag.ExisteOffre = true;
+            if (offre != null) return View(offre);
+            ViewBag.ExisteOffre = false;
+            ViewBag.idFou = p.IdFou;        
+            return View();
+        }
+        // GET : Le fournisseur
+        // La liste des fournisseurs en attente de validation 
+        public ActionResult ValidFouFinal(string  id)
+        {
+            ApplicationUser fournisseur = new ApplicationUser();
+            if (id == null)
+            {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            fournisseur = dbF.Users.Find(id);
+            if (fournisseur == null)
+            {
+                return HttpNotFound();
+            }
+            return View(fournisseur);            
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken,ActionName("ValidFouFinal")]
+        public ActionResult ValidFouFinal(string id, string sigtie)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var  fournisseur = dbF.Users.Find(id);
+            if (ModelState.IsValid)
+            {
+                if(sigtie=="" )
+                {
+                    sigtie = null;
+                    return View(fournisseur);
+                }
+                fournisseur.Sigtie = "Oui";
+                fournisseur.IdFou = sigtie;
+                dbF.Entry(fournisseur).State = System.Data.Entity.EntityState.Modified;
+                dbF.SaveChanges();
+                // envoi du mail de validation compte fournisseur - Administration fournisseur
+                MailMessage mailContact = new MailMessage();
+                mailContact.IsBodyHtml = true;
+                mailContact.From = new MailAddress("adminMP@willemsefrance.fr");
+                mailContact.To.Add(fournisseur.Email);
+                mailContact.Subject = "Willemsefrance - Validation de votre compte";
+                string textmsg = "Bonjour,<br/>" + "<b>" + fournisseur.Prenom + " " + fournisseur.Nom + ", </b> votre compte fournisseur a été validé. <br/><br/>";
+                textmsg = textmsg + "<b> Votre identifiant fournisseur : </b>" + sigtie;
+                mailContact.Body = textmsg;
+                // création du SMTPClient
+                var smtp = new SmtpClient
+                {
+                    Host = "DZETA.OLYMPE.NET",
+                    Port = 25,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    Timeout = 10000,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential("EXPL@OLYMPE.NET", "udohg")
+                };
+                smtp.Send(mailContact);
+                /////
+                /// Création d'un repertoire pour le fournisseur
+                var path = Server.MapPath(@"~/DossierMP/" + sigtie);
+                DirectoryInfo di = new DirectoryInfo(path);
+                if (di.Exists == false) di.Create();      
+                DirectoryInfo im = di.CreateSubdirectory("Images");
+                return RedirectToAction("ValidFou");
+            }
+            return View(fournisseur);
+        }
+
+        // Modification et validation d'une offre par l'administrateur du site
+        public ActionResult EditOffreAdmin(int? id,string idFou)
+        {
+            ViewBag.ExisteOffre = true;
+            if (!string.IsNullOrEmpty(idFou)) ViewBag.IDFOU = idFou;
+            if (id == null)
+            {
+                 return View("Error");
+            }
+            Offre offre = db.Offres.Find(id);
+            if (offre == null)
+            {
+                ViewBag.ExisteOffre = false;
+                return View();
+            }
+            var model = new CreateOffreViewModel
+            {
+                PrixVteTtcNonRemise = offre.PrixVteTtcNonRemise,
+                PourcRemise = offre.PourcRemise,
+                PrixVtTtc = offre.PrixVtTtc,
+                PrixAchtHT = offre.PrixAchtHT,
+                FraisLiv = offre.FraisLiv,
+                Tva = offre.Tva,
+                Delailiv = offre.Delailiv,
+                Dispo = offre.Dispo
+            };
+            //ViewBag.ProduitID = new SelectList(db.Produits, "ProduitID", "IdFou", offre.ProduitID);
+            return View(model);
+        }
+
+        // POST: Offres/Edit/5
+        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
+        // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditOffreAdmin(int? id, CreateOffreViewModel model, string Tva)
+        {
+            Offre offre = db.Offres.Find(id);
+            if (ModelState.IsValid)
+            {
+                offre.PrixVteTtcNonRemise = FormatDonnees.transformeDecimal(model.PrixVteTtcNonRemise);
+                offre.PourcRemise = FormatDonnees.transformeDecimal(model.PourcRemise);
+                offre.PrixVtTtc = FormatDonnees.transformeDecimal(model.PrixVtTtc);
+                offre.PrixAchtHT = FormatDonnees.transformeDecimal(model.PrixAchtHT);
+                offre.FraisLiv = FormatDonnees.transformeDecimal(model.FraisLiv);
+                offre.Delailiv = model.Delailiv;
+                offre.Dispo = model.Dispo;
+                offre.FicOrForm = "Oui";
+                offre.DateMod = DateTime.Now;
+                offre.Tva = Tva;
+                offre.ValdFou = "Oui";
+                offre.ValdWill = "Oui";
+                db.Entry(offre).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("ValidPro", "Admin", new { recherche = offre.Produit.IdFou });
+            }
+            ViewBag.ProduitID = new SelectList(db.Produits, "ProduitID", "IdFou", offre.ProduitID);
+            return View(model);
+        }
+
+        // VAlidation d'un produit 
+        public ActionResult ValidProAdmin(int? id)
+        {
+            if (id == null) return View("Error");
+            Produit p = db.Produits.Find(id);
+            if (p == null) return View("Error");
+            p.ValdFou = "Oui";
+            p.ValdWill = "Oui";
+            db.Entry(p).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("ValidPro", "Admin", new { recherche = p.IdFou });
+        }
+
+        public ActionResult ValidOffAdmin(int? id)
+        {
+            if (id == null) return View("Error");
+            Offre o = db.Offres.Find(id);
+            if (o == null) return View("Error");
+            o.ValdFou = "Oui";
+            o.ValdWill = "Oui";
+            db.Entry(o).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("ValidPro", "Admin", new { recherche = o.Produit.IdFou });
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
+}

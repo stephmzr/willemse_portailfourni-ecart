@@ -1,0 +1,243 @@
+﻿@model WillemseFranceMP.Models.Commande
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Détails de la commande";
+}
+
+
+
+<h2 style="color:darkgreen;" >@ViewBag.Title</h2>
+
+<br /><br />
+@using (Html.BeginForm("MAJCommandes", "Commandes", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data"}))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <input type="hidden" name="idcmnd" value="@Model.idcmnd.ToString()" />
+        <input type="hidden" name="codpro" value="@Model.codproerp" />
+        <div class="row">
+            <div class="col-xs-4">
+                <ul>
+                    <li>
+                        <b style="color:darkgreen;">@Html.DisplayNameFor(model => model.numcmnd)</b><br />
+                        @Html.EditorFor(model => model.numcmnd, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "cursor:text" } })
+                    </li>
+                </ul>
+            </div>
+            <div class="col-xs-4">
+                <ul>
+                    <li><b style="color:darkgreen;">@Html.DisplayNameFor(model => model.datecmnd)</b><br />
+                    @Html.EditorFor(model => model.datecmnd, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "cursor:text" } })
+                </ul>
+            </div>
+            <div class="col-xs-4">
+                <ul>
+                    <li><b style="color:darkgreen;">@Html.DisplayNameFor(model => model.datefact)</b><br />
+                    @Html.EditorFor(model => model.datefact, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "cursor:text" } })
+                </ul>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-xs-4">
+                <ul>
+                    <li><b style="color:darkgreen;">Code produit</b><br />
+                    @Html.EditorFor(model => model.reffou, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "cursor:text" } })
+                </ul>
+            </div>
+            <div class="col-xs-4">
+                <ul>
+                    <li><b style="color:darkgreen;">@Html.DisplayNameFor(model => model.prixht)</b><br />
+                    @Html.EditorFor(model => model.prixht, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "cursor:text" } })
+                </ul>
+            </div>
+            <div class="col-xs-4">
+                <ul>
+                    <li><b style="color:darkgreen;">@Html.DisplayNameFor(model => model.qt)</b><br />
+                    @Html.EditorFor(model => model.qt, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "cursor:text" } })
+                </ul>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-xs-4">
+                <ul>
+                    <li><b style="color:darkgreen;">@Html.DisplayNameFor(model => model.civilite)</b><br />
+                    @Html.EditorFor(model => model.civilite, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "cursor:text" } })
+                </ul>
+            </div>
+            <div class="col-xs-4">
+                <ul>
+                    <li><b style="color:darkgreen;">@Html.DisplayNameFor(model => model.nomc)</b><br />
+                    @Html.EditorFor(model => model.nomc, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "cursor:text" } })
+                </ul>
+            </div>
+            <div class="col-xs-4">
+                <ul>
+                    <li><b style="color:darkgreen;">@Html.DisplayNameFor(model => model.prenomc)</b><br />
+                    @Html.EditorFor(model => model.prenomc, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "cursor:text" } })
+                </ul>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-xs-4">
+                <ul>
+                    <li><b style="color:darkgreen;">@Html.DisplayNameFor(model => model.adrliv)</b><br />
+                    @Html.EditorFor(model => model.adrliv, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "cursor:text" } })
+                </ul>
+            </div>
+            <div class="col-xs-4">
+                <ul>
+                    <li><b style="color:darkgreen;">@Html.DisplayNameFor(model => model.compadr)</b><br />
+                    @Html.EditorFor(model => model.compadr, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "cursor:text" } })
+                </ul>
+            </div>
+            <div class="col-xs-4">
+                <ul>
+                    <li><b style="color:darkgreen;">@Html.DisplayNameFor(model => model.bplieu)</b><br />
+                    @Html.EditorFor(model => model.bplieu, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "cursor:text" } })
+                </ul>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-xs-4">
+                <ul>
+                    <li><b style="color:darkgreen;">@Html.DisplayNameFor(model => model.codpost)</b><br />
+                   @Html.EditorFor(model => model.codpost, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "cursor:text" } })
+                </ul>
+            </div>
+            <div class="col-xs-4">
+                <ul>
+                    <li><b style="color:darkgreen;">@Html.DisplayNameFor(model => model.ville)</b><br />
+                    @Html.EditorFor(model => model.ville, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "cursor:text" } })
+                </ul>
+            </div>
+            <div class="col-xs-4">
+                <ul>
+                    <li><b style="color:darkgreen;">@Html.DisplayNameFor(model => model.pays)</b><br />
+                    @Html.EditorFor(model => model.pays, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "cursor:text" } })
+                </ul>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-xs-4">
+                <ul>
+                    <li><b style="color:darkgreen;">@Html.DisplayNameFor(model => model.telfix)</b><br />
+                    @Html.EditorFor(model => model.telfix, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "cursor:text" } })
+                </ul>
+            </div>
+            <div class="col-xs-4">
+                <ul>
+                    <li><b style="color:darkgreen;">@Html.DisplayNameFor(model => model.telport)</b><br />
+                    @Html.EditorFor(model => model.telport, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "cursor:text" } })
+                </ul>
+            </div>
+            <div class="col-xs-4">
+                <ul>
+                    <li><b style="color:darkgreen;">@Html.DisplayNameFor(model => model.emailc)</b><br />
+                    @Html.EditorFor(model => model.emailc, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "cursor:text" } })
+                </ul>
+            </div>
+        </div>
+        <br /><hr /><br />
+        <div class="row">
+            <div class="col-sm-12">
+                <ul>
+                    <li>
+                        <b style="color:darkgreen;">@Html.DisplayNameFor(model => model.REMARQUE)</b><br />
+                        @Html.EditorFor(model => model.REMARQUE, new { htmlAttributes = new { @class = "form-control", name = "REMARQUE" } })
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <br /><br />
+        <div class="row">
+            <div class="col-xs-4">
+                <ul>
+                    <li>
+                        <b style="color:darkgreen;">@Html.DisplayNameFor(model => model.NUMFACTFOU)</b><br />
+                        @Html.EditorFor(model => model.NUMFACTFOU, new { htmlAttributes = new { @class = "form-control", name = "NUMFACTFOU" } })
+                    </li>
+                </ul>
+            </div>
+            <div class="col-xs-4">
+                <ul>
+                    <li>
+                        <b style="color:darkgreen;">@Html.DisplayNameFor(model => model.datappliv)</b><br />
+                        @Html.EditorFor(model => model.datappliv, new { htmlAttributes = new { @class = "form-control", name = "datappliv", placeholder = "aaaa-mm-jj" } })
+                    </li>
+                </ul>
+            </div>
+            <div class="col-xs-4">
+                <ul>
+                    <li>
+                        <b style="color:darkgreen;">@Html.DisplayNameFor(model => model.datexp)</b><br />
+                        @Html.EditorFor(model => model.datexp, new { htmlAttributes = new { @class = "form-control", name = "datexp", placeholder = "aaaa-mm-jj" } })
+                    </li>
+                </ul>
+            </div>
+        </div><br /><br />
+            <div class="row">
+                <div class="col-xs-4">
+                    <ul>
+                        <li><b style="color:darkgreen;">@Html.DisplayNameFor(model => model.tracking)</b><br />
+                        @Html.EditorFor(model => model.tracking, new { htmlAttributes = new { @class = "form-control", name = "tracking" } })</li>
+                    </ul>
+                </div>
+                <div class="col-xs-4">
+                    <ul>
+                        <li><b style="color:darkgreen;">@Html.DisplayNameFor(model => model.transporteur)</b><br />
+                        @Html.EditorFor(model => model.transporteur, new { htmlAttributes = new { @class = "form-control", name = "transporteur" } })</li>
+                    </ul>
+                </div>
+                <div class="col-xs-4">
+                    <ul>
+                        <li>
+                            <b style="color:darkgreen;">@Html.DisplayNameFor(model => model.datrec)</b><br />
+                            @Html.EditorFor(model => model.datrec, new { htmlAttributes = new { @class = "form-control", name = "datrec", placeholder = "aaaa-mm-jj" } })
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <br /><br />
+            <div class="row">
+                <div class="col-xs-4">
+                    <ul>
+                        <li><b style="color:darkgreen;">@Html.DisplayNameFor(model => model.colisretour)</b><br />
+                        @Html.EditorFor(model => model.colisretour, new { htmlAttributes = new { @class = "form-control", name = "colisretour" } })</li>
+                    </ul>
+                </div>
+                <div class="col-xs-4">
+                    <ul>
+                        <li><b style="color:darkgreen;">@Html.DisplayNameFor(model => model.motifretour)</b><br />
+                        @Html.EditorFor(model => model.motifretour, new { htmlAttributes = new { @class = "form-control", name = "motifretour" } })</li>
+                    </ul>
+                </div>
+                <div class="col-xs-4">
+                    <ul>
+                        <li>
+                            <b style="color:darkgreen;">@Html.DisplayNameFor(model => model.ACTIONRETOUR)</b><br />
+                            @Html.EditorFor(model => model.ACTIONRETOUR, new { htmlAttributes = new { @class = "form-control", name = "ACTIONRETOUR" } })
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <br /><br />
+            <div class="row">
+                <div class="col-xs-10">
+                    <span class="glyphicon glyphicon-arrow-left" style="color:steelblue"></span>
+                    @Html.ActionLink("Retour", "SuiviCommandes/")
+                </div>
+                <div class="col-xs-2">
+                    <div class="col-xs-2">
+                        <input type="submit" class="btn btn-success active" value="Valider" />
+                    </div>
+                </div>
+            </div>
+    </div>
+}      

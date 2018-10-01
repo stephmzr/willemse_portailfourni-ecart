@@ -1,0 +1,35 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace WillemseFranceMP.Controllers
+{
+    // Controller : Page général du site internet
+    public class HomeController : Controller
+    {
+
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult About()
+        {
+            ViewBag.Message = "La marketplace - Willemsefrance";
+
+            return View();
+        }
+
+        // Desactiver - En fonction de l'ergonomie du site
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Page de contact";
+
+            return View();
+        }
+
+        
+    }
+}

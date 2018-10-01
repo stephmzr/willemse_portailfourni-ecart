@@ -1,0 +1,148 @@
+﻿@model WillemseFranceMP.Models.ApplicationUser
+@using WillemseFranceMP.Controllers.Helpers
+
+
+@{
+    if (Model.Sigtie == "Oui")
+    {
+        ViewBag.Title = "Détails fournisseur: " + Model.Societe;
+    }
+    else
+    {
+        ViewBag.Title = "Activation compte fournisseur";
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<div class="container">
+    <br /><br />
+    <h2 style="color:darkgreen;">@ViewBag.Title</h2>
+    <br />
+    <div>
+        <div class="form-group">
+            @using (Html.BeginForm("ValidFouFinal", "Admin", FormMethod.Post, new { @class = "form-inline", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="row">
+                    <div class="col-xs-5">
+                        <ul>
+                            <li>
+                                <b style="color:darkgreen;">Nom Interlocuteur</b><br />
+                                <input type="text" class="form-control" name="nom" placeholder="Entrer ici le nom du contact" value="@Model.Nom" />
+                                <br /><br />
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-5">
+                        <ul>
+                            <li>
+                                <b style="color:darkgreen;">Prenom</b><br />
+                                <input type="text" class="form-control" name="prenom" placeholder="Entrer ici le prénom du contact" value="@Model.Prenom" />
+                                <br /><br />
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5">
+                        <ul>
+                            <li>
+                                <b style="color:darkgreen;">Email</b><br />
+                                <input type="text" class="form-control" name="email" placeholder="Entrer ici un email" value="@Model.Email" />
+                                <br /><br />
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-5">
+                        <ul>
+                            <li>
+                                <b style="color:darkgreen;">Telephone</b><br />
+                                <input type="text" class="form-control" name="tel" placeholder="Entrer ici le numéro de téléphone" value="@Model.Telephone" />
+                                <br /><br />
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5">
+                        <ul>
+                            <li>
+                                <b style="color:darkgreen;">Société</b><span style="color:red">*</span><br />
+                                <input type="text" class="form-control" name="societe" placeholder="Entrer ici le nom de la société" value="@Model.Societe" required />
+                                <br /><br />
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-5">
+                        <ul>
+                            <li>
+                                <b style="color:darkgreen;">SIRET</b><br />
+                                <input type="text" class="form-control" name="siret" placeholder="Entrer ici le numéro de siret" value="@Model.Siret" />
+                                <br /><br />
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5">
+                        <ul>
+                            <li>
+                                <b style="color:darkgreen;">Numero interne fournisseur</b><span style="color:red">*</span><br />
+                                <input type="text" class="form-control" name="idfou" placeholder="Entrer ici le code fournisseur" value="@Model.IdFou" required/>
+                                <br /><br />
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-5">
+                        <ul>
+                            <li>
+                                <b style="color:darkgreen;">Images fournisseur</b><br />
+                                <input type="text" class="form-control" name="sigimg" placeholder="Entrer ici le prefixe composé de 3 lettres" value="@Model.Valzn1" />
+                                <br /><br />
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                if (ViewBag.Message == "p")
+                {
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <ul>
+                                <li>
+                                    <b style="color:darkgreen;">Login FTP</b><br />
+                                    <input type="text" class="form-control" name="ftplog" placeholder="Entrer ici le login ftp du fournisseur" value="@Model.FTP_LOGIN" />
+                                    <br /><br />
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-5">
+                            <ul>
+                                <li>
+                                    <b style="color:darkgreen;">Password FTP</b><br />
+                                    <input type="text" class="form-control" name="ftppass" placeholder="Entrer ici le password ftp" value="@Model.FTP_PASS" />
+                                    <br /><br />
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+                <br /><br />
+                <div class="col-xs-8">
+                    <a href="#"><span class="glyphicon glyphicon-arrow-left"></span></a>
+                    @Html.ActionLink("Retour vers Page principale", "Index")
+                </div>
+                <input type="submit" class="btn btn-success active" value="Valider" />
+            }
+        </div>
+
+    </div>
+</div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script>
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
+    }

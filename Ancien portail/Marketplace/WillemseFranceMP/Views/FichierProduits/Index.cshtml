@@ -1,0 +1,211 @@
+﻿@model WillemseFranceMP.Models.FicheProduitViewModel
+
+
+@{
+    ViewBag.Title = "Fichiers de produits et offres";
+    // Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2 style="color:darkgreen">@ViewBag.Title</h2>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery-1.10.2.js")" type="text/javascript"></script>
+<br />
+
+<div class="panel panel-success ">
+    <div class="panel-heading text-center">
+        <h4> 
+            <span class="badge" style="font-size:large">1</span> 
+            Téléchargez nos modèles de fichiers
+        </h4>
+    </div>
+</div>
+
+    <div class="row">
+        <div class="col-lg-6 text-center" style="margin-top:10px">
+            <a class="btn btn-default btn-file" href="@Url.Action("Download",new { id = "Pro" })">
+                <span  class="glyphicon glyphicon-import" role="button"></span>
+                Téléchargez le modèle produits
+            </a>        
+        </div>
+        <div class="col-lg-6 text-center" style="border-left:3px solid grey;margin-top:10px">
+            <a class="btn btn-default btn-file" href="@Url.Action("DownloadOffExcel",new { id = "Off" })">
+                <span class="glyphicon glyphicon-import" role="button"></span>
+                Téléchargez le modèle offres
+            </a>
+        </div>
+    </div>
+<br/>
+<div class="panel panel-success">
+    <div class="panel-heading text-center">
+        <h4> 
+        <span class="badge" style="font-size:large">2</span> 
+        Chargez votre fichier
+        </h4>
+    </div>
+</div>
+<p class="text-center text-warning"><b>Pour être valides, les fichiers doivent respecter nos modèles.</b></p>
+<p class="text-center text-warning"><b>Veuillez respecter les noms et l'ordre des <mark>colonnes(champs)</mark> dans votre fichier.&nbsp; </b></p>
+<p class="text-center text-warning"><b>Veuillez respecter les noms et l'ordre des <mark>feuilles</mark> dans votre fichier.</b></p>
+<p class="text-center text-danger"><b>ATTENTION! La suppression des produits se fait dans le portail et non pas dans le fichier.</b></p>  
+   
+<div class="row">
+    <div class="col-lg-6 text-center" style="margin-top:10px">
+        @using (Html.BeginForm("GenereFicPro", "FichierProduits", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+        {
+           <label class="btn btn-default btn-file" style="height:35px">
+               <span class="glyphicon glyphicon-export"></span>               
+               Chargez un fichier de produits
+               @Html.AntiForgeryToken()
+               @Html.ValidationSummary("", new { @class = "text-danger" })
+               @Html.TextBoxFor(m => m.FicPro, new { type = "file", accept = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", style = "display:none" })
+               @Html.ValidationMessageFor(m => m.FicPro, "", new { @class = "text-danger" })
+            </label>
+            <input type="submit" value="ok" class="btn btn-default btn-file"/>
+        }
+    </div>
+    <div class="col-lg-6 text-center" style="border-left:3px solid grey;margin-top:10px">
+        @using (Html.BeginForm("GenereFicOff", "FichierProduits", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+        {
+            <label class="btn btn-default btn-file" style="height:35px">
+                <span class="glyphicon glyphicon-export"></span>
+                Chargez un fichier d'offres
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                @Html.TextBoxFor(m => m.FicPro, new { type = "file", accept = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", style = "display:none" })
+                @Html.ValidationMessageFor(m => m.FicPro, "", new { @class = "text-danger" })
+            </label>
+            <input type="submit" value="ok" class="btn btn-default btn-file" />
+        }
+    </div>
+</div>
+<br/>
+<div class="panel panel-success ">
+    <div class="panel-heading text-center">
+        <h4> 
+        <span class="badge"style="font-size:large">3</span> Rapport d'erreurs
+        </h4>
+    </div>
+</div>
+<p class="text-center text-warning"> 
+    <b> Ce journal d'erreurs est le rapport sur l'état de chargement de votre dernier fichier.</b> 
+</p>
+<div class="row">
+    <div class="col-lg-6 text-center" style="margin-top:10px">
+        <a class="btn btn-default btn-file" href="@Url.Action("RapportErreur",new { id = "Pro" })">
+            <span class="glyphicon glyphicon-import" role="button"></span>
+            Rapport d'erreurs fichier produits
+        </a>
+    </div>
+    <div class="col-lg-6 text-center" style="border-left:3px solid grey;margin-top:10px">
+        <a class="btn btn-default btn-file" href="@Url.Action("RapportErreur",new { id = "Off" })">
+            <span class="glyphicon glyphicon-import" role="button"></span>
+            Rapport d'erreurs fichier Offres
+        </a>
+    </div>
+</div>
+ <br/>
+<div class="panel panel-success ">
+    <div class="panel-heading text-center">
+        <h4> 
+        <span class="badge"style="font-size:large">4</span> 
+        Chargement d'images
+        </h4>
+    </div>
+</div>
+<p class="text-center text-warning"><b> Utilisez un dossier compressé ZIP pour charger les <mark>images</mark> de vos produits.</b></p>
+<p class="text-center text-warning"><b> Les noms de fichiers de vos images doivent être les mêmes que ceux indiqués dans le fichier produits, par exemple "123.jpg"</b></p>
+<div class="row">
+    <div class="col-lg-6">
+          <div class="form-inline text-center"style="margin-top:10px">
+                @using (Html.BeginForm("ChargerImages", "FichierProduits", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data"}))
+                {
+                    <label class="btn btn-default btn-file" style="height:35px">
+                        <span class="glyphicon glyphicon-export"></span>
+                        Charger un fichier zip d'images
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                    <input type="file" name="ImagesZip" accept=".zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed" required style="display:none" />
+                    </label>
+                    <input type="submit" value="ok" class="btn btn-default btn-file" />
+                }
+            </div>
+    </div>
+    <div class="col-lg-6 text-center"style="border-left:3px solid grey;margin-top:10px">
+        <a class="btn btn-default btn-file" href="@Url.Action("RapportErreur",new { id = "Img" })">
+            <span class="glyphicon glyphicon-import" role="button"></span>
+            Rapport d'erreurs fichier Images
+        </a>
+    </div>
+</div>
+
+
+
+<br />
+<div class="panel panel-success ">
+    <div class="panel-heading text-center">
+        <h4>
+            <span class="badge" style="font-size:large">5</span>
+            Chargement de fiches PDF
+        </h4>
+    </div>
+</div>
+<p class="text-center text-warning"><b> Utilisez un dossier compressé ZIP pour charger les <mark>Fiches PDF</mark> de vos produits.</b></p>
+<p class="text-center text-warning"><b> Les noms des fichiers doivent être les mêmes que ceux indiqués dans le fichier produits, par exemple "ABC.pdf" </b></p>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-inline text-center" style="margin-top:10px">
+            @using (Html.BeginForm("ChargerFiches", "FichierProduits", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+            {
+                <label class="btn btn-default btn-file" style="height:35px">
+                    <span class="glyphicon glyphicon-export"></span>
+                    Charger un fichier zip
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                    <input type="file" name="PdfZip" accept=".zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed" required style="display:none" />
+                </label>
+                    <input type="submit" value="ok" class="btn btn-default btn-file" />
+            }
+        </div>
+    </div>
+    <div class="col-lg-6 text-center" style="border-left:3px solid grey;margin-top:10px">
+        <a class="btn btn-default btn-file" href="@Url.Action("RapportErreur",new { id = "Pdf" })">
+            <span class="glyphicon glyphicon-import" role="button"></span>
+            Rapport d'erreurs fichier PDF
+        </a>
+    </div>
+</div>
+
+<br/>
+<div class="panel panel-success ">
+    <div class="panel-heading text-center">
+    <h4> 
+        <span class="badge"style="font-size:large">6</span> 
+        Votre Catalogue en Fichier CSV
+        </h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6 text-center" style="margin-top:10px">
+        <a class="btn btn-default btn-file" href="@Url.Action("chargerBDProduits")">
+            <span class="glyphicon glyphicon-import" role="button"></span>
+            Téléchargez tous vos Produits dans un Fichier CSV
+        </a>
+    </div>
+    <div class="col-lg-6 text-center" style="border-left:3px solid grey;margin-top:10px">
+        <a class="btn btn-default btn-file" href="@Url.Action("chargerBDOffres")">
+            <span class="glyphicon glyphicon-import" role="button"></span>
+            Téléchargez toutes vos Offres dans un Fichier CSV
+        </a>
+    </div>
+</div>
+<br /><br /><br />
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script>
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
+    }

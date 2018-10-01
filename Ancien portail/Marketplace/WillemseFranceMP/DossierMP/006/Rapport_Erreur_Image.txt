@@ -1,0 +1,6 @@
+########  -- Journal des Erreurs : Images   13/05/2016 17:36:28 --  ##########
+
+Le produit USA13051615 n'a pas trouvé d'image sécondaire 1 avec  tondeuse2.JPG 
+
+------------------------  FIN  -----------------------------------
+

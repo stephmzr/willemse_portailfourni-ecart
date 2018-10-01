@@ -1,0 +1,116 @@
+﻿@model PagedList.IPagedList<WillemseFranceMP.Models.Produit>
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Votre Catalogue de produits en ligne";
+}
+<h2 style="color:darkgreen;">@ViewBag.Title</h2>
+
+
+<br />
+    <p>
+        @Html.ActionLink("Enregistrer un nouveau produit", "Create")  &nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;
+        @Html.ActionLink("Importez votre Catalogue par fichier ", "Index","FichierProduits") <span class="glyphicon glyphicon-folder-open" />
+
+    </p>
+    <br/>
+@{
+    <div class="form-inline">
+        @using (Html.BeginForm("Index", "Produits", FormMethod.Get))
+        {
+            
+            @Html.TextBox("recherche", "Saisir le code produit", ViewBag.CurrentFilter as string, new { @class = "form-control" })
+            <input type="submit" value="Rechercher" class="btn btn-success active" />
+        }
+    </div>
+    <br />
+    if (Model.Count() == 0)
+    {
+        <table class="table table-hover">
+            <tr>
+                <th>
+                    Fournisseur
+                </th>
+                <th>
+                    Code Produit
+                </th>
+                <th>
+                    Designation
+                </th>
+                <th>
+                    Prix Cession HT
+                </th>
+                <th>
+                    &nbsp;
+                </th>
+            </tr>
+            <tr><td colspan="5"><p class="text-danger">Il n' y a pas de produits disponibles</p></td></tr>
+            </table>
+            }
+            else
+            {          
+            <table class="table table-hover">
+                <tr>
+                    <th style="color:darkgreen;">
+                        Fournisseur
+                    </th>
+                    <th style="color:darkgreen;">
+                        Code Produit
+                    </th>
+                    <th style="color:darkgreen;">
+                        Designation
+                    </th>
+                    <th style="color:darkgreen;">
+                        Prix Cession HT
+                    </th>
+                    <th style="color:darkgreen;">
+                        &nbsp;
+                    </th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdFou)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CodProFou)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DesignationPro)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Offre.PrixAchtHT)
+                            &euro;
+                        </td>
+                        <td>
+                            <b>
+                                <a href="#"><span class="glyphicon glyphicon-credit-card"></span></a>
+                                @Html.ActionLink("Offres", "Index", "Offres", new { id = item.ProduitID }, null) |
+                            </b>
+                            <b>
+                                <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                @Html.ActionLink("Details", "Details", new { id = item.ProduitID }) |
+                            </b>
+                            <b>
+                                <a href="#"><span class="glyphicon glyphicon-edit"></span></a>
+                                @Html.ActionLink("Modifier", "Edit", new { id = item.ProduitID }) |
+                            </b>
+                            <b>
+                                <a href="#"><span class="glyphicon glyphicon-trash"></span></a>
+                                @Html.ActionLink("Supprimer", "Delete", new { id = item.ProduitID })
+                           </b>
+                        </td>
+                    </tr>
+                }
+            </table>
+
+            }
+
+
+}
+<hr />
+<span class="text-info">Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) sur @Model.PageCount</span>
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, currentFilter = ViewBag.CurrentFilter }))

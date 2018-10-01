@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "Importer un fichier de suivi de commandes";
+}
+<div class="container">
+    <br /><br />
+    <h2 style="color:darkgreen;">@ViewBag.Title</h2>
+    <br /><br />
+    @{
+        if (TempData["errormessage"] != null)
+        {
+                <div class="alert alert-info">@TempData["errormessage"].ToString()</div>
+        }
+    }
+    <br /><br />
+    <div>
+        @using (Html.BeginForm("ImporterFichierCommandes", "Produits", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+        {
+            <div class="row">
+                <div class="col-xs-2"></div>
+                <div class="col-xs-10">
+                    <label style="color:darkslategrey">
+                       Télécharger le modèle: &emsp;
+                    </label><br />
+                    Il est important de respecter ce format de fichiers. &emsp;
+                    <a href="@Url.Action("DownloadModeleSuivi")" class="btn btn-success active" role="button"><b style="font-family:Arial, Helvetica, sans-serif"><span class="glyphicon glyphicon-download"> </span>Télécharger</b></a>
+                </div>
+            </div>
+            <br /><br />
+                <div class="row">
+                    <div class="col-xs-2"></div>
+                    <div class="col-xs-10">
+                        <label style="color:darkslategrey">
+                            Importer votre fichier de suivi: &emsp;
+                        </label><br />
+                        Les dates doivent être au format <b>jj/mm/aaaa</b> ou <b>aaaaMMjj</b> &emsp;
+                        <label class="btn btn-success active btn-file">
+                            <b>
+                                <span class="glyphicon glyphicon-upload">
+                                    <input type="file" id="fichier" name="file" accept=".csv" onchange="validate()?enableSend():void(0)" style="display: none;" />
+                                </span>
+                                Importer
+                            </b>
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-offset-10">
+                        <input type="submit" id="send" value="OK" class="btn btn-success" />
+                    </div>
+                </div>
+        }
+
+
+        <div class="row">
+            <label id="message" style="color:red"></label>
+        </div>
+    </div>
+
+    <br /><br />
+    <div>
+        <span class="glyphicon glyphicon-arrow-left" style="color:steelblue"></span>
+        @Html.ActionLink("Retour à la liste de commandes", "SuiviCommandes")
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        function validate() {
+            if (document.getElementById("fichier").files.length == 0) {
+                document.getElementById("message").innerHTML = "Aucun fichier selectionné.";
+                return false;
+            } else {
+                return true;
+            }
+        }
+        function enableSend(name) {
+            document.getElementById('send').removeAttribute("disabled");
+        }
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById('send').setAttribute("disabled", true);
+        });
+        $("#pageCommandes").addClass('active');
+    </script>
+}

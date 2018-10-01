@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<parametres>
+  
+    <mail>
+      <host>192.168.10.45</host>
+      <port>25</port>
+      <credentials name="EXPL@OLYMPE.NET" pass="udohg" />
+      <mpMail>noreply@willemsefrance.fr</mpMail>
+      <mpMailName>Portail Fournisseur</mpMailName>
+    </mail>
+  
+    <FTP>ftp.partage-willemse.com</FTP>
+ 
+    <!-- Pour changer d'environnement prod/preprod -->
+
+    <environnement>MPOraclePROD</environnement>
+    <oracleConnection>Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=EPSILON)(PORT=1521))(CONNECT_DATA=(SID=GNXPROD)));User Id=Soc1;Password=Infor1;</oracleConnection>
+
+    <!--
+    <environnement>MPOraclePREPROD</environnement>
+    <oracleConnection>Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=KHI)(PORT=1521))(CONNECT_DATA=(SID=GNXPROD)));User Id=Soc1;Password=Infor1;</oracleConnection>
+    -->
+    
+   <fichiers>
+    <produits>Modele_Produits_Vierge.xlsx</produits>
+    <offres>Modele_Offres_Vierge.xlsx</offres>
+    <suivi>Modele_suivi_commandes.csv</suivi>
+    <commandes>Commandes_suivi.csv</commandes>
+    <exportERPFile>MP_INTEG_PRO_ERP.IN</exportERPFile>
+    <rapportErreursProduits>Rapport_Erreur_Produit.txt</rapportErreursProduits>
+    <rapportErreursOffres>Rapport_Erreur_Offre.txt</rapportErreursOffres>
+    <rapportErreursImages>Rapport_Erreur_Image.txt</rapportErreursImages>
+    <rapportErreursModele>Rapport_Erreur_Modele.txt</rapportErreursModele>
+    <rapportErreursFiches>Rapport_Erreur_Fiches.txt</rapportErreursFiches>
+    <produitsCSV>BD_Produits_CSV.csv</produitsCSV>
+    <offresCSV>BD_Produits_CSV.csv</offresCSV>
+  </fichiers>
+  
+  <chemins>
+     
+    <exportERPPath>\\EPSILON\in</exportERPPath>
+    <DirOutPath>\\EPSILON\out</DirOutPath>
+    <!-- 
+    <exportERPPath>\\KHI\in</exportERPPath>
+    <DirOutPath>\\KHI\out</DirOutPath>
+    -->
+    <appData>~/App_Data</appData>
+    <DossiersFournisseurs>~/DossierMP</DossiersFournisseurs>
+    <ektas>\\rho\EKTAS\Vrac\Atraiter</ektas>
+    <repCommandes>~/FichiersCommandes</repCommandes>
+    <relationsclients>\\san2\users\utilisateurs\Informatique\RN</relationsclients><!-- Répertoire RN de test -->
+  </chemins>
+
+</parametres>

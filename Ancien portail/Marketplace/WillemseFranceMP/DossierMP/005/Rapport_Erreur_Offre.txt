@@ -1,0 +1,7 @@
+########  -- Journal des Erreurs  11/05/2016 09:44:15 --  ##########
+
+------------  Ligne 3 : Référence Produit ***  *** ---------------
+Le champ CODE PRODUIT FOURNISSEUR ne peut pas être vide
+Le champ DÉSIGNATION DU PRODUIT ne peut pas être vide
+Les champs 'Prix de Vente TTC du Produit' et 'Prix d'achat HT' sont tous les deux vides! 
+ Fin

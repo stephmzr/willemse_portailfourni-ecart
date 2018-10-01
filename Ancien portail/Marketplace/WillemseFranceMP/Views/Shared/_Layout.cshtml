@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html lang="fr-fr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Willemse France</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/site.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-toggle2.css" rel="stylesheet" />   
+    <link href="~/Content/bootstrap-toggle2.min.css" rel="stylesheet" />    
+    <link rel="stylesheet" type="text/css" href="/jquery.datetimepicker.css" />
+    <script src="/jquery.js"></script>
+    <script src="/build/jquery.datetimepicker.full.min.js"></script>
+    <link rel="icon" href="http://www.willemsefrance.fr/skin/frontend/willemseV2/default/images/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="http://www.willemsefrance.fr/skin/frontend/willemseV2/default/images/favicon.ico" type="image/x-icon" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.8.24.min.js"></script>
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top" style="height:7%;padding-left:4%;padding-right:4%">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="@Url.Action("Index", "Home")" class="navbar-brand" style="margin:0">
+                    <img src="~/ImagesSite/Logo.png" alt="Logo WillemseFrance"  class="img-responsive"/>
+                    
+                </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="navbar-default navbar-collapse" id="myNav" style="margin-top:15px">
+                <ul class="nav navbar-nav" style="margin-top:10px">
+                    <li>&nbsp;
+                        <b >
+                            @Html.ActionLink("Accueil", "Index", "Home", routeValues: null, htmlAttributes: new { style = "color:darkslategrey" })
+                        </b>&nbsp;
+
+                    <li>&nbsp;
+                        <b>
+                            @Html.ActionLink("Mon catalogue", "Index", "Produits", routeValues: null, htmlAttributes: new { style = "color:darkslategrey" })
+                        </b>&nbsp;
+
+                    <li>&nbsp;
+                        <b>
+                            @Html.ActionLink("FAQ", "About", "Home", routeValues: null, htmlAttributes: new { style = "color:darkslategrey" })
+                        </b>&nbsp;
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        <div class="panel btn-group btn-group-justified" style="text-align:center;">
+                @if (ViewBag.Message == "p" || ViewBag.Message == "a")
+            {
+
+                    @Html.ActionLink("Fournisseurs", "../Admin/Index", routeValues: null, htmlAttributes: new {@class= "btn btn-default", style = "color:darkslategrey", id="pageFournisseurs" })
+                    @Html.ActionLink("Nouveaux comptes", "../Admin/ValidFou", routeValues: null, htmlAttributes: new { @class = "btn btn-default", style = "color:darkslategrey", id = "pageComptes" })
+                    @Html.ActionLink("Validation des Produits", "../Admin/ValidPro", routeValues: null, htmlAttributes: new { @class = "btn btn-default", style = "color:darkslategrey", id = "pageProduits" })
+                    @Html.ActionLink("Export vers l'ERP", "../Admin/EnvoieERP", routeValues: null, htmlAttributes: new { @class = "btn btn-default", style = "color:darkslategrey", id = "pageExport" })
+                    if (ViewBag.Message == "p")
+                    {
+                        @Html.ActionLink("Suivi de commandes", "Index", "Commandes", routeValues: null, htmlAttributes: new { @class = "btn btn-default", style = "color:darkslategrey", id = "pageCommandes" })
+
+                        @Html.ActionLink("Administrateurs", "../Admin/Administrateurs", routeValues: null, htmlAttributes: new { @class = "btn btn-default", style = "color:darkslategrey", id = "pageAdmins" })
+            
+                        @Html.ActionLink("Parametres", "../Admin/Parametrage", routeValues: null, htmlAttributes: new { @class = "btn btn-default", style = "color:darkslategrey", id = "pageParametres" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Suivi de commandes", "Index", "Commandes", routeValues: null, htmlAttributes: new { @class = "btn btn-default", style = "color:darkslategrey", id = "pageCommandes" })
+                    }
+                }
+        </div>
+
+        @RenderBody()
+    </div>
+    <br /><br />
+    <footer class="navbar-fixed-bottom" style="height:4%;background-color:white">
+        <p style="margin-left:50px">&copy; @DateTime.Now.Year - Portail fournisseur - Willemse France</p>
+    </footer>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.intellisense.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/respond.js"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+

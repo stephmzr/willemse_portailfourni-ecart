@@ -1,0 +1,111 @@
+﻿@model WillemseFranceMP.Models.Parametres
+
+<div class="container">
+    <br /><br />
+    <div>
+        <!-- Formulaire de paramètres -->
+        @using (Html.BeginForm("EditParams", "Admin", FormMethod.Post))
+        {
+            <div class="form-group">
+                <h2>Paramètres de messagerie</h2>
+                <br />
+                <div class="row">
+                    <div class="col-xs-4">
+                        @Html.LabelFor(model => model.Host, new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.Host, new { @class = "form-control" })
+                    </div>
+                    <div class="col-xs-4">
+                        @Html.LabelFor(model => model.Port, new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.Port, new { @class = "form-control" })
+                    </div>
+                    <div class="col-xs-4">
+                        @Html.LabelFor(model => model.MailUser, new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.MailUser, new { @class = "form-control" })
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-xs-4">
+                        @Html.LabelFor(model => model.MailMP, new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.MailMP, new { @class = "form-control" })
+                    </div>
+                    <div class="col-xs-4">
+                        @Html.LabelFor(model => model.MailMpName, new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.MailMpName, new { @class = "form-control" })
+                    </div>
+                    <div class="col-xs-4">
+                        @Html.LabelFor(model => model.MailPass, new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.MailPass, new { @class = "form-control" })
+                    </div>
+                </div>
+         @*<br />
+        <hr />
+        <div class="row">
+            <div class="col-xs-4">
+                <h3>@Html.LabelFor(model => model.FTP, new { @class = "control-label" })</h3>
+                @Html.TextBoxFor(model => model.FTP, new { @class = "form-control" })
+            </div>
+            <div class="col-xs-6">
+                <h3>@Html.LabelFor(model => model.exportErpPath, new { @class = "control-label" })</h3>
+                @Html.TextBoxFor(model => model.exportErpPath, new { @class = "form-control" })
+            </div>
+        </div> *@
+                <div class="col-xs-1 col-xs-offset-10" style="margin-top:60px">
+                    <input type="submit" class="btn btn-success active" value="Enregistrer" />
+                </div>
+            </div>
+            <br />
+            <div class="row">
+            </div>
+        }
+        <hr />
+        <br />
+        <h2>Modèles de catalogues</h2>
+        <br />
+        <div class="row">
+            <div class="col-xs-4">
+                 @using (Html.BeginForm("changerCatProduits", "admin", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                 {
+                     <a href="@Url.Action("DownloadCatPro")" class="btn btn-success active" role="button"><b style="font-family:Arial, Helvetica, sans-serif">Voir le fichier de produits</b></a>
+                    <label  class="btn btn-default btn-file">
+                        Modifier<input type="file" name="file" onchange="submit()"style="display: none;"/>
+                    </label>
+                 }
+            </div>
+            <div class="col-xs-4">
+                @using (Html.BeginForm("changerCatOffres", "admin", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                {
+                    <a href="@Url.Action("DownloadCatOffres")" class="btn btn-success active" role="button"><b style="font-family:Arial, Helvetica, sans-serif">Voir le fichier d'offres</b></a>
+                    <label  class="btn btn-default btn-file">
+                        Modifier<input type="file" name="file" onchange="submit()" style="display: none;"/>
+                    </label>
+                }
+            </div>
+
+            <div class="col-xs-4">
+            @using (Html.BeginForm("changerFichierSuiviCommandes", "admin", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+            {
+                <a href="@Url.Action("DownloadFichierSuiviCommandes")" class="btn btn-success active" role="button"><b style="font-family:Arial, Helvetica, sans-serif">Voir le fichier de commandes</b></a>
+                <label class="btn btn-default btn-file">
+                    Modifier<input type="file" name="file" onchange="submit()" style="display: none;" />
+                </label>
+            }
+            </div>            
+        </div>
+    </div>
+    <br /><br />
+    <br /><br />
+    <div class="col-xs-10">
+        <a href="#"><span class="glyphicon glyphicon-arrow-left"></span></a>
+        @Html.ActionLink("Retour", "Index")
+    </div>
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $("#pageParametres").addClass('active');
+    </script>
+}
+
+

@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Bienvenue au Portail Fournisseur ";
+}
+
+
+<div class="text-left">
+        <a style="color:darkgreen;font-size:xx-large">@ViewBag.Title</a>
+        @if (ViewBag.Message == "u")
+        {
+            <a class="btn btn-default btn-file" href="@Url.Action("Download")" style="margin-left:35%">
+                <span class="glyphicon glyphicon-download" role="button"></span>
+                Téléchargez le guide d'utilisation
+            </a>
+        }
+
+</div>
+<br /><br /><br />
+<div class="container">
+    <div class="bs-example" style="	margin: 20px;">
+        <div id="myCarousel" class="carousel slide" data-interval="3000" data-ride="carousel" style="background: #2f4357;">
+            <!-- Carousel indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>
+            <!-- Wrapper for carousel items -->
+            <div class="carousel-inner" style="width:100%;height:80%;">
+                <div class="active item">
+                    <img src="~/ImagesSite/add-user-xxl.png" alt="Willemse France" style="width: 36.5%;margin: 0 auto;">
+                    <div class="carousel-caption">
+                        <h2>Créer votre compte fournisseur</h2>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="~/ImagesSite/icon_download.png" alt="Portail fournisseur" style="width: 40%;margin: 0 auto;">
+                    <div class="carousel-caption">
+                        <h2>Gérer votre Catalogue en Ligne</h2>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="~/ImagesSite/icon_jardinage.png" alt="Commandes" style="width: 36.45%;margin: 0 auto;">
+                    <div class="carousel-caption">
+                        <h2>Consulter les commandes</h2>
+                    </div>
+                </div>
+            </div>
+            <!-- Carousel controls -->
+            <a class="carousel-control left" href="#myCarousel" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+            <a class="carousel-control right" href="#myCarousel" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div>
+        <br /><br />
+    </div>
+</div>

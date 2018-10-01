@@ -1,0 +1,81 @@
+﻿@model IEnumerable<WillemseFranceMP.Models.ApplicationUser>
+@{
+    ViewBag.Title = "Les fournisseurs en attente de Validation ";
+}
+<div class="container">
+    <br /><br />
+    <h2 style="color:darkgreen;">@ViewBag.Title</h2>
+    <br />
+    <div>
+        @{
+            if (Model.Count() == 0)
+            {
+                <div class="alert alert-danger">
+                    Il n'y a pas de fournisseurs en attente de validation !
+                </div>
+            }
+            else
+            {
+                <table class="table table-hover ">
+                    <tr>
+
+                        <th>
+                            Réprésentant Fournisseur
+                        </th>
+                        <th>
+                            Adresse Email
+                        </th>
+                        <th>
+                            Société
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nom)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Societe)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Valider", "ValidFouFinal", new { id = item.Id })
+                            </td>
+                            <td>
+                                @Html.ActionLink("Supprimer", "ValidFouDelete", new { id = item.Id }, new { onclick = "return confirm('Confirmer la suppression du fournisseur "+item.Nom+"?')" })
+                            </td>
+
+                        </tr>
+                    }
+
+                </table>
+
+            }
+            <p>
+                <div>
+                    <a href="#"><span class="glyphicon glyphicon-arrow-left"></span></a>
+
+                    @Html.ActionLink("Retour", "Index")
+
+                </div>
+            </p>
+        }
+</div></div>
+
+@section Scripts {
+    <script type="text/javascript">
+            $("#pageComptes").addClass('active');
+    </script>
+}
+
+

@@ -1,0 +1,43 @@
+﻿@model WillemseFranceMP.Models.Offre
+
+@{
+    ViewBag.Title = "Suppression offre";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="color:darkgreen">Offre</h2>
+
+<h3 style="color:darkgreen">Suppression</h3>
+<div>
+    
+    <hr />
+    <h5>Etes-vous sûr de vouloir supprimer l'offre sur ce produit</h5>
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayName("Code Produit : ")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Produit.CodProFou)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Prix de Cession HT : ")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrixAchtHT)
+        </dd>   
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Supprimer" class="btn btn-success active" /> |
+            @Html.ActionLink("Retour", "Index",new { id=Model.ProduitID})
+        </div>
+    }
+</div>

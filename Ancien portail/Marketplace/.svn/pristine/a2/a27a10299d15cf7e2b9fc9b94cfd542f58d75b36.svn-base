@@ -1,0 +1,99 @@
+﻿@model IEnumerable<WillemseFranceMP.Models.ApplicationUser>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Administrateurs";
+}
+<div class="container">
+    @Html.ActionLink("Validation Inscription Fournisseur", "ValidFou") &nbsp;&nbsp;| &nbsp;&nbsp;
+    @Html.ActionLink("Validation des Produits", "ValidPro") &nbsp;&nbsp;| &nbsp;&nbsp;
+    @Html.ActionLink("Envoyer des produits vers l' ERP", "EnvoieERP") &nbsp;&nbsp;| &nbsp;&nbsp;
+    @Html.ActionLink("Fournisseurs", "Index")
+    @{
+        if (ViewBag.Message == "p")
+        {
+            @: &nbsp; &nbsp; | &nbsp; &nbsp;
+            @Html.ActionLink("Administrateurs", "Administrateurs")
+            @: &nbsp; &nbsp; | &nbsp; &nbsp;
+            @Html.ActionLink("Parametres", "Parametrage")
+        }
+    }
+    <br /><br />
+    <h2 style="color:darkgreen;">@ViewBag.Title</h2>
+    <br />
+    <div>
+        <!-- Liste des fournisseurs -->
+        @{
+            if (Model.Count() == 0)
+            {
+                <table class="table table-hover">
+                    <tr>
+                        <th>
+                            Prénom
+                        </th>
+                        <th>
+                            Nom
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
+                    <tr><td colspan="5"><p class="text-danger">Aucun Administrateur n'est enregistré</p></td></tr>
+                </table>
+            }
+            else
+            {
+                <table class="table table-hover">
+                    <tr>
+                        <th style="color:darkgreen;">
+                            Prénom
+                        </th>
+                        <th style="color:darkgreen;">
+                            Nom
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th style="color:darkgreen;">
+                            &nbsp;
+                        </th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr style="cursor: pointer;" onclick="produits(@item.IdFou)">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IdFou)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Societe)
+                            </td>
+                            <td>
+                                <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                @Html.ActionLink("Details Fournisseur", "ValidFouFinal", new { id = item.Id })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+        }
+
+
+    </div>
+</div>
+
+@section Scripts {
+
+
+
+    <script type="text/javascript">
+        function produits(fou) {
+            window.location = '/Admin/Validpro?recherche=' + fou;
+        }
+
+    </script>
+}
+
+

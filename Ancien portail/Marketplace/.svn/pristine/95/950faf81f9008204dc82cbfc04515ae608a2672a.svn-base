@@ -1,0 +1,90 @@
+﻿@model WillemseFranceMP.Models.CreateOffreViewModel
+
+@using WillemseFranceMP.Controllers.Helpers
+
+
+@{
+    ViewBag.Title = "Modification de l'offre sur le produit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="color:darkgreen">Modifier l'Offre</h2>
+
+
+@*using (Html.BeginForm())*@
+@using (Html.BeginForm("Edit","Offres",FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <hr/>
+    
+    <div class="form-horizontal">
+        
+        <div class="form-group">
+            <div class="row">
+                <div class="col-xs-4">
+                    @Html.RequiredLabelFor(m => m.PrixAchtHT, new { @class = " control-label" })
+                    @Html.TextBoxFor(m => m.PrixAchtHT, new {  @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.PrixAchtHT, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.LabelFor(m => m.PrixVtTtc, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.PrixVtTtc, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.PrixVtTtc, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-xs-4">
+                    @Html.LabelFor(m => m.FraisLiv, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.FraisLiv, new {  @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.FraisLiv, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+
+                <div class="col-xs-4">
+                    @Html.RequiredLabelFor(m => m.EcoTaxe, new { @class = " control-label" })
+                    @Html.TextBoxFor(m => m.EcoTaxe, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.EcoTaxe, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.RequiredLabelFor(m => m.Delailiv, new { @class = " control-label" })
+                    @Html.DropDownListFor(m => m.Delailiv, new SelectList(new string[] { "1 Semaine", "1 à 2 Semaines", "2 à 3 Semaines", "3 à 4 Semaines", "4 à 6 Semaines", "6 à 8 Semaines" }), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Delailiv, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.RequiredLabelFor(m => m.Dispo, new { @class = " control-label" })
+                    @Html.DropDownListFor(m => m.Dispo, new SelectList(new string[] { "Oui", "Epuisé/Supprimé", "Momentanément indisponible" }), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Dispo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-xs-5">
+                    @Html.RequiredLabelFor(m => m.Tva, new { @class = "control-label" })
+                    <div class="radio">
+                        <label><input type="radio" name="Tva" value="6" checked>Taux normal (20%)</label>
+                    </div>
+                    <div class="radio">
+                        <label><input type="radio" name="Tva" value="5">Taux réduit (10%)</label>
+                    </div>
+                </div>
+
+                <div class="col-xs-2">
+                    <br /><br /><br /><br />
+                    <input type="submit" value="Valider la modification" class="btn btn-success active" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+                        $(document).ready(function () {
+                            $('[data-toggle="tooltip"]').tooltip();
+                        });
+    </script>
+}

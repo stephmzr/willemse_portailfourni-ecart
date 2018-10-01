@@ -1,0 +1,139 @@
+﻿@model WillemseFranceMP.Models.RegisterViewModel
+@using WillemseFranceMP.Controllers.Helpers 
+@using Recaptcha.Web.Mvc
+@{
+    ViewBag.Title = "Inscription au portail fournisseur";
+}
+
+<h2 style="color:darkgreen;">@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <!--insertion des nouveaux champs pour l'inscription du fournisseur -->
+    <div class="form-group">
+        <div class="row">
+            <div class="col-xs-6">
+                @Html.RequiredLabelFor(m => m.Nom, new { @class = " control-label" })
+                @Html.TextBoxFor(m => m.Nom, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Nom, "", new { @class = "text-danger" })
+            </div>
+           
+            <div class="col-xs-6">
+                @Html.RequiredLabelFor(m => m.Prenom, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Prenom, new { @class = "form-control" })
+               @Html.ValidationMessageFor(m => m.Prenom, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-xs-6">
+                @Html.RequiredLabelFor(m => m.Email, new { @class = " control-label" })
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="col-xs-6">
+                @Html.RequiredLabelFor(m => m.Telephone, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Telephone, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Telephone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-xs-6">
+                @Html.RequiredLabelFor(m => m.Password, new { @class = " control-label"  })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control"  })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="col-xs-6">
+                @Html.RequiredLabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <br />
+    <h4 style="color:darkgreen;">Votre Société : </h4>
+    <hr />
+    <div class="form-group">
+        <div class="row">
+            <div class="col-xs-6">
+                @Html.RequiredLabelFor(m => m.Societe, new { @class = " control-label" })
+                @Html.TextBoxFor(m => m.Societe, new { @class = "form-control" })
+            </div>
+            <div class="col-xs-6">
+                @Html.RequiredLabelFor(m => m.Siret, new { @class = " control-label" })
+                @Html.TextBoxFor(m => m.Siret, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Siret, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-xs-6">
+                        @Html.LabelFor(m => m.Rue, new { @class = " control-label" })
+                        @Html.TextBoxFor(m => m.Rue, new { @class = "form-control" })
+                    </div>
+                    <div class="col-xs-6">
+                        @Html.LabelFor(m => m.Complement, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.Complement, new { @class = "form-control" })
+                    </div>
+                </div>
+                
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-xs-6">
+                        @Html.LabelFor(m => m.CodePostal, new { @class = " control-label" })
+                        @Html.TextBoxFor(m => m.CodePostal, new { @class = "form-control" })
+                    </div>
+                    <div class="col-xs-6">
+                        @Html.LabelFor(m => m.Ville, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.Ville, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        @Html.LabelFor(m => m.Pays, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.Pays, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-xs-6">
+                        @Html.LabelFor(m => m.Message, new { @class = "control-label" })
+                        @Html.TextAreaFor(m => m.Message, new { @class = "form-control", @rows = "5", @name = "review" })
+                    </div>
+                    <div class="col-xs-6">
+                        @Html.Label("Vérification Captcha", new { @class = "control-label" })
+                        @Html.Recaptcha()
+                    </div>                    
+                </div>                
+            </div>
+            <br /><br />
+            <div class="form-group">
+                <div class="col-md-offset-8 col-md-10">
+                    <input type="submit" class="btn btn-success active" value="S’inscrire" />
+                </div>
+            </div>
+
+            }
+
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+
+
+
+            }
+
+

@@ -1,0 +1,81 @@
+﻿@model WillemseFranceMP.Models.ApplicationUser
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Compte administrateur";
+}
+<div class="container">
+    <br /><br />
+    <h2 style="color:darkgreen;">@ViewBag.Title</h2>
+    <br />
+    <div>
+        <!-- Champs infos administrateur -->
+        @{
+            using (Html.BeginForm("SaveAdmin", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+            {
+                <div class="row">
+                    <input type="hidden" name="id" value="@Model.Id"/>
+                    <div class="col-xs-4">
+                        <b style="color:darkgreen;">Nom </b><br />
+                        <input type="text" class="form-control" name="nom" placeholder="Entrer ici le nom du contact" value="@Model.Nom" /> 
+                    </div>
+                    <div class="col-xs-4">
+                        <b style="color:darkgreen;">Prénom</b><br />
+                        <input type="text" class="form-control" name="prenom" placeholder="Entrer ici le nom du contact" value="@Model.Prenom" /> 
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-xs-4">
+                        <b style="color:darkgreen;">E-mail</b><br />
+                        <input type="text" class="form-control" name="email" placeholder="Entrer ici le nom du contact" value="@Model.Email" /> 
+                    </div>
+                    <br />
+                    <div class="col-xs-4">
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="valzn2" id="notification"
+                               @{ if (@Model.ValZn2 == "Oui" || @Model.ValZn2 == "oui")
+                                   {
+                                        @: checked="checked" value="Oui"
+                                   }
+                               }
+                               onclick="notif()" />
+                                <b style="color:darkgreen;">Reçoit des notifications</b>
+                                </label>
+                        </div>
+                    </div>
+                </div>
+                <br /><br />
+                <div class="row">
+                    <div class="col-xs-6">
+                        <a href="#"><span class="glyphicon glyphicon-arrow-left"></span></a>
+                        @Html.ActionLink("Retour", "Administrateurs")
+                    </div>
+                    <div class="col-xs-6" style="text-align:right">
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" class="btn btn-success active" value="Enregistrer" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        }
+
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        function notif() {
+            if (document.getElementById("notification").value == "Oui") {
+                document.getElementById("notification").value = "Non";
+            }
+            else {
+                document.getElementById("notification").value = "Oui";
+            }
+        }
+        $("#pageAdmins").addClass('active');
+    </script>
+}
+

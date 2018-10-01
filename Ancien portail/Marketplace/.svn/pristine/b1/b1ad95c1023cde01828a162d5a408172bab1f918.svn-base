@@ -1,0 +1,203 @@
+﻿@model PagedList.IPagedList<WillemseFranceMP.Models.Commande>
+@using PagedList.Mvc
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Suivi de Commandes";
+}
+
+
+<div class="container">
+    <h2 style="color:darkgreen;">@ViewBag.Title</h2>
+        <br /><br />
+            @if (Model.Count() == 0)
+            {
+                <p class="text-danger">Aucune commande enregistrée.</p>
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col-xs-3 form-inline">
+                        @using (Html.BeginForm("Index", "Commandes", FormMethod.Get))
+                {
+                            <label>Filtrer par fournisseur:</label><br />
+                            <input type="text"  id="fou" name="fou" placeholder="Id fournisseur" style="width:10em;" class="from-control" />
+                            <input type="submit" value="Filtrer" class="btn btn-success active" />
+                        }
+                    </div>
+                    <div class="col-xs-3 form-inline">
+                        @using (Html.BeginForm("Index", "Commandes", FormMethod.Get))
+                {
+                            <label>Trouver une commande:</label><br />
+                            <input type="text" id="com" name="com" placeholder="N° commande" style="width:10em;" class="from-control" />
+                            <input type="submit" value="Rechercher" class="btn btn-success active" />
+                        }
+                    </div>
+                    <div class="col-xs-3 form-inline">
+                        @using (Html.BeginForm("Index", "Commandes", FormMethod.Get))
+                {
+                            <label>Trouver un produit:</label><br />
+                            <input type="text" id="pro" name="pro" placeholder="Code produit" style="width:10em;" class="from-control" />
+                            <input type="submit" value="Rechercher" class="btn btn-success active" />
+                        }
+                    </div>
+                    <div class="col-xs-3 form-inline">
+                        @using (Html.BeginForm("Index", "Commandes", FormMethod.Get))
+                {
+                            <label>Commandes à partir d'une date:</label><br />
+                            <input type="date" id="datecm" name="datecm" placeholder="aaaa-mm-jj" style="width:10em;" class="from-control" />
+                            <input type="submit" value="Rechercher" class="btn btn-success active" />
+                        }
+                    </div>
+                </div>
+                <br /><br />
+                <div class="row pull-right">
+                    <div class="checkbox checkbox-primary">       
+                        <input id="majcheck" type="checkbox" class="styled" onclick="filter('maj')"/>
+                        <label for="majcheck">Commandes mises à jour par le fournisseur</label>
+                    </div>
+                </div>
+                <br /><br /><br />
+                <table class="table table-hover list-group">
+                    <tr style="color:darkgreen">
+                        <th>
+                            Id fournisseur
+                        </th>
+                        <th>
+                            N° commande
+                        </th>
+                        <th>
+                            Date commande
+                        </th>
+                        <th>
+                            Date facturation
+                        </th>
+                        <th>
+                            Code produit
+                        </th>
+                        <th style="padding-left:20px">
+                            Mise à jour du fournisseur
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                {
+                        <tr style="cursor: pointer" onclick="location.href='@(Url.Action("Edit", new { id = item.idcmnd }))'">
+                            <td style="padding-left:20px">
+                                @Html.DisplayFor(modelItem => item.idfou)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.numcmnd)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.datecmnd)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.datefact)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.codproerp)
+                            </td>
+                            <td style="text-align:center">
+                                @if(item.datrec == null && item.datappliv == null && item.colisretour == null && item.datexp == null && item.tracking == null)
+                                {
+                                   @: En attente <b>...</b>
+                                }
+                                else if(!string.IsNullOrEmpty(item.colisretour) || !string.IsNullOrEmpty(item.ACTIONRETOUR))
+                                {
+                                        <a href="#" style="color:darkred">
+                                        <span class="glyphicon glyphicon-arrow-left"></span>
+                                        Colis retourné
+                                        </a>
+                                }
+                                else if (item.datrec.HasValue)
+                                {
+                                    <a href="#" style="color:darkgreen">
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                        Colis livré
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="#" style="color:darkblue">
+                                        <span class="glyphicon glyphicon-arrow-right"></span>
+                                        Colis expédié
+                                    </a>
+                                }
+                            </td>
+                            <td>
+                                <b style="margin-left:20px">
+                                    <a href="#"><span class="glyphicon glyphicon-remove"></span></a>
+                                    @Html.ActionLink("Ne plus afficher", "Hide", new { id = item.idcmnd })
+                                </b>
+
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            }
+    <span class="text-info">Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) sur @Model.PageCount</span>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $("#pageCommandes").addClass('active');
+
+        $(document).ready(function () {
+            var checkmaj = $_GET('maj');
+            var checksolde = $_GET('solde');
+            if (checkmaj != null) {
+                if (checkmaj == 'true') {
+                    $('#majcheck').prop('checked', true).change();
+                } else {
+                    $('#majcheck').prop('checked', false).change();
+                }
+            }
+            if (checksolde != null) {
+                if (checksolde == 'true') {
+                    $('#soldecheck').prop('checked', true).change();
+                } else {
+                    $('#soldecheck').prop('checked', false).change();
+                }
+            }
+        });
+ 
+        function updateQueryStringParameter(uri, key, value) {
+            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+            var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+            if (uri.match(re)) {
+                return uri.replace(re, '$1' + key + "=" + value + '$2');
+            }
+            else {
+                return uri + separator + key + "=" + value;
+            }
+        }
+
+        function filter(filtre) {
+            var url = window.location.href;
+            var newfiltre = document.getElementById(filtre+'check').checked;
+            var newurl = updateQueryStringParameter(url, filtre, newfiltre);
+            window.location.href = newurl;
+        }
+
+        function $_GET(param) {
+            var vars = {};
+            window.location.href.replace(location.hash, '').replace(
+                /[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+                function (m, key, value) { // callback
+                    vars[key] = value !== undefined ? value : '';
+                }
+            );
+            if (param) {
+                return vars[param] ? vars[param] : null;
+            }
+            return vars;
+        }
+    </script>
+}

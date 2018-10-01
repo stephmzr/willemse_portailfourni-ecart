@@ -1,0 +1,18 @@
+########  -- Journal des Erreurs  07/12/2016 14:04:18 --  ##########
+
+
+
+------------  Ligne 3 : Référence Produit ***  *** ---------------
+Le champ CODE PRODUIT FOURNISSEUR ne peut pas être vide
+Le champ DÉSIGNATION DU PRODUIT ne peut pas être vide
+Le champ PRIX D'ACHAT HT ne peut pas être vide
+
+
+------------  Ligne 4 : Référence Produit *** test *** ---------------
+Le champ PRIX D'ACHAT HT ne peut pas être vide
+Le champ TVA ne peut pas être vide
+Le champ DELAI DE LIVRAISON ne peut pas être vide
+Le champ PRODUIT DISPONIBLE ne peut pas être vide
+
+
+Fin

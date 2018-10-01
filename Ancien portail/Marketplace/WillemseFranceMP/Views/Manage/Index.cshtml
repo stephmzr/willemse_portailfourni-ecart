@@ -1,0 +1,182 @@
+﻿@model WillemseFranceMP.Models.IndexViewModel
+@{
+    ViewBag.Title = "Paramètres de votre compte ";
+}
+
+<h2 style="color:darkgreen;">@ViewBag.Title</h2>
+
+<div>
+    <hr />
+    @{
+        if (@ViewBag.StatusMessage != null)
+        {
+            if (@ViewBag.StatusMessage.Contains("erreur"))
+            {
+                <div class="alert alert-danger">@ViewBag.StatusMessage</div>
+            }
+            else if(ViewBag.StatusMessage.Contains("mis à jour"))
+            {
+                <div class="alert alert-success">@ViewBag.StatusMessage</div>
+            }
+            else if (ViewBag.StatusMessage != "")
+            {
+                <div class="alert alert-info">@ViewBag.StatusMessage</div>
+            }
+        }
+    }
+    <div class="form-group">
+        @using (Html.BeginForm("Edit", "Manage", FormMethod.Post, new { @class = "form-inline", role = "form" }))
+            {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="col-xs-5">
+                    <ul>
+                        <li>
+                            <b style="color:darkgreen;">Nom Interlocuteur</b><br />
+                            <input type="text" class="form-control" name="nom" placeholder="Entrer ici le nom du contact" value="@Model.User.Nom" />
+                            <br /><br />
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-xs-5">
+                    <ul>
+                        <li>
+                            <b style="color:darkgreen;">Prenom</b><br />
+                            <input type="text" class="form-control" name="prenom" placeholder="Entrer ici le prénom du contact" value="@Model.User.Prenom" />
+                            <br /><br />
+                        </li>
+                    </ul>
+                </div>
+            </div>
+                <div class="row">
+                    <div class="col-xs-5">
+                        <ul>
+                            <li>
+                                <b style="color:darkgreen;">Email</b><br />
+                                <input type="text" class="form-control" name="email" placeholder="Entrer ici un email" value="@Model.User.Email" />
+                                <br /><br />
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-5">
+                        <ul>
+                            <li>
+                                <b style="color:darkgreen;">Telephone</b><br />
+                                <input type="text" class="form-control" name="tel" placeholder="Entrer ici le numéro de téléphone" value="@Model.User.Telephone" />
+                                <br /><br />
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5">
+                        <ul>
+                            <li>
+                                <b style="color:darkgreen;">Société</b><br />
+                                <input type="text" class="form-control" name="societe" placeholder="Entrer ici le nom de la société" value="@Model.User.Societe" />
+                                <br /><br />
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-5">
+                        <ul>
+                            <li>
+                                <b style="color:darkgreen;">SIRET</b><br />
+                                <input type="text" class="form-control" name="siret" placeholder="Entrer ici le numéro de siret" value="@Model.User.Siret" />
+                                <br /><br />
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            <br /><br />
+                <div class="col-xs-8">
+
+                </div>
+                <input type="submit" class="btn btn-success active" value="Valider" />
+        }
+    </div>
+
+
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt style="color:darkgreen;">Mot de passe :</dt>
+        <dd>
+            [
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("Changer votre mot de passe", "ChangePassword")
+            }
+            else
+            {
+                @Html.ActionLink("Créer", "SetPassword")
+            }
+            ]
+        </dd>
+
+
+        @*
+        
+        <dt>Connexions externes :</dt>
+        <dd>
+            @Model.Logins.Count [
+            @Html.ActionLink("Gérer", "ManageLogins") ]
+        </dd>
+            *@
+        @*
+            Les numéros de téléphone peuvent servir de second facteur de vérification dans un système d'authentification à 2 facteurs.
+             
+             Consultez <a href="http://go.microsoft.com/fwlink/?LinkId=403804">cet article</a>
+                pour des détails sur la configuration de cette application ASP.NET en vue de la prise en charge de l'authentification à 2 facteurs via des SMS.
+             
+             Décommentez le bloc suivant après avoir configuré l'authentification à 2 facteurs
+        *@
+        @*  
+            <dt>Numéro de téléphone :</dt>
+            <dd>
+                @(Model.PhoneNumber ?? "Aucun") [
+                @if (Model.PhoneNumber != null)
+                {
+                    @Html.ActionLink("Changer", "AddPhoneNumber")
+                    @: &nbsp;|&nbsp;
+                    @Html.ActionLink("Supprimer", "RemovePhoneNumber")
+                }
+                else
+                {
+                    @Html.ActionLink("Ajouter", "AddPhoneNumber")
+                }
+                ]
+            </dd>
+        *@
+        @*
+        <dt>Authentification à 2 facteurs :</dt>
+        <dd>
+            <p>
+                Il n'existe aucun fournisseur d'authentification à 2 facteurs configuré. Consultez <a href="http://go.microsoft.com/fwlink/?LinkId=403804">cet article</a>
+                pour des détails sur la configuration de cette application ASP.NET en vue de la prise en charge de l'authentification à 2 facteurs.
+            </p>
+        *@
+            @*@if (Model.TwoFactor)
+                {
+                    using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <text>Activé
+                        <input type="submit" value="Désactiver" class="btn btn-link" />
+                        </text>
+                    }
+                }
+                else
+                {
+                    using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <text>Désactivé
+                        <input type="submit" value="Activer" class="btn btn-link" />
+                        </text>
+                    }
+                }*@
+        <!----/dd-->
+    </dl>
+</div>

@@ -1,0 +1,27 @@
+﻿@model WillemseFranceMP.Models.Offre
+
+@{
+    ViewBag.Title = "Offres";
+}
+
+@{
+
+        <h2>Offres </h2>
+        <div class="alert alert-danger">
+           <p>Il n' a y a pas d'offres disponibles pour ce produit</p>
+        </div>
+        <p>
+            @Html.ActionLink("Ajouter une offre", "Create", new { id = ViewBag.Id })
+        </p>
+
+}
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,336 @@
+﻿    @model WillemseFranceMP.Models.Produit
+    @using WillemseFranceMP.Models
+
+
+    @{
+        ViewBag.Title = "Details produit";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h2 style="color:darkgreen;">Details du produit @Model.DesignationPro</h2>
+    <div>
+        <br /><br />
+        <div class="form-group">
+            <div class="row">
+                <div class="col-xs-6">
+                    <ul>
+                        <li>
+                            <b style="color:darkgreen;">Image principale</b><br /><br />
+                            <img src="~/DossierMP/@Model.IdFou/Images/@Model.ImgPrinc" alt="@Model.ImgPrinc" width="300" height="400" />
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-xs-3">
+                    <ul>
+                        <li><b style="color:darkgreen;">Date création produit</b><br />@Model.DateCre.ToString("dd-MM-yyyy")</li>
+                    </ul>
+                </div>
+                <div class="col-xs-3">
+                    <ul>
+                        <li><b style="color:darkgreen;">Date dernière modification</b><br />@Model.DateMod.ToString("dd-MM-yyyy")</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <ul>
+                        <li><b style="color:darkgreen;">Fournisseur</b><br />@Model.IdFou</li>
+                    </ul>
+                </div>
+                <div class="col-xs-3">
+                    <ul>
+                        <li><b style="color:darkgreen;">Code Produit</b><br />@Model.CodProFou</li>
+                    </ul>
+                </div>
+                <div class="col-xs-3">
+                    <ul>
+                        <li><b style="color:darkgreen;">EAN</b><br />@Model.EAN</li>
+                    </ul>
+                </div>
+                <div class="col-xs-3">
+                    <ul>
+                        <li><b style="color:darkgreen;">Designation Produit</b><br />@Model.DesignationPro</li>
+                    </ul>
+                </div>                  
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <ul>
+                        <li><b style="color:darkgreen;">Bon de livraison</b><br />@Model.LibBonLiv</li>
+                    </ul>
+                </div>    
+                <div class="col-xs-3">
+                    <ul>
+                        <li><b style="color:darkgreen;">Categorie Arboresence</b><br />@Model.CatArborIn</li>
+                    </ul>
+                </div> 
+                <div class="col-xs-3">
+                    <ul>
+                        <li><b style="color:darkgreen;">Descriptif Produit</b><br />@Model.DescPro</li>
+                    </ul>
+                </div>  
+                <div class="col-xs-3">
+                    <ul>
+                        <li><b style="color:darkgreen;">Garantie </b><br />@Model.DureeGarantie</li>
+                    </ul>
+                </div>   
+
+            </div>
+            <hr />
+            <div class="row"> 
+                <div class="col-xs-3">
+                    <ul>
+                        <li><b style="color:darkgreen;">Qualité livrée</b><br />@Model.QuaLiv</li>
+                    </ul>
+                </div>  
+                <div class="col-xs-3">
+                    <ul>
+                        <li><b style="color:darkgreen;">Pièces/paquet</b><br />@Model.NbrePcsPaq</li>
+                    </ul>
+                </div>   
+                <div class="col-xs-3">
+                    <ul>
+                        <li><b style="color:darkgreen;">Dimension </b><br />@Model.Hauteur</li>
+                    </ul>
+                </div>
+                <div class="col-xs-3">
+                    <ul>
+                        <li><b style="color:darkgreen;">Couleur </b><br />@Model.Couleur</li>
+                    </ul>
+                </div>                             
+            </div>  
+
+            <div class="row">         
+                <div class="col-xs-3">
+                    <ul>
+                        <li><b style="color:darkgreen;">Marque</b><br />@Model.Marque</li>
+                    </ul>
+                </div>
+                <div class="col-xs-3">
+                    <ul>
+                        <li><b style="color:darkgreen;">Slogan </b><br />@Model.Slogan</li>
+                    </ul>
+                </div>  
+                <div class="col-xs-3">
+                    <ul>
+                        <li><b style="color:darkgreen;">Plus(1) du produit</b><br />@Model.PlusProd1</li>
+                    </ul>
+                </div> 
+                <div class="col-xs-3">
+                    <ul>
+                        <li><b style="color:darkgreen;">Plus(2) du produit</b><br />@Model.PlusProd2</li>
+                    </ul>
+                </div>
+            </div>
+            <br />
+            <div class="row">   
+                <div class="col-xs-3">
+                    <ul>
+                        <li><b style="color:darkgreen;">Plus(3) du produit</b><br />@Model.PlusProd3</li>
+                    </ul>
+                </div>
+                <div class="col-xs-3">
+                    <ul>
+                        <li><b style="color:darkgreen;">Fiche Info </b><br />@Model.FichePDF</li>
+                    </ul>
+                </div>
+                <div class="col-xs-3">
+                    <ul>
+                        <li><b style="color:darkgreen;">Type de Livraison</b><br />@Model.DFO</li>
+                    </ul>
+                </div>
+                <div class="col-xs-3">
+                    <ul>
+                        <li><b style="color:darkgreen;">Lien YouTube</b><br />@Model.LienYoutube</li>
+                    </ul>
+                </div>
+            </div>
+            <hr />
+            <br />
+            <div class="row">
+                <div class="col-xs-6">
+                    <ul>
+                        <li><b style="color:darkgreen;">Période de plantation </b><br />@Model.PerPlant</li>
+                    </ul>
+                </div>
+                <div class="col-xs-6">
+                    <ul>
+                        <li><b style="color:darkgreen;">Période de floraison </b><br />@Model.PerFlo</li>
+                    </ul>
+                </div> 
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-xs-6">
+                    <ul>
+                        <li><b style="color:darkgreen;">Période de livraison </b><br />@Model.PerLiv</li>
+                    </ul>
+                </div>
+                <div class="col-xs-6">
+                    <ul>
+                        <li><b style="color:darkgreen;">Période de semis </b><br />@Model.PerSemis</li>
+                    </ul>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-xs-6">
+                    <ul>
+                        <li><b style="color:darkgreen;">Période de recolte </b><br />@Model.PerRecolte</li>
+                    </ul>
+                </div>
+                <div class="col-xs-6">
+                    <ul>
+                        <li><b style="color:darkgreen;">Type d'utilisation </b><br />@Model.TypUtil</li>
+                    </ul>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-xs-6">
+                    <ul>
+                        <li><b style="color:darkgreen;">Type de sol </b><br />@Model.TypSol</li>
+                    </ul>
+                </div>
+                <div class="col-xs-6">
+                    <ul>
+                        <li><b style="color:darkgreen;">Zone d'exposition</b><br />@Model.Exposition</li>
+                    </ul>
+                </div>
+            </div>
+        
+            
+            <hr />
+            <br/>
+            <div class="row">
+               <div class="col-xs-4">
+                   <ul>
+                       <li>
+                           <b style="color:darkgreen;">Image Secondaire 1 </b><br /><br />
+                           @if (@Model.ImgSecond1 == null)
+                           {
+
+                           }
+                           else
+                           {
+                            <img src="~/DossierMP/@Model.IdFou/Images/@Model.ImgSecond1" alt="@Model.ImgSecond1" width="300" height="400" />
+                           }
+                           
+                               
+                       </li>
+                   </ul>            
+                </div>
+                <div class="col-xs-4">
+                    <ul>
+                        <li>
+                            <b style="color:darkgreen;">Image Secondaire 2 </b><br /><br />
+                             @if (@Model.ImgSecond2 == null)
+                             {
+
+                             }
+                             else
+                             {
+                            <img src="~/DossierMP/@Model.IdFou/Images/@Model.ImgSecond2" alt="@Model.ImgSecond2" width="300" height="400" />
+                             }
+                        </li>
+                    </ul>       
+                </div>
+
+                <div class="col-xs-4">
+                    <ul>
+                        <li>
+                            <b style="color:darkgreen;">Image Secondaire 3 </b><br /><br />
+                            @if (@Model.ImgSecond3 == null)
+                            {
+
+                            }
+                            else
+                            {
+                                <img src="~/DossierMP/@Model.IdFou/Images/@Model.ImgSecond3" alt="@Model.ImgSecond3" width="300" height="400" />
+                            }
+                        </li>
+                    </ul>
+                </div> 
+           </div>
+           <div class="row">         
+                <div class="col-xs-4">
+                    <ul>
+                        <li>
+                            <b style="color:darkgreen;">Image Secondaire 4 </b><br /><br />
+                             @if (@Model.ImgSecond4 == null)
+                             {
+
+                             }
+                             else
+                             {
+                            <img src="~/DossierMP/@Model.IdFou/Images/@Model.ImgSecond4" alt="@Model.ImgSecond4" width="300" height="400" />
+                             }
+                        </li>
+                    </ul>       
+                </div>
+                <div class="col-xs-4">
+                    <ul>
+                        <li>
+                            <b style="color:darkgreen;">Image Secondaire 5 </b><br /><br />
+                             @if (@Model.ImgSecond5 == null)
+                             {
+
+                             }
+                             else
+                             {
+                            <img src="~/DossierMP/@Model.IdFou/Images/@Model.ImgSecond5" alt="@Model.ImgSecond5" width="300" height="400" />
+                             }
+                        </li>
+                    </ul>       
+                </div>                
+            </div>
+            <br />
+    </div>  
+  </div>    
+    <br/>
+    <div>
+        <div>
+            <hr />
+
+            @{
+
+                if (ViewBag.TYPUSER)
+                {
+                    <div class="form-group text-center">
+                        <div class="col-xs-2 col-xs-offset-4">
+                            <span class="glyphicon glyphicon-arrow-left" style="color:steelblue"></span>
+                            @Html.ActionLink("Retour", "ValidPro", "Admin", new { recherche = Model.IdFou }, null)
+
+                        </div>
+                        <div class="col-xs-2">
+                            <a href="@Url.Action("ValidProAdmin","Admin",new { id = Model.ProduitID })" class="btn btn-success active" role="button"><b style="font-family:Arial, Helvetica, sans-serif">Valider</b></a>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="row text-center">
+                        <div class="col-xs-2">
+                            <span class="glyphicon glyphicon-arrow-left" style="color:steelblue"></span>
+                            @Html.ActionLink("Retour", "Index")
+
+                        </div>
+                        <div class="col-xs-2 col-xs-offset-8">
+                            <a href="#"><span class="glyphicon glyphicon-edit"></span></a>
+                            @Html.ActionLink("Modifier", "Edit", new { id = Model.ProduitID })
+                        </div>
+                    </div>
+                }
+            }
+
+        </div>
+    </div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $("#pageProduits").addClass('active');
+    </script>
+}

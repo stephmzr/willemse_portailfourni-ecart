@@ -1,0 +1,143 @@
+﻿using Microsoft.AspNet.Identity;
+using System.Data;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using WillemseFranceMP.Models;
+
+
+namespace WillemseFranceMP.Controllers
+{
+    [Authorize(Roles = "Utilisateur")]
+    public class FichierProduitsController : Controller
+    {
+        private ProduitDBContext db = new ProduitDBContext();
+        private ApplicationDbContext dbA = new ApplicationDbContext();
+        private ImportExcelFile FicPro = new ImportExcelFile();
+
+        public ApplicationUser CurrentUser
+        {
+            get
+            {
+                string currentUserId = User.Identity.GetUserId();
+                return dbA.Users.FirstOrDefault(x => x.Id == currentUserId);
+            }
+        }
+
+        public ActionResult Index()
+        {
+            return View();
+        }
+        public FileResult Download(string id)
+        {
+            string filepath = "~/App_Data/Modele_Offres_Vierge.xlsx";
+            string filename = "MarketPlace_" + this.CurrentUser.Nom + "_Offres.xlsx";
+            if (!string.IsNullOrEmpty(id)&&id.Equals("Pro"))
+            {
+                filepath = "~/App_Data/Modele_Produits_Vierge.xlsx";
+                filename = "MarketPlace_" + this.CurrentUser.Nom + "_Produits.xlsx";
+            }
+           // string filePath = "Market Place -" + User.Identity.GetUserName();
+            return File(Server.MapPath(filepath), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename);
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult GenereFicPro(FicheProduitViewModel model)
+        {
+            DataTable dtResult = null; 
+
+            if (ModelState.IsValid)
+            {
+                if (model.FicPro != null && model.FicPro.ContentLength > 0)
+                {
+                    string filename = "MarketPlace_" + CurrentUser.Nom + "_Produits.xlsx";
+                    string filePath = Server.MapPath("~/DossierMP/"+CurrentUser.IdFou+"/"+filename);
+                    model.FicPro.SaveAs(Path.Combine(Server.MapPath("~/DossierMP/"+CurrentUser.IdFou), filename));                  
+                    dtResult = this.FicPro.ConvertExcelToDataTable(filePath, 1);
+                    this.FicPro.checkFile(dtResult, Server.MapPath("~/DossierMP/"+CurrentUser.IdFou), this.CurrentUser.IdFou,1);
+                    //  dtResult = ImportExcelFile.ConvertExcelToDataTable(filePath,1);
+                   //  ImportExcelFile.checkFile(dtResult, Server.MapPath("~/FichiersMP"));
+                    ViewBag.StatusFileOff = "Le fichier a été chargé avec Succès";
+                }
+                //  return View("TestExcel",dtResult);
+                return View("Index");
+            }
+            return View();
+        }
+
+        public FileResult RapportErreur(string id)
+        {
+            string filename = "Rapport_Erreur_Produit.txt";
+            string filepath = "~/DossierMP/" + CurrentUser.IdFou + "/" + filename;
+            if(!string.IsNullOrEmpty(id)&& id.Equals("Off"))
+            {
+                filename = "Rapport_Erreur_Offre.txt";
+                filepath = "~/DossierMP/" + CurrentUser.IdFou + "/" + filename;
+            }
+            // string filePath = "Market Place -" + User.Identity.GetUserName();
+            return File(Server.MapPath(filepath), "application/octet-stream", filename);
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult GenereFicOff(FicheProduitViewModel model)
+        {
+            DataTable dtResult = null;
+            if (ModelState.IsValid)
+            {
+                if (model.FicPro != null && model.FicPro.ContentLength > 0)
+                {
+                    string filename = "MarketPlace_" + this.CurrentUser.Nom + "_Offres.xlsx";
+                    string filePath = Server.MapPath("~/DossierMP/" +CurrentUser.IdFou+"/"+ filename);
+                    model.FicPro.SaveAs(Path.Combine(Server.MapPath("~/DossierMP/"+CurrentUser.IdFou), filename));
+                    dtResult = FicPro.ConvertExcelToDataTable(filePath, 2);
+                    this.FicPro.checkFile(dtResult, Server.MapPath("~/DossierMP/" + CurrentUser.IdFou), this.CurrentUser.IdFou, 2);
+                }
+                // Text excel --** revenir 
+                return View("TestExcel", dtResult);
+            }
+            return View();
+        }
+
+        public ActionResult ChargerImages(HttpPostedFileBase imagesZip)
+        {
+            if(ModelState.IsValid)
+            {
+                if(imagesZip!=null && imagesZip.ContentLength>0)
+                {
+                    string extractPath = Server.MapPath(@"~/DossierMP/" + CurrentUser.IdFou + @"/Images");
+                    string zipPath = Path.Combine(extractPath, imagesZip.FileName);
+                    string unzipPath =Path.Combine(extractPath,(Path.GetFileNameWithoutExtension(imagesZip.FileName)));
+                    if (Directory.Exists(unzipPath)) Directory.Delete(unzipPath,true);
+                    if (System.IO.File.Exists(zipPath)) System.IO.File.Delete(zipPath);
+                    imagesZip.SaveAs(zipPath);
+                    ZipFile.ExtractToDirectory(zipPath, extractPath);
+                    System.IO.File.Delete(zipPath);
+                    foreach(FileInfo f in new DirectoryInfo(unzipPath).GetFiles())
+                    {
+                        f.MoveTo(Path.Combine(extractPath,f.Name));
+                    }
+                       
+
+               //     }
+                  //  GestionErreurImage.deplacerImages(unzipPath, extractPath);
+                }
+                return View("Index");
+            }
+            return View();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
+}

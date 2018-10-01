@@ -1,0 +1,154 @@
+﻿@model PagedList.IPagedList<WillemseFranceMP.Models.Produit>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Produits";
+   // Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    @Html.ActionLink("Validation Inscription Fournisseur", "ValidFou") &nbsp;&nbsp;| &nbsp;&nbsp;
+    @Html.ActionLink("Validation des Produits", "ValidPro") &nbsp;&nbsp;| &nbsp;&nbsp;
+    @Html.ActionLink("Envoyer des produits vers l' ERP", "EnvoieERP") &nbsp;&nbsp;| &nbsp;&nbsp;
+    @Html.ActionLink("Fournisseurs", "Index")
+    @{
+        if (ViewBag.Message == "p")
+        {
+            @: &nbsp; &nbsp; | &nbsp; &nbsp;
+            @Html.ActionLink("Administrateurs", "Administrateurs")
+            @: &nbsp; &nbsp; | &nbsp; &nbsp;
+            @Html.ActionLink("Parametres", "Parametrage")
+        }
+    }
+    <br /><br />
+    <h2 style="color:darkgreen;">@ViewBag.Title</h2>
+    <br />
+    <div>
+    @{
+        <div class="form-inline">
+            @using (Html.BeginForm("Validpro", "Admin", FormMethod.Get))
+            {
+                @Html.AntiForgeryToken()
+                @Html.TextBox("recherche", "Entrer ici le numéro interne fournisseur", ViewBag.CurrentFilter as string, new { @class = "form-control" })
+                <input type="submit" value="Rechercher" class="btn btn-success active" />
+            }
+        </div>
+        <br />
+        if (Model.Count() == 0)
+        {
+            <p class="text-danger">Il n'y a pas de produits disponibles ! Saisir le&nbsp;<strong>numero interne fournisseur</strong> pour effectuer une recherche </p>
+            <table class="table table-hover">
+                <tr>
+                    <th style="color:darkgreen;">Fournisseur</th>
+                    <th style="color:darkgreen;">Code Produit</th>
+                    <th style="color:darkgreen;">Designation</th>
+                    <th style="color:darkgreen;">Prix Cession HT</th>
+                    <th style="color:darkgreen;">Produits</th>
+                    <th style="color:darkgreen;">Offres</th>
+                </tr>
+                <tr><td colspan="5"></td></tr>
+            </table>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table   table-hover">
+                    <tr>
+                        <th style="color:darkgreen;">Fournisseur</th>
+                        <th style="color:darkgreen;">Code Produit</th>
+                        <th style="color:darkgreen;">Designation</th>
+                        <th style="color:darkgreen;">Prix Cession HT</th>
+                        <th style="color:darkgreen;">Produits</th>
+                        <th style="color:darkgreen;">Offres</th>
+                    </tr>
+                    @foreach (var item in Model)
+                {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.IdFou)</td>
+                            <td>@Html.DisplayFor(modelItem => item.CodProFou)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DesignationPro)</td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Offre.PrixAchtHT)
+                                &euro;
+                            </td>
+                                                        @*
+          <td class="text-nowrap">
+            <b>
+                @if (!item.ValdWill.Equals("Oui"))
+                {
+                    <button type="button" class="btn btn-danger btn-xs">Valide<span class="badge">NON</span></button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-success btn-xs active ">Valide <span class="badge">OUI</span></button>
+                }
+                <a href="#"><span class="glyphicon glyphicon-edit"></span></a>
+                @Html.ActionLink("Modifier", "Edit", "Produits", new { id = item.ProduitID }, null)
+                <a href="#">&nbsp;<span class="glyphicon glyphicon-eye-open"></span></a>
+                @Html.ActionLink("Details", "Details", "Produits", new { id = item.ProduitID }, null)
+            </b>
+        </td>
+
+                                                            backround color green pour valide, red pour non valide
+                                                        *@
+                            
+                            
+                            <td class="text-nowrap" style="background-color:
+                                @if (!item.ValdWill.Equals("Oui"))
+                                    {
+                                       @:#f3d0bf
+                                    }
+                                    else
+                                    {
+                                       @:#c8ebd0
+                                    }
+                                ">
+                                <b>
+                                    
+                                    <a href="#"><span class="glyphicon glyphicon-edit"></span></a>
+                                    @Html.ActionLink("Modifier", "Edit", "Produits", new { id = item.ProduitID }, null)
+                                    <a href="#">&nbsp;<span class="glyphicon glyphicon-eye-open"></span></a>
+                                    @Html.ActionLink("Details", "Details", "Produits", new { id = item.ProduitID }, null)
+                                </b>
+                            </td>
+                            <td class="text-nowrap" style="background-color:
+                                @if (item.Offre != null && item.Offre.ValdWill != null && item.Offre.ValdWill.Equals("Oui"))
+                                    {
+                                       @:#c8ebd0
+                                    }
+                                    else
+                                    { 
+                                       @:#f3d0bf
+                                    }
+                                ">
+                                <b>
+                                    @if (item.Offre != null && item.Offre.ValdWill != null && item.Offre.ValdWill.Equals("Oui"))
+                                    {
+                                        <button type="button" class="btn btn-success btn-xs active">Valide <span class="badge">OUI</span></button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-danger btn-xs active">Valide <span class="badge">NON</span></button>
+                                    }
+                                    <a href="#"><span class="glyphicon glyphicon-edit"></span></a>
+                                    @Html.ActionLink("Modifier", "EditOffreAdmin", new { id = item.ProduitID, idFou = item.IdFou }, null) |
+                                    <a href="#">&nbsp;<span class="glyphicon glyphicon-eye-open"></span></a>
+                                    @Html.ActionLink("Details", "DetailsOffreAdmin", new { id = item.ProduitID }, null)
+                                </b>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        }
+    }
+    <hr />
+    <p>
+        <div>
+            <a href="#"><span class="glyphicon glyphicon-arrow-left"></span></a>
+            @Html.ActionLink("Retour vers Page principale", "Index")
+        </div>
+    </p>
+    <span class="text-info">Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) sur @Model.PageCount</span>
+    @Html.PagedListPager(Model, page => Url.Action("ValidPro",
+                new { page, currentFilter = ViewBag.CurrentFilter }))
+        </div>
+</div>

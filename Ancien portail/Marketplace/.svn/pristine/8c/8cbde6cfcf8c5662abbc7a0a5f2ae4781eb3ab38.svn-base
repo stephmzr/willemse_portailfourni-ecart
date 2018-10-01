@@ -1,0 +1,10 @@
+﻿
+@{
+    ViewBag.Title = "Loading";
+}
+
+<h2>Page en construction...</h2>
+
+<a onclick="window.history.back();"><span class="glyphicon glyphicon-arrow-left"></span>Retour</a>
+
+

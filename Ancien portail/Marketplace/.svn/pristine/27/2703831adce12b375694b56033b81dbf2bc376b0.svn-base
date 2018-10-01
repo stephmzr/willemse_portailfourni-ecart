@@ -1,0 +1,150 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity.Infrastructure;
+using System.Data.OleDb;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Web;
+
+namespace WillemseFranceMP.Models
+{
+    public class UtilCommandes
+    {
+        private CommandeDbOracleContext db = new CommandeDbOracleContext();
+        private Parametres p = new Parametres();
+
+
+        public Boolean TraitementCSVCommandes(string path)
+        {
+            string pathOnly = Path.GetDirectoryName(path);
+            string filename = Path.GetFileName(path);
+            try
+            {
+                DataTable dt = ConvertCSVToDataTable(path);
+                //Vérifie le nombre de colonnes
+                if (dt.Columns.Count != 27)
+                    return false;
+                InsertInDBCommandes(dt);
+                return true;
+            }catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
+
+        //Convertir les données du fichier en table de données
+        public DataTable ConvertCSVToDataTable(string filename)
+        {
+            StreamReader DataStreamReader = new StreamReader(@filename);
+            string[] columnNames = DataStreamReader.ReadLine().Split(new string[] {";"}, StringSplitOptions.None);
+            DataTable table = new DataTable("Commandes");
+            DataSet dset = new DataSet();
+            DataColumn column = null;
+            for (int i = 0; i < columnNames.Length; i++)
+            {
+                column = new DataColumn(columnNames[i]);
+                table.Columns.Add(column);
+            }
+            dset.Tables.Add(table);
+            while (!DataStreamReader.EndOfStream)
+            {
+                dset.Tables["Commandes"].Rows.Add(DataStreamReader.ReadLine().Split(new string[] { ";" }, StringSplitOptions.None));
+            }
+            DataStreamReader.Close();
+            return table;
+        }
+
+        public void InsertInDBCommandes(DataTable dt)
+        {
+            for (int i = 1; i < dt.Rows.Count; i++)
+            {
+                DataRow row = dt.Rows[i];
+                Commande commande = new Commande();
+                //commande.idcmnd = db.Commandes.Count()+1;
+                commande.numcmnd = row[0].ToString();
+                if (!row[1].ToString().Equals(null) && !row[1].ToString().Equals(""))
+                    commande.datecmnd = DateTime.ParseExact(row[1].ToString(), "yyyyMMdd", CultureInfo.InvariantCulture);
+                else
+                    commande.datecmnd = DateTime.MinValue;
+                if (!row[2].ToString().Equals(null) && !row[2].ToString().Equals(""))
+                    commande.datefact = DateTime.ParseExact(row[2].ToString(), "yyyyMMdd", CultureInfo.InvariantCulture);
+                else
+                    commande.datefact = DateTime.MinValue;
+                commande.civilite = row[3].ToString();
+                commande.nomc = row[4].ToString();
+                commande.prenomc = row[5].ToString();
+                commande.adrliv = row[6].ToString();
+                commande.compadr = row[7].ToString();
+                commande.bplieu = row[8].ToString();
+                commande.codpost = row[9].ToString();
+                commande.ville = row[10].ToString();
+                commande.pays = row[11].ToString();
+                commande.telfix = row[12].ToString();
+                commande.telport = row[13].ToString();
+                commande.emailc = row[14].ToString();
+                commande.codproerp = row[15].ToString();
+                commande.prixht = row[16].ToString();
+                commande.qt = row[17].ToString();
+                commande.reffou = row[18].ToString();
+                if (!row[19].ToString().Equals(null) && !row[19].ToString().Equals(""))
+                    commande.datappliv = DateTime.ParseExact(row[19].ToString(), "yyyyMMdd", CultureInfo.InvariantCulture);
+                else
+                    commande.datappliv = DateTime.MinValue;
+                if (!row[20].ToString().Equals(null) && !row[20].ToString().Equals(""))
+                    commande.datexp = DateTime.ParseExact(row[20].ToString(), "yyyyMMdd", CultureInfo.InvariantCulture);
+                else
+                    commande.datexp = DateTime.MinValue;
+                commande.tracking = row[21].ToString();
+                commande.transporteur = row[22].ToString();
+                if (!row[23].ToString().Equals(null) && !row[23].ToString().Equals(""))
+                    commande.datrec = DateTime.ParseExact(row[23].ToString(), "yyyyMMdd", CultureInfo.InvariantCulture);
+                else
+                    commande.datrec = DateTime.MinValue;
+                commande.colisretour = row[24].ToString();
+                commande.motifretour = row[25].ToString();
+                commande.solder = row[26].ToString();
+
+                db.Commandes.Add(commande);
+                db.SaveChanges();
+            }
+        }
+
+
+        private Exception HandleDbUpdateException(DbUpdateException dbu)
+        {
+            var builder = new StringBuilder("A DbUpdateException was caught while saving changes. ");
+            if (!(dbu.InnerException is System.Data.Entity.Core.UpdateException) ||
+                !(dbu.InnerException.InnerException is System.Data.SqlClient.SqlException))
+            {
+                try
+                {
+                    foreach (var result in dbu.Entries)
+                    {
+                        builder.AppendFormat("Type: {0} was part of the problem. ", result.Entity.GetType().Name);
+                    }
+                }
+                catch (Exception e)
+                {
+                    builder.Append("Error parsing DbUpdateException: " + e);
+                }
+            }
+            else
+            {
+                var sqlException = (System.Data.SqlClient.SqlException)dbu.InnerException.InnerException;
+                for (int i = 0; i < sqlException.Errors.Count; i++)
+                {
+                    builder.AppendLine("    SQL Message: " + sqlException.Errors[i].Message);
+                    builder.AppendLine("    SQL procedure: " + sqlException.Errors[i].Procedure);
+                }
+            }
+
+            string message = builder.ToString();
+            return new Exception(message, dbu);
+        }
+    }
+}

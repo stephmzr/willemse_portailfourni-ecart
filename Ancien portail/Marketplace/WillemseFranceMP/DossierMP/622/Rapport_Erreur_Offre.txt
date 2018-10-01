@@ -1,0 +1,13 @@
+########  -- Journal des Erreurs  11/10/2016 13:08:33 --  ##########
+
+------------  Ligne 53 : Référence Produit *** PHBI6C02 *** ---------------
+Le Code produit Fournisseur PHBI6C02 n'existe pas .
+------------  Ligne 94 : Référence Produit *** SEYAKI2C03 *** ---------------
+Le Code produit Fournisseur SEYAKI2C03 n'existe pas .
+------------  Ligne 96 : Référence Produit *** SEYAKI6C03 *** ---------------
+Le Code produit Fournisseur SEYAKI6C03 n'existe pas .
+------------  Ligne 98 : Référence Produit *** SEYAKI1C07 *** ---------------
+Le Code produit Fournisseur SEYAKI1C07 n'existe pas .
+------------  Ligne 99 : Référence Produit *** SEYAKI2C07 *** ---------------
+Le Code produit Fournisseur SEYAKI2C07 n'existe pas .
+Fin

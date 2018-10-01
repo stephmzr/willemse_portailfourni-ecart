@@ -1,0 +1,162 @@
+﻿@model PagedList.IPagedList<WillemseFranceMP.Models.Produit>
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Votre Catalogue de produits en ligne";
+}
+
+<br />
+<div class="row">
+    <div class="col-xs-8">
+        <h2 style="color:darkgreen;">@ViewBag.Title</h2>
+    </div>
+
+
+    <div class="col-xs-4" id="change">
+        <script type="text/javascript">
+                $("#change").hide();
+        </script>
+        <br />
+        <h4 class="text-danger">
+            Vous avez créé et/ou modifié des produits.<br />
+            Une fois que vous aurez terminé tous les ajouts et modifications, ceux-ci doivent être validé pour être pris en compte.
+        </h4>
+        <input type="button" onClick="valider()" value="Demander la validation des changements " class="btn btn-success active" />
+    </div>
+</div>
+<div class="row">
+    <br />
+    <div class="col-xs-2">
+        <span class="btn btn-success active">
+            <span class="glyphicon glyphicon-plus"></span>
+            @Html.ActionLink("Ajouter un produit", "Create", "", new { @style = "color:white" })
+        </span>
+    </div>
+    <div class="col-xs-3">
+        <span class="btn btn-success active">
+            <span class="glyphicon glyphicon-download-alt"></span>
+            @Html.ActionLink("Importer un catalogue par fichier", "../FichierProduits", "FichierProduits", new { style = "color:white" })
+        </span>
+    </div>
+    <div class="col-xs-3">
+        <span class="btn btn-success active">
+            <span class="glyphicon glyphicon-search"></span>
+            @Html.ActionLink("Suivi des commandes", "../Commandes/SuiviCommandes", "Commandes", htmlAttributes: new { @style = "color:white" })
+        </span>
+    </div>
+    <div class="col-xs-4">
+        <div class="form-inline">
+            @using (Html.BeginForm("Index", "Produits", FormMethod.Get))
+            {
+                @Html.TextBox("recherche", "", ViewBag.CurrentFilter as string, new { @class = "form-control", placeholder = "Saisir le code produit" })
+                <input type="submit" value="Rechercher" class="btn btn-success active" />
+            }
+        </div>
+    </div>
+</div>
+<br />
+@{
+    
+    if (Model.Count() == 0)
+    {
+       <p class="text-danger">Vous n'avez pas encore ajouté de produits.</p>
+    }
+    else
+    {
+        <br />
+        <table class="table table-hover">
+            <tr>
+                <th style="color:darkgreen;">
+                    Code Produit
+                </th>
+                <th style="color:darkgreen;">
+                    Designation
+                </th>
+                <th style="color:darkgreen;">
+                    Prix Cession HT
+                </th>
+                <th style="color:darkgreen;">
+                    &nbsp;
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CodProFou)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DesignationPro)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Offre.PrixAchtHT)
+                        &euro;
+                    </td>
+                    <td>
+                        <b>
+                            <a href="#"><span class="glyphicon glyphicon-credit-card"></span></a>
+                            @Html.ActionLink("Offres", "Index", "Offres", new { id = item.ProduitID }, null) |
+                        </b>
+                        <b>
+                            <a href="#"><span class="glyphicon glyphicon-eye-open"></span></a>
+                            @Html.ActionLink("Details", "Details", new { id = item.ProduitID }) |
+                        </b>
+                        <b>
+                            <a href="#"><span class="glyphicon glyphicon-edit"></span></a>
+                            @Html.ActionLink("Modifier", "Edit", new { id = item.ProduitID }) |
+                        </b>
+                        <b>
+                            <a href="#"><span class="glyphicon glyphicon-trash"></span></a>
+                            @Html.ActionLink("Supprimer", "Delete", new { id = item.ProduitID })
+                        </b>
+                    </td>
+                </tr>
+            }
+        </table>
+        <hr />
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-6">
+                    <span class="text-info">Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) sur @Model.PageCount</span>
+                    @Html.PagedListPager(Model, page => Url.Action("Index",
+            new { page, currentFilter = ViewBag.CurrentFilter }))
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        function valider()
+        {
+            $.ajax({
+                url: "Produits/Validate",
+                error: function (xhr, status, error) {
+                    alert('Erreur d\'envoi. \n Veuillez réessayer plus tard. ' + xhr.status);
+                },
+                success: function (response) {
+                    changements = false;
+                    window.location.reload();
+                    alert('Vos modifications ont bien été prises en compte.');
+                }
+            });
+        }
+        $(document).ready(function changements() {
+            $.ajax({
+                url: "Produits/ChangeOccured",
+                error: function (xhr, status, error) {
+                    alert('Erreur  ' + xhr.status);
+                },
+                success: function (response) {
+                    if(response == "True")
+                    {
+                        $("#change").show();
+                    }
+                }
+            });
+        });
+        
+    </script>
+}

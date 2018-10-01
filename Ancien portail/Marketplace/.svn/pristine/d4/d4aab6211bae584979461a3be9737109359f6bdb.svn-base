@@ -1,0 +1,873 @@
+﻿@model WillemseFranceMP.Models.EditProduitViewModel
+@using WillemseFranceMP.Controllers.Helpers
+
+@{
+    ViewBag.Title = "Modifier un produit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2 style="color:darkgreen;">@ViewBag.Title</h2>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery-1.10.2.js")" type="text/javascript"></script>
+
+
+
+@using (Html.BeginForm("Edit", "Produits", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <hr />
+        <div class="form-group">
+            <div class="row">
+                <div class="col-xs-3">
+                    <b><label>Code produit<span style="color:#f00">*</span></label></b>
+                    @Html.TextBoxFor(m => m.CodProFou, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.CodProFou, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(m => m.EAN, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.EAN, new { @class = "form-control" })
+                </div>
+                <div class="col-xs-6">
+                    @Html.RequiredLabelFor(m => m.DesignationPro, new { @class = "control-label", @display = "inline" })
+                    @Html.TextBoxFor(m => m.DesignationPro, new { @class = "form-control", @style = "width: 100%; max-width: 100%;" })
+                    @Html.ValidationMessageFor(m => m.DesignationPro, "", new { @class = "text-danger" })
+                    <span onMouseOver="this.style.cursor='help'" />@Html.DescriptionFor(m => m.DesignationPro)
+                </div>
+
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            @Html.RequiredLabelFor(m => m.LibBonLiv, new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.LibBonLiv, new { @class = "form-control", @style = "width: 100%; max-width: 100%;" })
+                            @Html.ValidationMessageFor(m => m.LibBonLiv, "", new { @class = "text-danger" })
+                            <span onMouseOver="this.style.cursor='help'" />@Html.DescriptionFor(m => m.LibBonLiv)
+                        </div>
+                    </div><br /><br />
+                    <div class="row">
+                        <div class="col-xs-12">
+                            @Html.LabelFor(m => m.DesignationLat, new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.DesignationLat, new { @class = "form-control", @style = "width: 100%; max-width: 100%;" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    @Html.RequiredLabelFor(m => m.DescPro, new { @class = "control-label" })
+                    @Html.TextAreaFor(m => m.DescPro, 8, 200, new { @class = "form-control", @name = "review", @style = "width: 100%; max-width: 100%;" })
+                    @Html.ValidationMessageFor(m => m.DescPro, "", new { @class = "text-danger" })
+                    <span onMouseOver="this.style.cursor='help'" />@Html.DescriptionFor(m => m.DescPro)
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+
+                <div class="col-xs-3">
+                    @Html.RequiredLabelFor(m => m.DureeGarantie, new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.DureeGarantie, new SelectList(new string[] { "1 an", "2 ans", "3 ans", "4 ans", "5 ans" }), new { @class = "form-control" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.RequiredLabelFor(m => m.NbrePcsPaq, new { @class = "control-label", @style = "text-align:left" })
+                    @Html.EditorFor(model => model.NbrePcsPaq, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.NbrePcsPaq, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.RequiredLabelFor(m => m.QuaLiv, new { @class = "control-label", @style = "text-align:left" })
+                    @Html.TextBoxFor(m => m.QuaLiv, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.QuaLiv, "", new { @class = "text-danger" })
+                    <span onMouseOver="this.style.cursor='help'" />@Html.DescriptionFor(m => m.QuaLiv)
+                </div>
+                <div class="col-xs-3">
+                    @Html.RequiredLabelFor(m => m.Hauteur, new { @class = " control-label", @style = "text-align:left" })
+                    @Html.TextBoxFor(m => m.Hauteur, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Hauteur, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+        </div>
+        <br />
+            <hr />
+            <br />
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-xs-12">
+                @Html.RequiredLabelFor(m => m.ActualArbor, new { @class = "control-label" }) :
+                <span style="color:darkslategrey" size="50%">
+                    @Model.ActualArbor
+                </span>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-xs-3">
+                @Html.RequiredLabelFor(m => m.Arb1, new { @class = " control-label" })
+                @Html.DropDownListFor(m => m.Arb1, new SelectList(string.Empty, "Value", "Text"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Arb1, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-xs-3">
+                @Html.RequiredLabelFor(m => m.Arb2, new { @class = " control-label" })
+                @Html.DropDownListFor(m => m.Arb2, new SelectList(string.Empty, "Value", "Text"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Arb2, "", new { @class = "text-danger" })
+            </div>
+        @*
+        <div class="col-xs-3">
+            @Html.RequiredLabelFor(m => m.Arb3, new { @class = " control-label" })
+            @Html.DropDownListFor(m => m.Arb3, new SelectList(string.Empty, "Value", "Text"), new { @class = "form-control" })
+        </div>
+        <div class="col-xs-3">
+            @Html.RequiredLabelFor(m => m.Arb4, new { @class = " control-label" })
+            @Html.DropDownListFor(m => m.Arb4, new SelectList(string.Empty, "Value", "Text"), new { @class = "form-control" })
+        </div>
+       *@
+
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-xs-3">
+                @Html.LabelFor(m => m.Marque, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Marque, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Marque, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-xs-3">
+                @Html.RequiredLabelFor(m => m.Couleur, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.Couleur, new SelectList(new string[] { "Aucune", "Bleu", "Rouge", "Jaune", "Vert", "Rose", "Violet", "Orange", "Noir", "Blanc", "Multicolore", "Mélange", "Gris" }), new { @class = "form-control" })
+            </div>
+            <div class="col-xs-6">
+                @Html.LabelFor(m => m.Slogan, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Slogan, new { @class = "form-control", @style = "width: 100%; max-width: 100%;" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-xs-3">
+                @Html.LabelFor(m => m.PlusProd1, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.PlusProd1, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.PlusProd1)
+                <span onMouseOver="this.style.cursor='help'" />@Html.DescriptionFor(m => m.PlusProd1)
+            </div>
+            <div class="col-xs-3">
+                @Html.LabelFor(m => m.PlusProd2, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.PlusProd2, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.PlusProd2, "", new { @class = "text-danger" })
+                <span onMouseOver="this.style.cursor='help'" />@Html.DescriptionFor(m => m.PlusProd2)
+            </div>
+            <div class="col-xs-3">
+                @Html.LabelFor(m => m.PlusProd3, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.PlusProd3, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.PlusProd3, "", new { @class = "text-danger" })
+                <span onMouseOver="this.style.cursor='help'" />@Html.DescriptionFor(m => m.PlusProd3)
+            </div>
+            <div class="col-xs-3">
+                @Html.RequiredLabelFor(m => m.DFO, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.DFO, new SelectList(new string[] { "00-Depart Fournisseur", "01-Depart Willemse" }), new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <br /><hr /><br />
+    <div class="form-group">
+        <div class="row">
+            <div class="col-xs-3">
+                @Html.LabelFor(m => m.ImgPrinc, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.ImgPrinc, new { type = "file" })
+                @Html.ValidationMessageFor(m => m.ImgPrinc, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-3">
+                @Html.LabelFor(m => m.ImgSecond1, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.ImgSecond1, new { type = "file" })
+                @Html.ValidationMessageFor(m => m.ImgSecond1, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-xs-3">
+                @Html.LabelFor(m => m.ImgSecond2, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.ImgSecond2, new { type = "file" })
+                @Html.ValidationMessageFor(m => m.ImgSecond2, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-xs-3">
+                @Html.LabelFor(m => m.ImgSecond3, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.ImgSecond3, new { type = "file" })
+                @Html.ValidationMessageFor(m => m.ImgSecond3, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="form-group">
+        <div class="row">
+            <div class="col-xs-3">
+                @Html.LabelFor(m => m.ImgSecond4, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.ImgSecond4, new { type = "file" })
+                @Html.ValidationMessageFor(m => m.ImgSecond4, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-xs-3">
+                @Html.LabelFor(m => m.ImgSecond5, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.ImgSecond5, new { type = "file" })
+                @Html.ValidationMessageFor(m => m.ImgSecond5, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-xs-3">
+                @Html.LabelFor(m => m.LienYoutube, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.LienYoutube, new { @class = "form-control" })
+            </div>
+            <div class="col-xs-3">
+                @Html.LabelFor(m => m.FichePDF, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.FichePDF, new { type = "file" })
+                @Html.ValidationMessageFor(m => m.FichePDF, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <br /><hr /><br />
+    <div class="form-group">
+        <div class="row">
+            <div class="col-xs-3">
+                @Html.LabelFor(m => m.PerPlant, new { @class = "control-label" })
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perplant" value="00" @{ if (Model.PerPlant.Contains("00")) { @: checked="checked"
+                                                       } }>Toute l'année
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perplant" value="01" @{ if (Model.PerPlant.Contains("01")) { @: checked="checked"
+                                                       } }>Janvier
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perplant" value="02" @{ if (Model.PerPlant.Contains("02")) { @: checked="checked"
+                                                       } }>Fevrier
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perplant" value="03" @{ if (Model.PerPlant.Contains("03")) { @: checked="checked"
+                                                       } }>Mars
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perplant" value="04" @{ if (Model.PerPlant.Contains("04")) { @: checked="checked"
+                                                       } }>Avril
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perplant" value="05" @{ if (Model.PerPlant.Contains("05")) { @: checked="checked"
+                                                       } }>Mai
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perplant" value="06" @{ if (Model.PerPlant.Contains("06")) { @: checked="checked"
+                                                       } }>Juin
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perplant" value="07" @{ if (Model.PerPlant.Contains("07")) { @: checked="checked"
+                                                       } }>Juillet
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perplant" value="08" @{ if (Model.PerPlant.Contains("08")) { @: checked="checked"
+                                                       } }>Aout
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perplant" value="09" @{ if (Model.PerPlant.Contains("09")) { @: checked="checked"
+                                                       } }>Septembre
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perplant" value="10" @{ if (Model.PerPlant.Contains("10")) { @: checked="checked"
+                                                       } }>Octombre
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perplant" value="11" @{ if (Model.PerPlant.Contains("11")) { @: checked="checked"
+                                                       } }>Novembre
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perplant" value="12" @{ if (Model.PerPlant.Contains("12")) { @: checked="checked"
+                                                       } }>Decembre
+                    </label>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                @Html.LabelFor(m => m.PerFlo, new { @class = "control-label" })
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perflo" value="00" @{ if (Model.PerFlo.Contains("00")) { @: checked="checked"
+                                                       } }>Toute l'année
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perflo" value="01" @{ if (Model.PerFlo.Contains("01")) { @: checked="checked"
+                                                       } }>Janvier
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perflo" value="02" @{ if (Model.PerFlo.Contains("02")) { @: checked="checked"
+                                                       } }>Fevrier
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perflo" value="03" @{ if (Model.PerFlo.Contains("03")) { @: checked="checked"
+                                                       } }>Mars
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perflo" value="04" @{ if (Model.PerFlo.Contains("04")) { @: checked="checked"
+                                                       } }>Avril
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perflo" value="05" @{ if (Model.PerFlo.Contains("05")) { @: checked="checked"
+                                                       } }>Mai
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perflo" value="06" @{ if (Model.PerFlo.Contains("06")) { @: checked="checked"
+                                                       } }>Juin
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perflo" value="07" @{ if (Model.PerFlo.Contains("07")) { @: checked="checked"
+                                                       } }>Juillet
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perflo" value="08" @{ if (Model.PerFlo.Contains("08")) { @: checked="checked"
+                                                       } }>Aout
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perflo" value="09" @{ if (Model.PerFlo.Contains("09")) { @: checked="checked"
+                                                       } }>Septembre
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perflo" value="10" @{ if (Model.PerFlo.Contains("10")) { @: checked="checked"
+                                                       } }>Octobre
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perflo" value="11" @{ if (Model.PerFlo.Contains("11")) { @: checked="checked"
+                                                       } }>Novembre
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perflo" value="12" @{ if (Model.PerFlo.Contains("12")) { @: checked="checked"
+                                                       } }>Decembre
+                    </label>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                @Html.LabelFor(m => m.TypUtil, new { @class = "control-label" })
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Typutil" value="1"
+                               @{ if (Model.TypUtil.Contains("1")) { @: checked="checked"
+                                                       } }>Bordure
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Typutil" value="2" @{ if (Model.TypUtil.Contains("2")) { @: checked="checked"
+                                                       } }>Couvre-sol
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Typutil" value="3" @{ if (Model.TypUtil.Contains("3")) { @: checked="checked"
+                                                       } }>Decoration Interieure
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Typutil" value="4" @{ if (Model.TypUtil.Contains("4")) { @: checked="checked"
+                                                       } }>Fleur à couper
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Typutil" value="5" @{ if (Model.TypUtil.Contains("5")) { @: checked="checked"
+                                                       } }>Grimpante
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Typutil" value="6" @{ if (Model.TypUtil.Contains("6")) { @: checked="checked"
+                                                       } }>Haie
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Typutil" value="7" @{ if (Model.TypUtil.Contains("7")) { @: checked="checked"
+                                                       } }>Isolé
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Typutil" value="8" @{ if (Model.TypUtil.Contains("8")) { @: checked="checked"
+                                                       } }>Massif
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Typutil" value="9" @{ if (Model.TypUtil.Contains("9")) { @: checked="checked"
+                                                       } }>Rocaille
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Typutil" value="10" @{ if (Model.PerPlant.Contains("10")) { @: checked="checked"
+                                                       } }>Jardinière/pot
+                    </label>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                @Html.LabelFor(m => m.PerSemis, new { @class = "control-label" })
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Persem" value="00" @{ if (Model.PerSemis.Contains("00")) { @: checked="checked"
+                                                       } }>Toute l'année
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Persem" value="01" @{ if (Model.PerSemis.Contains("01")) { @: checked="checked"
+                                                       } }>Janvier
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Persem" value="02" @{ if (Model.PerSemis.Contains("02")) { @: checked="checked"
+                                                       } }>Fevrier
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Persem" value="03" @{ if (Model.PerSemis.Contains("03")) { @: checked="checked"
+                                                       } }>Mars
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Persem" value="04" @{ if (Model.PerSemis.Contains("04")) { @: checked="checked"
+                                                       } }>Avril
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Persem" value="05" @{ if (Model.PerSemis.Contains("05")) { @: checked="checked"
+                                                       } }>Mai
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Persem" value="06" @{ if (Model.PerSemis.Contains("06")) { @: checked="checked"
+                                                       } }>Juin
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Persem" value="07" @{ if (Model.PerSemis.Contains("07")) { @: checked="checked"
+                                                       } }>Juillet
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Persem" value="08" @{ if (Model.PerSemis.Contains("08")) { @: checked="checked"
+                                                       } }>Aout
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Persem" value="09" @{ if (Model.PerSemis.Contains("09")) { @: checked="checked"
+                                                       } }>Septembre
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Persem" value="10" @{ if (Model.PerSemis.Contains("10")) { @: checked="checked"
+                                                       } }>Octombre
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Persem" value="11" @{ if (Model.PerSemis.Contains("11")) { @: checked="checked"
+                                                       } }>Novembre
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Persem" value="12" @{ if (Model.PerSemis.Contains("12")) { @: checked="checked"
+                                                       } }>Decembre
+                    </label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+
+            <div class="col-xs-3">
+                @Html.RequiredLabelFor(m => m.PerLiv, new { @class = "control-label" })
+                @Html.ValidationMessageFor(m => m.PerLiv, "", new { @class = "text-danger" })
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perliv" value="00" @{ if (Model.PerLiv.Contains("00") || Model.PerLiv == "") { @: checked="checked"
+                                                       } }>Toute l'année
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perliv" value="01" @{ if (Model.PerLiv.Contains("01")) { @: checked="checked"
+                                                       } }>Janvier
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perliv" value="02" @{ if (Model.PerLiv.Contains("02")) { @: checked="checked"
+                                                       } }>Fevrier
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perliv" value="03" @{ if (Model.PerLiv.Contains("03")) { @: checked="checked"
+                                                       } }>Mars
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perliv" value="04" @{ if (Model.PerLiv.Contains("04")) { @: checked="checked"
+                                                       } }>Avril
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perliv" value="05" @{ if (Model.PerLiv.Contains("05")) { @: checked="checked"
+                                                       } }>Mai
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perliv" value="06" @{ if (Model.PerLiv.Contains("06")) { @: checked="checked"
+                                                       } }>Juin
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perliv" value="07" @{ if (Model.PerLiv.Contains("07")) { @: checked="checked"
+                                                       } }>Juillet
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perliv" value="08" @{ if (Model.PerLiv.Contains("08")) { @: checked="checked"
+                                                       } }>Aout
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perliv" value="09" @{ if (Model.PerLiv.Contains("09")) { @: checked="checked"
+                                                       } }>Septembre
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perliv" value="10" @{ if (Model.PerLiv.Contains("10")) { @: checked="checked"
+                                                       } }>Octombre
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perliv" value="11" @{ if (Model.PerLiv.Contains("11")) { @: checked="checked"
+                                                       } }>Novembre
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perliv" value="12" @{ if (Model.PerLiv.Contains("12")) { @: checked="checked"
+                                                       } }>Decembre
+                    </label>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                @Html.LabelFor(m => m.TypSol, new { @class = "control-label" })
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Typsol" value="1" @{ if (Model.TypSol.Contains("1")) { @: checked="checked"
+                                                       } }>Tout Type
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Typsol" value="2" @{ if (Model.TypSol.Contains("2")) { @: checked="checked"
+                                                       } }>Argileux
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Typsol" value="3" @{ if (Model.TypSol.Contains("3")) { @: checked="checked"
+                                                       } }>Calcaire
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Typsol" value="4" @{ if (Model.TypSol.Contains("4")) { @: checked="checked"
+                                                       } }>Sableux
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Typsol" value="5" @{ if (Model.TypSol.Contains("5")) { @: checked="checked"
+                                                       } }>Humide
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Typsol" value="6" @{ if (Model.TypSol.Contains("6")) { @: checked="checked"
+                                                       } }>Sol Sec
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Typsol" value="7" @{ if (Model.TypSol.Contains("7")) { @: checked="checked"
+                                                       } }>Sol Acide
+                    </label>
+                </div>
+
+            </div>
+            <div class="col-xs-3">
+                @Html.LabelFor(m => m.Exposition, new { @class = "control-label" })
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Expo" value="13" @{ if (Model.Exposition.Contains("13")) { @: checked="checked"
+                                                       } }>Plein Soleil
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Expo" value="14" @{ if (Model.Exposition.Contains("14")) { @: checked="checked"
+                                                       } }>Mi-Ombre
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Expo" value="15" @{ if (Model.Exposition.Contains("15")) { @: checked="checked"
+                                                       } }>Ombre
+                    </label>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                @Html.LabelFor(m => m.PerRecolte, new { @class = "control-label" })
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perrec" value="00" @{ if (Model.PerRecolte.Contains("00")) { @: checked="checked"
+                                                       } }>Toute l'année
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perrec" value="01" @{ if (Model.PerRecolte.Contains("01")) { @: checked="checked"
+                                                       } }>Janvier
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perrec" value="02" @{ if (Model.PerRecolte.Contains("02")) { @: checked="checked"
+                                                       } }>Fevrier
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perrec" value="03" @{ if (Model.PerRecolte.Contains("03")) { @: checked="checked"
+                                                       } }>Mars
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perrec" value="04" @{ if (Model.PerRecolte.Contains("04")) { @: checked="checked"
+                                                       } }>Avril
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perrec" value="05" @{ if (Model.PerRecolte.Contains("05")) { @: checked="checked"
+                                                       } }>Mai
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perrec" value="06" @{ if (Model.PerRecolte.Contains("06")) { @: checked="checked"
+                                                       } }>Juin
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perrec" value="07" @{ if (Model.PerRecolte.Contains("07")) { @: checked="checked"
+                                                       } }>Juillet
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perrec" value="08" @{ if (Model.PerRecolte.Contains("08")) { @: checked="checked"
+                                                       } }>Aout
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perrec" value="09" @{ if (Model.PerRecolte.Contains("09")) { @: checked="checked"
+                                                       } }>Septembre
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perrec" value="10" @{ if (Model.PerRecolte.Contains("10")) { @: checked="checked"
+                                                       } }>Octombre
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perrec" value="11" @{ if (Model.PerRecolte.Contains("11")) { @: checked="checked"
+                                                       } }>Novembre
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="Perrec" value="12" @{ if (Model.PerRecolte.Contains("12")) { @: checked="checked"
+                                                       } }>Decembre
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <hr />
+    <br />
+    <div class="form-group text-center">
+        <div class="col-xs-2 col-xs-offset-4">
+            <a><span class="glyphicon glyphicon-arrow-left"></span></a>
+            @if (ViewBag.message == "p" || ViewBag.message == "a")
+            {
+                @Html.ActionLink("Retour", "ValidPro", "Admin", new { recherche = ViewBag.IDFOU }, null)
+            }
+            else{ 
+                @Html.ActionLink("Retour", "Index")
+            }
+            
+        </div>
+        <div class="col-xs-2">
+            <input type="submit" class="btn btn-success active" value="Valider" />
+        </div>
+    </div>
+
+
+        }
+        <!--div>
+            @*Html.ActionLink("Retourner vers la liste", "Index")*@
+        </div-->
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+            <script>
+                $(document).ready(function () {
+                    $('[data-toggle="tooltip"]').tooltip();
+                });
+            </script>
+            <script type="text/javascript">
+                $(function () {
+                    //  var url1 = encodeURIComponent("/Produits/Arb1/List")
+                    $.getJSON("/Produits/Arb1/List", function (data) {
+                        var items = "<option value=\"\">Selectionnez votre Categorie</option>";
+                        $.each(data, function (i, arbr) {
+                            items += "<option value=\"" + arbr.Value + "\">" + arbr.Text + "</option>";
+                        });
+                        $("#Arb1").html(items);
+                    });
+
+                    var f1 = function () {
+                        var tmp = $("#Arb1 > option:selected").attr("value");
+
+                        tmp = tmp.replace(/&/g, "xxx");
+                        var url2 = encodeURI("/Produits/Arb2/List/" + tmp)
+                        $.getJSON(url2, function (data) {
+                            var items = "<option value=\"\">Selectionnez Sous Arborescence 1</option>";
+                            $.each(data, function (i, arbr2) {
+                                items += "<option value=\"" + arbr2.Value + "\">" + arbr2.Text + "</option>";
+                            });
+                            $("#Arb2").html(items);
+                        });
+                    }
+                    var f2 = function () {
+                        var tmp = $("#Arb1 > option:selected").attr("value") + "/" + $("#Arb2 > option:selected").attr("value");
+                        tmp = tmp.replace(/&/g, "xxx");
+                        var url3 = encodeURI("/Produits/Arb3/List/" + tmp)
+                        $.getJSON(url3, function (data2) {
+                            var items2 = "<option value=\"\">Selectionnez Sous Arborescence 2</option>";
+                            $.each(data2, function (i, arbr3) {
+                                items2 += "<option value=\"" + arbr3.Value + "\">" + arbr3.Text + "</option>";
+                            });
+
+                            if (items2 == ("<option value=\"\">Selectionnez Sous Arborescence 2</option>"))
+                                items2 = "<option value=\"\"></option>";
+                            if (items2 == "<option value=\"\">Selectionnez Sous Arborescence 2</option>" + "<option value=\"\"></option>")
+                                items2 = "<option value=\"\"></option>";
+                            $("#Arb3").html(items2);
+                        });
+                    }
+                    var f3 = function () {
+                        var tmp = $("#Arb1 > option:selected").attr("value") + "/" + $("#Arb2 > option:selected").attr("value") + "/" + $("#Arb3 > option:selected").attr("value")
+                        tmp = tmp.replace(/&/g, "xxx");
+
+                        var url4 = encodeURI("/Produits/Arb4/List/" + tmp)
+                        $.getJSON(url4, function (data3) {
+                            var items3 = new String();
+                            $.each(data3, function (i, arbr4) {
+                                items3 += "<option value=\"" + arbr4.Value + "\">" + arbr4.Text + "</option>";
+                            });
+                            $("#Arb4").html(items3);
+                        });
+                    }
+                    // $("#Arb1").change(f1);
+                    $(document).on('change', '#Arb1', f1);
+                    $(document).on('change', '#Arb1', f2);
+                    $(document).on('change', '#Arb1', f3);
+                    /*$("#Arb2").change(f2);*/
+                    $(document).on('change', '#Arb2', f2);
+                    $(document).on('change', '#Arb2', f3);
+                    $("#Arb3").change(f3);
+                    $(document).on('change', '#Arb3', f3);
+                });
+                $("#pageProduits").addClass('active');
+            </script>
+        }
