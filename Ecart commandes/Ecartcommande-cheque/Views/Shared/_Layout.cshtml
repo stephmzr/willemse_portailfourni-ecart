@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title Willemse</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    @*<nav class="navbar navbar-light bg-light">
+
+
+            <span class="navbar-brand d-flex flex-fill">
+                <a href="@Url.Action("Index", "Home", routeValues: null)" class="navbar-brand"</a>
+                <img src="~/Content/Images/logo-willemse-france-2018.png" class="d-inline-block" alt="" style="margin-top: 15px" />
+            </span>
+            <span class="navbar-text" style="text-align: center">
+                <a class="navbar navbar-brand" href="@Url.Action("Index", "Home", routeValues: null)" style="color : darkgreen">
+                    <h3><b> Ecart règlement - chèque</b></h3>
+                </a>
+            </span>
+        </nav>*@
+    <nav class="navbar navbar-light bg-light">
+
+        <a class="navbar-brand" href="@Url.Action("Index", "Home", routeValues: null)">
+            <img src="~/Content/Images/logo-willemse-france-2018.png" class="d-inline-block align-top" alt="">
+
+        </a>
+
+    </nav>
+    <br />
+
+    <span style="text-align: center;">
+        <a href="@Url.Action("Index", "Home", routeValues: null)" style="color : #69aa2e">
+            <h4><b> Ecart règlement - chèque</b></h4>
+        </a>
+    </span>
+
+    <div class="container">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Willemse France</p>
+        </footer>
+    </div>
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

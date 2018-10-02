@@ -1,0 +1,136 @@
+﻿@model PagedList.IPagedList<Ecartcommande_cheque.Models.ecart_reglement>
+@using PagedList.Mvc
+
+<br />
+<br />
+<br />
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+
+
+
+
+
+</head>
+
+
+<div class="row justify-content-around">
+    <div class="col-6">
+        @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+        {
+            <label style="color : darkgreen">Recherche à partir du numéro client :</label>
+            <br />
+            <input type="text" id="numeroclient" name="numeroclient" placeholder=" Numéro client" style="width:10em;" class="from-control" />
+            <input type="submit" value="Rechercher" class="btn btn-success" />
+        }
+    </div>
+
+    <div class="col-6">
+        @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+        {
+            <label style="color : darkgreen">Recherche à partir du numéro de commande :</label>
+            <br />
+            <input type="text" id="numerocommande" name="numerocommande" placeholder=" Numéro commande" style="width:10em;" class="from-control" />
+            <input type="submit" value="Rechercher" class="btn btn-success" />
+        }
+    </div>
+</div>
+
+
+
+
+
+
+
+    <br />
+    <br />
+
+
+    <table class="table table-striped table-hover">
+        <tr style=" color : darkgreen">
+            <th>
+                Type de vente
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                Numéro client
+            </th>
+            <th>
+                Numéro commande
+            </th>
+            <th>
+                Prix TTC pièce
+            </th>
+            <th>
+                TTC paiement
+            </th>
+            <th>
+                Ecart
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+
+
+
+            <tr style="cursor: pointer;" onclick="location.href='http://rc.willemsefrance.fr/fiche_clients?client_num='+@item.ER_Tiers;">
+                <td>
+                    @Html.DisplayFor(modelItem => item.ER_CA_NUM)
+                </td>
+
+                <td>
+                    @{
+                        string parameterValue = item.ER_date_piece.ToString().Remove(10, 9);
+                    }
+                    @Html.DisplayFor(modelItem => parameterValue)
+                </td>
+                <td data-toggle="popover" data-trigger="hover" data-content="@item.ER_Tiers" title="13" data-html="true" class="">
+                    @Html.DisplayFor(modelItem => item.ER_Tiers)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ER_piece)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ER_TTC_piece)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ER_TTC_paiement)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ER_ecart)
+                </td>
+
+                @*<td>
+                                   @Html.DropDownList("dropRoles", new List<SelectListItem>()
+                    {
+                      new SelectListItem() { Text= "Clôturé", Value = "true" },
+                      new SelectListItem() { Text= "En cours", Value = "false", Selected = true }})
+                               </td>*@
+
+            </tr>
+        }
+
+    </table>
+    <hr />
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6">
+                <span class="text-info">Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) sur @Model.PageCount</span>
+                @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, currentFilter = ViewBag.CurrentFilter }))
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="popover"]').popover({
+            })
+        });
+    </script>
