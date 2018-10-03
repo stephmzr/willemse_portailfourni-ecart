@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TableEcartReglementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ecart_reglementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ecart_reglement">
           <Key>
             <PropertyRef Name="ER_ID" />
@@ -17,8 +17,10 @@
           <Property Name="ER_Tiers" Type="varchar" MaxLength="17" />
           <Property Name="ER_type" Type="smallint" />
           <Property Name="ER_piece" Type="varchar" MaxLength="9" />
+          <Property Name="ER_Oxatis" Type="varchar" MaxLength="50" />
           <Property Name="ER_TTC_piece" Type="numeric" Precision="24" Scale="6" />
           <Property Name="ER_TTC_paiement" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="ER_TTC_reglement" Type="numeric" Precision="24" Scale="6" />
           <Property Name="ER_ecart" Type="numeric" Precision="24" Scale="6" />
           <Property Name="ER_statut" Type="varchar" MaxLength="20" />
           <Property Name="ER_Derniere_action" Type="datetime" />
@@ -28,14 +30,14 @@
           <Property Name="Er_Montant_cagnotte" Type="numeric" Precision="24" Scale="6" />
           <Property Name="ER_Commentaire" Type="varchar" MaxLength="500" />
         </EntityType>
-        <EntityContainer Name="TableEcartReglementModelStoreContainer">
+        <EntityContainer Name="ecart_reglementModelStoreContainer">
           <EntitySet Name="ecart_reglement" EntityType="Self.ecart_reglement" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="TableEcartReglementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="ecart_reglementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="ecart_reglement">
           <Key>
             <PropertyRef Name="ER_ID" />
@@ -48,8 +50,10 @@
           <Property Name="ER_Tiers" Type="String" MaxLength="17" FixedLength="false" Unicode="false" />
           <Property Name="ER_type" Type="Int16" />
           <Property Name="ER_piece" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="ER_Oxatis" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ER_TTC_piece" Type="Decimal" Precision="24" Scale="6" />
           <Property Name="ER_TTC_paiement" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="ER_TTC_reglement" Type="Decimal" Precision="24" Scale="6" />
           <Property Name="ER_ecart" Type="Decimal" Precision="24" Scale="6" />
           <Property Name="ER_statut" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="ER_Derniere_action" Type="DateTime" Precision="3" />
@@ -59,7 +63,7 @@
           <Property Name="Er_Montant_cagnotte" Type="Decimal" Precision="24" Scale="6" />
           <Property Name="ER_Commentaire" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityContainer Name="TableEcartReglementEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="EcartReglementEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ecart_reglement" EntityType="Self.ecart_reglement" />
         </EntityContainer>
       </Schema>
@@ -67,9 +71,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="TableEcartReglementModelStoreContainer" CdmEntityContainer="TableEcartReglementEntities">
+        <EntityContainerMapping StorageEntityContainer="ecart_reglementModelStoreContainer" CdmEntityContainer="EcartReglementEntities">
           <EntitySetMapping Name="ecart_reglement">
-            <EntityTypeMapping TypeName="TableEcartReglementModel.ecart_reglement">
+            <EntityTypeMapping TypeName="ecart_reglementModel.ecart_reglement">
               <MappingFragment StoreEntitySet="ecart_reglement">
                 <ScalarProperty Name="ER_ID" ColumnName="ER_ID" />
                 <ScalarProperty Name="ER_CA_NUM" ColumnName="ER_CA_NUM" />
@@ -79,8 +83,10 @@
                 <ScalarProperty Name="ER_Tiers" ColumnName="ER_Tiers" />
                 <ScalarProperty Name="ER_type" ColumnName="ER_type" />
                 <ScalarProperty Name="ER_piece" ColumnName="ER_piece" />
+                <ScalarProperty Name="ER_Oxatis" ColumnName="ER_Oxatis" />
                 <ScalarProperty Name="ER_TTC_piece" ColumnName="ER_TTC_piece" />
                 <ScalarProperty Name="ER_TTC_paiement" ColumnName="ER_TTC_paiement" />
+                <ScalarProperty Name="ER_TTC_reglement" ColumnName="ER_TTC_reglement" />
                 <ScalarProperty Name="ER_ecart" ColumnName="ER_ecart" />
                 <ScalarProperty Name="ER_statut" ColumnName="ER_statut" />
                 <ScalarProperty Name="ER_Derniere_action" ColumnName="ER_Derniere_action" />

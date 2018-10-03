@@ -13,10 +13,10 @@ namespace Ecartcommande_cheque.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class TableEcartReglementEntities : DbContext
+    public partial class EcartReglementEntities : DbContext
     {
-        public TableEcartReglementEntities()
-            : base("name=TableEcartReglementEntities")
+        public EcartReglementEntities()
+            : base("name=EcartReglementEntities")
         {
         }
     

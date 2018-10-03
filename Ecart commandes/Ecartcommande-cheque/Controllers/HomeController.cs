@@ -13,7 +13,7 @@ namespace Ecartcommande_cheque.Controllers
         public ActionResult Index(string numeroclient, string numerocommande, int? page)
         {
 
-            TableEcartReglementEntities DB = new TableEcartReglementEntities();
+            EcartReglementEntities DB = new EcartReglementEntities();
 
             var tableau = DB.ecart_reglement.OrderByDescending(d => d.ER_date_piece).ToList();
 

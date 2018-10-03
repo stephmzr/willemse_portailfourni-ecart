@@ -22,8 +22,10 @@ namespace Ecartcommande_cheque.Models
         public string ER_Tiers { get; set; }
         public Nullable<short> ER_type { get; set; }
         public string ER_piece { get; set; }
+        public string ER_Oxatis { get; set; }
         public Nullable<decimal> ER_TTC_piece { get; set; }
         public Nullable<decimal> ER_TTC_paiement { get; set; }
+        public Nullable<decimal> ER_TTC_reglement { get; set; }
         public Nullable<decimal> ER_ecart { get; set; }
         public string ER_statut { get; set; }
         public Nullable<System.DateTime> ER_Derniere_action { get; set; }
@@ -33,4 +35,5 @@ namespace Ecartcommande_cheque.Models
         public Nullable<decimal> Er_Montant_cagnotte { get; set; }
         public string ER_Commentaire { get; set; }
     }
+
 }

@@ -9,10 +9,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
 
-
-
-
-
 </head>
 
 
@@ -38,99 +34,102 @@
     </div>
 </div>
 
+<br />
+<br />
 
 
 
+<table class="table table-striped table-hover">
+    <tr style=" color : darkgreen">
+        <th>
+            Type de vente
+        </th>
+        <th>
+            Date
+        </th>
+        <th>
+            N° client
+        </th>
+        <th>
+            N° commande
+        </th>
+        <th>
+            Mode de paiement
+        </th>
+        <th>
+            N° Oxatis
+        </th>
+        <th>
+            Prix TTC pièce
+        </th>
+        <th>
+            TTC paiement
+        </th>
+        <th>
+            Ecart
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
 
 
 
-    <br />
-    <br />
+    <tr >
+        <td style="cursor: pointer;" onclick="location.href='http://rc.willemsefrance.fr/fiche_clients?client_num='+@item.ER_Tiers;">
+            @Html.DisplayFor(modelItem => item.ER_CA_NUM)
+        </td>
 
+        <td style="cursor: pointer;" onclick="location.href='http://rc.willemsefrance.fr/fiche_clients?client_num='+@item.ER_Tiers;">
+            @{
+                string parameterValue = item.ER_date_piece.ToString().Remove(10, 9);
+            }
+            @Html.DisplayFor(modelItem => parameterValue)
+        </td>
+        <td style="cursor: pointer;" onclick="location.href='http://rc.willemsefrance.fr/fiche_clients?client_num='+@item.ER_Tiers;">
+            @*data-toggle="popover" data-trigger="hover" data-content="@item.ER_Tiers" title="13" data-html="true" class=""*@
+            @Html.DisplayFor(modelItem => item.ER_Tiers)
+        </td>
+        <td style="cursor: pointer;" onclick="location.href='http://rc.willemsefrance.fr/detail_commandes?client_num=@item.ER_Tiers&do_piece=@item.ER_piece&do_type=1';">
+            @Html.DisplayFor(modelItem => item.ER_piece)
+        </td>
+        <td style="cursor: pointer;" onclick="location.href='http://rc.willemsefrance.fr/fiche_clients?client_num='+@item.ER_Tiers;">
+            @Html.DisplayFor(modelItem => item.ER_Mode_paiement)
 
-    <table class="table table-striped table-hover">
-        <tr style=" color : darkgreen">
-            <th>
-                Type de vente
-            </th>
-            <th>
-                Date
-            </th>
-            <th>
-                Numéro client
-            </th>
-            <th>
-                Numéro commande
-            </th>
-            <th>
-                Prix TTC pièce
-            </th>
-            <th>
-                TTC paiement
-            </th>
-            <th>
-                Ecart
-            </th>
-        </tr>
+        </td>
+        <td style="cursor: pointer;" onclick="location.href='http://rc.willemsefrance.fr/fiche_clients?client_num='+@item.ER_Tiers;">
+            @Html.DisplayFor(modelItem => item.ER_Oxatis)
 
-        @foreach (var item in Model)
-        {
+        </td>
+        <td style="cursor: pointer;" onclick="location.href='http://rc.willemsefrance.fr/fiche_clients?client_num='+@item.ER_Tiers;">
+            @Html.DisplayFor(modelItem => item.ER_TTC_piece)
+        </td>
+        <td style="cursor: pointer;" onclick="location.href='http://rc.willemsefrance.fr/fiche_clients?client_num='+@item.ER_Tiers;">
+            @Html.DisplayFor(modelItem => item.ER_TTC_paiement)
+        </td>
+        <td style="cursor: pointer;" onclick="location.href='http://rc.willemsefrance.fr/fiche_clients?client_num='+@item.ER_Tiers;">
+            @Html.DisplayFor(modelItem => item.ER_ecart)
+        </td>
+    </tr>
+    }
 
-
-
-            <tr style="cursor: pointer;" onclick="location.href='http://rc.willemsefrance.fr/fiche_clients?client_num='+@item.ER_Tiers;">
-                <td>
-                    @Html.DisplayFor(modelItem => item.ER_CA_NUM)
-                </td>
-
-                <td>
-                    @{
-                        string parameterValue = item.ER_date_piece.ToString().Remove(10, 9);
-                    }
-                    @Html.DisplayFor(modelItem => parameterValue)
-                </td>
-                <td data-toggle="popover" data-trigger="hover" data-content="@item.ER_Tiers" title="13" data-html="true" class="">
-                    @Html.DisplayFor(modelItem => item.ER_Tiers)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ER_piece)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ER_TTC_piece)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ER_TTC_paiement)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ER_ecart)
-                </td>
-
-                @*<td>
-                                   @Html.DropDownList("dropRoles", new List<SelectListItem>()
-                    {
-                      new SelectListItem() { Text= "Clôturé", Value = "true" },
-                      new SelectListItem() { Text= "En cours", Value = "false", Selected = true }})
-                               </td>*@
-
-            </tr>
-        }
-
-    </table>
-    <hr />
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-6">
-                <span class="text-info">Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) sur @Model.PageCount</span>
-                @Html.PagedListPager(Model, page => Url.Action("Index",
-        new { page, currentFilter = ViewBag.CurrentFilter }))
-            </div>
+</table>
+<hr />
+<div class="container">
+    <div class="row">
+        <div class="col-xs-6">
+            <span class="text-info">Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) sur @Model.PageCount</span>
+            @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, currentFilter = ViewBag.CurrentFilter }))
         </div>
     </div>
+</div>
 
 
-    <script>
-        $(document).ready(function () {
-            $('[data-toggle="popover"]').popover({
-            })
-        });
-    </script>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover({
+        })
+    });
+</script>
+
