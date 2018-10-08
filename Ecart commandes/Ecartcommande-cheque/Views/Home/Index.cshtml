@@ -6,7 +6,7 @@
 <br />
 <head>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
 
 </head>
@@ -68,6 +68,9 @@
         <th>
             Ecart
         </th>
+        <th>
+
+        </th>
     </tr>
 
     @foreach (var item in Model)
@@ -75,7 +78,8 @@
 
 
 
-    <tr >
+
+    <tr>
         <td style="cursor: pointer;" onclick="location.href='http://rc.willemsefrance.fr/fiche_clients?client_num='+@item.ER_Tiers;">
             @Html.DisplayFor(modelItem => item.ER_CA_NUM)
         </td>
@@ -110,10 +114,51 @@
         <td style="cursor: pointer;" onclick="location.href='http://rc.willemsefrance.fr/fiche_clients?client_num='+@item.ER_Tiers;">
             @Html.DisplayFor(modelItem => item.ER_ecart)
         </td>
+        <td style="background-color: white; border : unset;" class="">
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#clotureModal" data-titre="@item.ER_piece" data-numcommande="toto">Clôturer</button>
+        </td>
+        <td style="background-color: white; border : unset;" class="">
+            <button type="button" class="btn btn-danger" onclick="location.href='@Url.Action("ActionCloturer", "Home", new { numcommande = item.ER_piece })'">Clôturer sans modal</button>
+        </td>
     </tr>
+
     }
 
 </table>
+
+<div class="modal fade" id="clotureModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="modal-titre"></h5>    
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" action="@Url.Action("ActionCloturer", "Home")" class="form-horizontal" method="POST">
+                    <div class="form-group">
+
+                        @using (Html.BeginForm("ActionCloturer", "Home", FormMethod.Post))
+                        {
+                            <label for="Commentaire">Commentaire :</label>
+                            <input type="text" name="commentaire" class="form-control" />
+                            <small id="commentaireHelp" class="form-text text-muted">(Facultatif)</small>
+
+                            <input type="submit" value="Cloturer" class="btn btn-primary" />
+                        }
+
+                    </div>
+</form>
+            </div>
+            <div class="modal-footer">
+                @*<button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("ActionCloturer", "Home", new { commentaire = "" })'">Clôturer</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <hr />
 <div class="container">
     <div class="row">
@@ -127,9 +172,45 @@
 
 
 <script>
+
     $(document).ready(function () {
         $('[data-toggle="popover"]').popover({
         })
     });
+
+    //$('#exampleModal').on('show.bs.modal', function (event) {
+    //    var button = $(event.relatedTarget) // Button that triggered the modal
+    //    var recipient = button.data('numcommande') // Extract info from data-* attributes
+    //    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+    //    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    //    var modal = $(this)
+    //    modal.find('.modal-title').text('New message to ' + recipient)
+    //    modal.find('.modal-body input').val(recipient)
+    //})
+
+
+    // data-* attributes to scan when populating modal values
+    var ATTRIBUTES = ['titre', 'numcommande'];
+
+    $('[data-toggle="modal"]').on('click', function (e) {
+        // convert target (e.g. the button) to jquery object
+        var $target = $(e.target);
+        // modal targeted by the button
+        var modalSelector = $target.data('target');
+
+        // iterate over each possible data-* attribute
+        ATTRIBUTES.forEach(function (attributeName) {
+            // retrieve the dom element corresponding to current attribute
+            var $modalAttribute = $(modalSelector + ' #modal-' + attributeName);
+            var dataValue = $target.data(attributeName);
+
+            // if the attribute value is empty, $target.data() will return undefined.
+            // In JS boolean expressions return operands and are not coerced into
+            // booleans. That way is dataValue is undefined, the left part of the following
+            // Boolean expression evaluate to false and the empty string will be returned
+            $modalAttribute.text(dataValue || '');
+        });
+    });
+
 </script>
 

@@ -13,19 +13,19 @@ namespace Ecartcommande_cheque.Controllers
         public ActionResult Index(string numeroclient, string numerocommande, int? page)
         {
 
-            EcartReglementEntities DB = new EcartReglementEntities();
+            EcartReglementEntities db = new EcartReglementEntities();
 
-            var tableau = DB.ecart_reglement.OrderByDescending(d => d.ER_date_piece).ToList();
+            var tableau = db.ecart_reglement.OrderByDescending(d => d.ER_date_piece).ToList();
 
 
             if (numeroclient != null)
             {
-                tableau = DB.ecart_reglement.Where(d => d.ER_Tiers == numeroclient).ToList();
+                tableau = db.ecart_reglement.Where(d => d.ER_Tiers == numeroclient).ToList();
                 
             }
             if (numerocommande != null)
             {
-                tableau = DB.ecart_reglement.Where(d => d.ER_piece == numerocommande).ToList();
+                tableau = db.ecart_reglement.Where(d => d.ER_piece == numerocommande).ToList();
             }
 
 
@@ -36,6 +36,38 @@ namespace Ecartcommande_cheque.Controllers
             return View(tableau.ToPagedList(pageNumber, pageSize));
             
         } 
- 
+
+        //[HttpPost]
+        public ActionResult ActionCloturer(string commentaire, string numcommande)
+        {
+
+            EcartReglementEntities db = new EcartReglementEntities();
+
+            var tableau = db.ecart_reglement.Where(d => d.ER_piece == numcommande && d.ER_statut != "Cloturé");
+
+
+
+            foreach (var ligne in tableau)
+            {
+
+                ligne.ER_statut = "Cloturé";
+                ligne.ER_Commentaire = commentaire;
+                ligne.ER_date_piece = DateTime.Now;
+
+            }
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                //Handle ex
+            }
+            return View("Index");
+
+
+        }
+
     }
 }
