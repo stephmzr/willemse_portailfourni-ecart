@@ -27,8 +27,8 @@ namespace WebApplication6.Controllers
         public void ExportToCSV(string id)
         {
             StringWriter sw = new StringWriter();
-            
-            sw.WriteLine("\"Référence\";\"Désignation\";\"Quantité\";\"Prix unitaire\";\"Société\";\"Nom\";\"Prénom\";\"Email\";\"Adresse Livraison\";\"Téléphone\";\"Téléphone2\";\"Code postal\";\"Ville\"");
+
+            sw.WriteLine("\"Référence\";\"Désignation\";\"Quantité\";\"Prix unitaire\";\"Société\";\"Nom\";\"Email\";\"Adresse Livraison\";\"Complément adresse\";\"Téléphone\";\"Téléphone2\";\"Code postal\";\"Ville\"");
 
             Response.ClearContent();
             Response.ContentEncoding = Encoding.UTF8;
@@ -51,19 +51,19 @@ namespace WebApplication6.Controllers
                         sw.WriteLine(string.Format("\"{0}\";\"{1}\";\"{2}\";\"{3}\";\"{4}\";\"{5}\";\"{6}\";\"{7}\";\"{8}\";\"{9}\";\"{10}\";\"{11}\";\"{12}\"",
 
 
-                            ligne.AF_RefFourniss,
-                            ligne.DL_Design,
-                            ligne.DL_Qte,
-                            ligne.DL_PrixUnitaire,
-                            commande.SOCIETE_LIVRAISON,
-                            commande.NOM_LIVRAISON,
-                            commande.PRENOM_LIVRAISON,
-                            commande.EMAIL_LIVRAISON,
-                            commande.ADRESSE_LIVRAISON,
-                            commande.TELEPHONE_LIVRAISON,
-                            commande.TELEPHONE_FACTURATION,
-                            commande.CODE_POSTAL_LIVRAISON,
-                            commande.VILLE_LIVRAISON
+                                ligne.AF_RefFourniss,
+                                ligne.DL_Design,
+                                ligne.DL_Qte,
+                                ligne.DL_PrixUnitaire,
+                                commande.SOCIETE_LIVRAISON,
+                                commande.CIVILITE_LIVRAISON + " " + commande.NOM_LIVRAISON + " " + commande.PRENOM_LIVRAISON,
+                                commande.EMAIL_LIVRAISON,
+                                commande.ADRESSE_LIVRAISON,
+                                commande.COMPLEMENT_LIVRAISON,
+                                commande.TELEPHONE_LIVRAISON,
+                                commande.TELEPHONE_FACTURATION,
+                                commande.CODE_POSTAL_LIVRAISON,
+                                commande.VILLE_LIVRAISON
 
 
                             ));
@@ -78,10 +78,10 @@ namespace WebApplication6.Controllers
                             ligne.DL_Qte,
                             ligne.DL_PrixUnitaire,
                             commande.SOCIETE_FACTURATION,
-                            commande.NOM_FACTURATION,
-                            commande.PRENOM_FACTURATION,
+                            commande.CIVILITE_FACTURATION + " " + commande.NOM_FACTURATION + " " + commande.PRENOM_FACTURATION,
                             commande.EMAIL_FACTURATION,
                             commande.ADRESSE_FACTURATION,
+                            commande.COMPLEMENT_FACTURATION,
                             commande.TELEPHONE_LIVRAISON,
                             commande.TELEPHONE_FACTURATION,
                             commande.CODE_POSTAL_FACTURATION,
@@ -143,7 +143,7 @@ namespace WebApplication6.Controllers
                     StreamWriter sw = new StreamWriter(new FileStream(newFile, FileMode.Create, FileAccess.ReadWrite), Encoding.UTF8);
 
 
-                    sw.WriteLine("\"Référence\";\"Désignation\";\"Quantité\";\"Prix unitaire\";\"Société\";\"Nom\";\"Prénom\";\"Email\";\"Adresse Livraison\";\"Téléphone\";\"Téléphone2\";\"Code postal\";\"Ville\"");
+                    sw.WriteLine("\"Référence\";\"Désignation\";\"Quantité\";\"Prix unitaire\";\"Société\";\"Nom\";\"Email\";\"Adresse Livraison\";\"Complément adresse\";\"Téléphone\";\"Téléphone2\";\"Code postal\";\"Ville\"");
           
 
                     // données des produits
@@ -160,10 +160,10 @@ namespace WebApplication6.Controllers
                                 ligne.DL_Qte,
                                 ligne.DL_PrixUnitaire,
                                 commande.SOCIETE_LIVRAISON,
-                                commande.NOM_LIVRAISON,
-                                commande.PRENOM_LIVRAISON,
+                                commande.CIVILITE_LIVRAISON + " " + commande.NOM_LIVRAISON + " " + commande.PRENOM_LIVRAISON,
                                 commande.EMAIL_LIVRAISON,
                                 commande.ADRESSE_LIVRAISON,
+                                commande.COMPLEMENT_LIVRAISON,
                                 commande.TELEPHONE_LIVRAISON,
                                 commande.TELEPHONE_FACTURATION,
                                 commande.CODE_POSTAL_LIVRAISON,
@@ -177,19 +177,19 @@ namespace WebApplication6.Controllers
 
                             sw.WriteLine(string.Format("\"{0}\";\"{1}\";\"{2}\";\"{3}\";\"{4}\";\"{5}\";\"{6}\";\"{7}\";\"{8}\";\"{9}\";\"{10}\";\"{11}\";\"{12}\"",
 
-                                ligne.AF_RefFourniss,
-                                ligne.DL_Design,
-                                ligne.DL_Qte,
-                                ligne.DL_PrixUnitaire,
-                                commande.SOCIETE_FACTURATION,
-                                commande.NOM_FACTURATION,
-                                commande.PRENOM_FACTURATION,
-                                commande.EMAIL_FACTURATION,
-                                commande.ADRESSE_FACTURATION,
-                                commande.TELEPHONE_LIVRAISON,
-                                commande.TELEPHONE_FACTURATION,
-                                commande.CODE_POSTAL_FACTURATION,
-                                commande.VILLE_FACTURATION
+                            ligne.AF_RefFourniss,
+                            ligne.DL_Design,
+                            ligne.DL_Qte,
+                            ligne.DL_PrixUnitaire,
+                            commande.SOCIETE_FACTURATION,
+                            commande.CIVILITE_FACTURATION + " " + commande.NOM_FACTURATION + " " + commande.PRENOM_FACTURATION,
+                            commande.EMAIL_FACTURATION,
+                            commande.ADRESSE_FACTURATION,
+                            commande.COMPLEMENT_FACTURATION,
+                            commande.TELEPHONE_LIVRAISON,
+                            commande.TELEPHONE_FACTURATION,
+                            commande.CODE_POSTAL_FACTURATION,
+                            commande.VILLE_FACTURATION
 
 
                                 ));
