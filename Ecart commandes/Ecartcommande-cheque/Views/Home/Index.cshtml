@@ -60,10 +60,10 @@
             N° Oxatis
         </th>
         <th>
-            Prix TTC pièce
+            TTC Cmde
         </th>
         <th>
-            TTC paiement
+            TTC Paiement
         </th>
         <th>
             Ecart
@@ -80,46 +80,43 @@
 
 
     <tr>
-        <td style="cursor: pointer;" onclick="location.href='http://rc.willemsefrance.fr/fiche_clients?client_num='+@item.ER_Tiers;">
+        <td style="cursor: pointer;" onclick="window.open('http://rc.willemsefrance.fr/fiche_clients?client_num=@item.ER_Tiers', '_blank');">
             @Html.DisplayFor(modelItem => item.ER_CA_NUM)
         </td>
 
-        <td style="cursor: pointer;" onclick="location.href='http://rc.willemsefrance.fr/fiche_clients?client_num='+@item.ER_Tiers;">
+        <td style="cursor: pointer;" onclick="window.open('http://rc.willemsefrance.fr/fiche_clients?client_num=@item.ER_Tiers', '_blank');">
             @{
                 string parameterValue = item.ER_date_piece.ToString().Remove(10, 9);
             }
             @Html.DisplayFor(modelItem => parameterValue)
         </td>
-        <td style="cursor: pointer;" onclick="location.href='http://rc.willemsefrance.fr/fiche_clients?client_num='+@item.ER_Tiers;">
+        <td style="cursor: pointer;" onclick="window.open('http://rc.willemsefrance.fr/fiche_clients?client_num=@item.ER_Tiers', '_blank');">
             @*data-toggle="popover" data-trigger="hover" data-content="@item.ER_Tiers" title="13" data-html="true" class=""*@
             @Html.DisplayFor(modelItem => item.ER_Tiers)
         </td>
-        <td style="cursor: pointer;" onclick="location.href='http://rc.willemsefrance.fr/detail_commandes?client_num=@item.ER_Tiers&do_piece=@item.ER_piece&do_type=1';">
+        <td style="cursor: pointer;" onclick="window.open('http://rc.willemsefrance.fr/detail_commandes?client_num=@item.ER_Tiers&do_piece=@item.ER_piece&do_type=1', '_blank');">
             @Html.DisplayFor(modelItem => item.ER_piece)
         </td>
-        <td style="cursor: pointer;" onclick="location.href='http://rc.willemsefrance.fr/fiche_clients?client_num='+@item.ER_Tiers;">
+        <td style="cursor: pointer;" onclick="window.open('http://rc.willemsefrance.fr/fiche_clients?client_num=@item.ER_Tiers', '_blank');">
             @Html.DisplayFor(modelItem => item.ER_Mode_paiement)
 
         </td>
-        <td style="cursor: pointer;" onclick="location.href='http://rc.willemsefrance.fr/fiche_clients?client_num='+@item.ER_Tiers;">
+        <td style="cursor: pointer;" onclick="window.open('http://rc.willemsefrance.fr/fiche_clients?client_num=@item.ER_Tiers', '_blank');">
             @Html.DisplayFor(modelItem => item.ER_Oxatis)
 
         </td>
-        <td style="cursor: pointer;" onclick="location.href='http://rc.willemsefrance.fr/fiche_clients?client_num='+@item.ER_Tiers;">
+        <td style="cursor: pointer;" onclick="window.open('http://rc.willemsefrance.fr/fiche_clients?client_num=@item.ER_Tiers', '_blank');">
             @Html.DisplayFor(modelItem => item.ER_TTC_piece)
         </td>
-        <td style="cursor: pointer;" onclick="location.href='http://rc.willemsefrance.fr/fiche_clients?client_num='+@item.ER_Tiers;">
+        <td style="cursor: pointer;" onclick="window.open('http://rc.willemsefrance.fr/fiche_clients?client_num=@item.ER_Tiers', '_blank');">
             @Html.DisplayFor(modelItem => item.ER_TTC_paiement)
         </td>
-        <td style="cursor: pointer;" onclick="location.href='http://rc.willemsefrance.fr/fiche_clients?client_num='+@item.ER_Tiers;">
+        <td style="cursor: pointer;" onclick="window.open('http://rc.willemsefrance.fr/fiche_clients?client_num=@item.ER_Tiers', '_blank');">
             @Html.DisplayFor(modelItem => item.ER_ecart)
         </td>
         <td style="background-color: white; border : unset;" class="">
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#clotureModal" data-titre="@item.ER_piece" data-numcommande="toto">Clôturer</button>
-        </td>
-        <td style="background-color: white; border : unset;" class="">
-            <button type="button" class="btn btn-danger" onclick="location.href='@Url.Action("ActionCloturer", "Home", new { numcommande = item.ER_piece })'">Clôturer sans modal</button>
-        </td>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#clotureModal" data-titre="Commande numéro @item.ER_piece" data-numcommande="@item.ER_piece">Clôturer</button>
+        </td>    
     </tr>
 
     }
@@ -136,23 +133,20 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form role="form" action="@Url.Action("ActionCloturer", "Home")" class="form-horizontal" method="POST">
-                    <div class="form-group">
+                <div class="form-group">
+                    @using (Html.BeginForm("ActionCloturer", "Home", FormMethod.Post))
+                    {
+                        <input type="hidden" name="numcommande" id="modal-numcommande" />
+                        <label for="Commentaire">Commentaire :</label>
+                        <textarea class="form-control" name="commentaire"></textarea>
+                        <small id="commentaireHelp" class="form-text text-muted">(Facultatif)</small>
 
-                        @using (Html.BeginForm("ActionCloturer", "Home", FormMethod.Post))
-                        {
-                            <label for="Commentaire">Commentaire :</label>
-                            <input type="text" name="commentaire" class="form-control" />
-                            <small id="commentaireHelp" class="form-text text-muted">(Facultatif)</small>
+                        <input type="submit" value="Cloturer" class="btn btn-success" />
+                    }
 
-                            <input type="submit" value="Cloturer" class="btn btn-primary" />
-                        }
-
-                    </div>
-</form>
+                </div>
             </div>
-            <div class="modal-footer">
-                @*<button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("ActionCloturer", "Home", new { commentaire = "" })'">Clôturer</button>*@
+                <div class="modal-footer">
             </div>
         </div>
     </div>
@@ -178,17 +172,6 @@
         })
     });
 
-    //$('#exampleModal').on('show.bs.modal', function (event) {
-    //    var button = $(event.relatedTarget) // Button that triggered the modal
-    //    var recipient = button.data('numcommande') // Extract info from data-* attributes
-    //    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-    //    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-    //    var modal = $(this)
-    //    modal.find('.modal-title').text('New message to ' + recipient)
-    //    modal.find('.modal-body input').val(recipient)
-    //})
-
-
     // data-* attributes to scan when populating modal values
     var ATTRIBUTES = ['titre', 'numcommande'];
 
@@ -209,6 +192,7 @@
             // booleans. That way is dataValue is undefined, the left part of the following
             // Boolean expression evaluate to false and the empty string will be returned
             $modalAttribute.text(dataValue || '');
+            $modalAttribute.val(dataValue || '');
         });
     });
 

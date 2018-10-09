@@ -15,7 +15,7 @@ namespace Ecartcommande_cheque.Controllers
 
             EcartReglementEntities db = new EcartReglementEntities();
 
-            var tableau = db.ecart_reglement.OrderByDescending(d => d.ER_date_piece).ToList();
+            var tableau = db.ecart_reglement.Where(d => d.ER_statut != "Cloturé").OrderByDescending(d => d.ER_date_piece).ToList();
 
 
             if (numeroclient != null)
@@ -52,7 +52,7 @@ namespace Ecartcommande_cheque.Controllers
 
                 ligne.ER_statut = "Cloturé";
                 ligne.ER_Commentaire = commentaire;
-                ligne.ER_date_piece = DateTime.Now;
+                ligne.ER_Derniere_action = DateTime.Now;
 
             }
 
@@ -64,9 +64,8 @@ namespace Ecartcommande_cheque.Controllers
             {
                 //Handle ex
             }
-            return View("Index");
 
-
+            return RedirectToAction("Index");
         }
 
     }
