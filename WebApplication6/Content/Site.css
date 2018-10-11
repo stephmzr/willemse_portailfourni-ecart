@@ -22,3 +22,23 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+.bouton-image:before {
+    content: "";
+    width: 80px;
+    height: 60px;
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: middle;
+    background-color: transparent;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.monBoutonCamion:before {
+    background-image: url(/Content/Images/camion.png);
+}
+.monBoutonCarton:before {
+    background-image: url(/Content/Images/carton.png);
+}

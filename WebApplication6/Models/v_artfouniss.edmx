@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="INFORMATIQUEModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'INFORMATIQUE.dbo.v_MP_ArtFournisseur' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+        <EntityType Name="v_MP_ArtFournisseur">
+          <Key>
+            <PropertyRef Name="AR_Ref" />
+            <PropertyRef Name="FA_CodeFamille" />
+            <PropertyRef Name="CT_Num" />
+          </Key>
+          <Property Name="AR_Ref" Type="varchar" MaxLength="19" Nullable="false" />
+          <Property Name="AR_Design" Type="varchar" MaxLength="69" />
+          <Property Name="FA_CodeFamille" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="AR_Garantie" Type="smallint" />
+          <Property Name="AR_PoidsNet" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="AR_PrixAch" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="DEBUT_LIVRABILITE_PRINTEMPS" Type="varchar" MaxLength="5" />
+          <Property Name="FIN_LIVRABILITE_PRINTEMPS" Type="varchar" MaxLength="5" />
+          <Property Name="DEBUT_LIVRABILITE_AUTOMNE" Type="varchar" MaxLength="5" />
+          <Property Name="FIN_LIVRABILITE_AUTOMNE" Type="varchar" MaxLength="5" />
+          <Property Name="LIVRABLE_TOUTE_ANNEE" Type="varchar" MaxLength="21" />
+          <Property Name="HAUTEUR" Type="varchar" MaxLength="10" />
+          <Property Name="LARGEUR" Type="varchar" MaxLength="10" />
+          <Property Name="LONGUEUR" Type="varchar" MaxLength="10" />
+          <Property Name="CODE_STATUT" Type="varchar" MaxLength="21" />
+          <Property Name="AF_PrixAch" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="LDF" Type="varchar" MaxLength="1" />
+          <Property Name="CT_Num" Type="varchar" MaxLength="17" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="INFORMATIQUEModel1StoreContainer">
+          <EntitySet Name="v_MP_ArtFournisseur" EntityType="Self.v_MP_ArtFournisseur" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [v_MP_ArtFournisseur].[AR_Ref] AS [AR_Ref], 
+    [v_MP_ArtFournisseur].[AR_Design] AS [AR_Design], 
+    [v_MP_ArtFournisseur].[FA_CodeFamille] AS [FA_CodeFamille], 
+    [v_MP_ArtFournisseur].[AR_Garantie] AS [AR_Garantie], 
+    [v_MP_ArtFournisseur].[AR_PoidsNet] AS [AR_PoidsNet], 
+    [v_MP_ArtFournisseur].[AR_PrixAch] AS [AR_PrixAch], 
+    [v_MP_ArtFournisseur].[DEBUT_LIVRABILITE_PRINTEMPS] AS [DEBUT_LIVRABILITE_PRINTEMPS], 
+    [v_MP_ArtFournisseur].[FIN_LIVRABILITE_PRINTEMPS] AS [FIN_LIVRABILITE_PRINTEMPS], 
+    [v_MP_ArtFournisseur].[DEBUT_LIVRABILITE_AUTOMNE] AS [DEBUT_LIVRABILITE_AUTOMNE], 
+    [v_MP_ArtFournisseur].[FIN_LIVRABILITE_AUTOMNE] AS [FIN_LIVRABILITE_AUTOMNE], 
+    [v_MP_ArtFournisseur].[LIVRABLE_TOUTE_ANNEE] AS [LIVRABLE_TOUTE_ANNEE], 
+    [v_MP_ArtFournisseur].[HAUTEUR] AS [HAUTEUR], 
+    [v_MP_ArtFournisseur].[LARGEUR] AS [LARGEUR], 
+    [v_MP_ArtFournisseur].[LONGUEUR] AS [LONGUEUR], 
+    [v_MP_ArtFournisseur].[CODE_STATUT] AS [CODE_STATUT], 
+    [v_MP_ArtFournisseur].[AF_PrixAch] AS [AF_PrixAch], 
+    [v_MP_ArtFournisseur].[LDF] AS [LDF], 
+    [v_MP_ArtFournisseur].[CT_Num] AS [CT_Num]
+    FROM [dbo].[v_MP_ArtFournisseur] AS [v_MP_ArtFournisseur]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="INFORMATIQUEModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="v_MP_ArtFournisseur">
+          <Key>
+            <PropertyRef Name="AR_Ref" />
+            <PropertyRef Name="FA_CodeFamille" />
+            <PropertyRef Name="CT_Num" />
+          </Key>
+          <Property Name="AR_Ref" Type="String" MaxLength="19" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AR_Design" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
+          <Property Name="FA_CodeFamille" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AR_Garantie" Type="Int16" />
+          <Property Name="AR_PoidsNet" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="AR_PrixAch" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="DEBUT_LIVRABILITE_PRINTEMPS" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="FIN_LIVRABILITE_PRINTEMPS" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="DEBUT_LIVRABILITE_AUTOMNE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="FIN_LIVRABILITE_AUTOMNE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="LIVRABLE_TOUTE_ANNEE" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="HAUTEUR" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="LARGEUR" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="LONGUEUR" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CODE_STATUT" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="AF_PrixAch" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="LDF" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="CT_Num" Type="String" MaxLength="17" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="INFORMATIQUEEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="v_MP_ArtFournisseur" EntityType="Self.v_MP_ArtFournisseur" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="INFORMATIQUEModel1StoreContainer" CdmEntityContainer="INFORMATIQUEEntities">
+          <EntitySetMapping Name="v_MP_ArtFournisseur">
+            <EntityTypeMapping TypeName="INFORMATIQUEModel1.v_MP_ArtFournisseur">
+              <MappingFragment StoreEntitySet="v_MP_ArtFournisseur">
+                <ScalarProperty Name="AR_Ref" ColumnName="AR_Ref" />
+                <ScalarProperty Name="AR_Design" ColumnName="AR_Design" />
+                <ScalarProperty Name="FA_CodeFamille" ColumnName="FA_CodeFamille" />
+                <ScalarProperty Name="AR_Garantie" ColumnName="AR_Garantie" />
+                <ScalarProperty Name="AR_PoidsNet" ColumnName="AR_PoidsNet" />
+                <ScalarProperty Name="AR_PrixAch" ColumnName="AR_PrixAch" />
+                <ScalarProperty Name="DEBUT_LIVRABILITE_PRINTEMPS" ColumnName="DEBUT_LIVRABILITE_PRINTEMPS" />
+                <ScalarProperty Name="FIN_LIVRABILITE_PRINTEMPS" ColumnName="FIN_LIVRABILITE_PRINTEMPS" />
+                <ScalarProperty Name="DEBUT_LIVRABILITE_AUTOMNE" ColumnName="DEBUT_LIVRABILITE_AUTOMNE" />
+                <ScalarProperty Name="FIN_LIVRABILITE_AUTOMNE" ColumnName="FIN_LIVRABILITE_AUTOMNE" />
+                <ScalarProperty Name="LIVRABLE_TOUTE_ANNEE" ColumnName="LIVRABLE_TOUTE_ANNEE" />
+                <ScalarProperty Name="HAUTEUR" ColumnName="HAUTEUR" />
+                <ScalarProperty Name="LARGEUR" ColumnName="LARGEUR" />
+                <ScalarProperty Name="LONGUEUR" ColumnName="LONGUEUR" />
+                <ScalarProperty Name="CODE_STATUT" ColumnName="CODE_STATUT" />
+                <ScalarProperty Name="AF_PrixAch" ColumnName="AF_PrixAch" />
+                <ScalarProperty Name="LDF" ColumnName="LDF" />
+                <ScalarProperty Name="CT_Num" ColumnName="CT_Num" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,4 +1,5 @@
-﻿@model PagedList.IPagedList<WebApplication6.Models.F_ARTFOURNISS>
+﻿
+@model PagedList.IPagedList<WebApplication6.Models.v_MP_ArtFournisseur>
 @using PagedList.Mvc
 
 @{
@@ -23,60 +24,116 @@
             }
         </div>
     </div>
-</div>
-<br />
-@{
 
-    if (Model.Count() == 0)
-    {
-        <p class="text-danger">Vous n'avez pas encore ajouté de produits.</p>
-    }
-    else
-    {
-        <br />
-        <table class="table table-hover">
-            <tr>
-                <th style="color:darkgreen;">
-                    Référence Produit
-                </th>       
-                <th style="color:darkgreen;">
-                    Prix Cession HT
-                </th>
-                <th style="color:darkgreen;">
-                    &nbsp;
-                </th>
-            </tr>
-
-            @foreach (var item in Model)
+    <div class="col-xs-4">
+        <div class="form-inline">
+            @using (Html.BeginForm("Index", "Produits", FormMethod.Get))
             {
-                <tr style="cursor: pointer" onclick="location.href='@(Url.Action("Details", new { id = item.AR_Ref }))'">
-                
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AR_Ref)
-                    </td>
-                    
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AF_PrixAch)
-                        &euro;
-                    </td>
-                    <td>
-                        <a href="@Url.Action("Details", "Produits", new { id = item.AR_Ref })"><span class="glyphicon glyphicon-eye-open"></span></a>
-                        @Html.ActionLink("Détails", "Details", new { id = item.AR_Ref })
-                    </td>
+                <input type="submit" id="filtre" onclick="location.href='@Url.Action("FilterProduitsDispo", "Produits")'" value="Filtrer produits dispo" class="btn btn-success active" />
+            }
+        </div>
+    </div>
 
+    <div class="col-xs-4">
+        @using (Html.BeginForm("Upload","GetFournisseurData", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+        <b>
+            <label for="file" style="color : darkgreen">Envoyer votre catalogue :</label>
+        </b>
+        <input type="file" name="file" id="file" accept="csv, xls, xlsx"/><br><br>
+        <input type="submit" value="Envoyer" class="btn btn-success" />
+        <br><br>
+        @ViewBag.Message
+        }
+    </div>
+
+
+    </div>
+    <br />
+    @{
+
+        if (Model.Count() == 0)
+        {
+            <p class="text-danger">Vous n'avez pas encore ajouté de produits.</p>
+        }
+        else
+        {
+            <br />
+            <table class="table table-hover">
+                <tr>
+                    <th style="color:darkgreen;">
+                        Référence Produit
+                    </th>
+                    <th style="color:darkgreen;">
+                        Libellé
+                    </th>
+                    <th style="color:darkgreen;">
+                        Prix Cession HT
+                    </th>
+                    <th style="color:darkgreen;">
+                        Disponible à la vente
+                    </th>
+                    <th style="color:darkgreen;">
+                        &nbsp;
+                    </th>
                 </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr style="cursor: pointer" onclick="location.href='@(Url.Action("Details", new { id = item.AR_Ref }))'">
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AR_Ref)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AR_Design)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AF_PrixAch)
+                            &euro;
+                        </td>
+                        <td>
+                            @{
+                                string parameterValue = item.CODE_STATUT == "Epuisé" ? "Non" : "Oui";
+                            }
+                            @Html.DisplayFor(modelItem => parameterValue)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Details", "Produits", new { id = item.AR_Ref })"><span class="glyphicon glyphicon-eye-open"></span></a>
+                            @Html.ActionLink("Détails", "Details", new { id = item.AR_Ref })
+                        </td>
+
+                    </tr>
                 }
             </table>
-        <hr />
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-6">
-                    <span class="text-info">Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) sur @Model.PageCount</span>
-                    @Html.PagedListPager(Model, page => Url.Action("Index",
-            new { page, currentFilter = ViewBag.CurrentFilter }))
+            <hr />
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <span class="text-info">Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) sur @Model.PageCount</span>
+                        @Html.PagedListPager(Model, page => Url.Action("Index",
+                new { page, currentFilter = ViewBag.CurrentFilter }))
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     }
-}
+
+
+            <script type="text/javascript">
+                function Checkfiles() {
+                    var fup = document.getElementById('filename');
+                    var fileName = fup.value;
+                    var ext = fileName.substring(fileName.lastIndexOf('.') + 1);
+
+                    if (ext == "csv" || ext == "xls" || ext == "xlsx") {
+                        return true;
+                    }
+                    else {
+                        alert("Nous acceptons uniquement les formats CSV, XLS et XLSX");
+                        return false;
+                    }
+                }
+            </script>
 

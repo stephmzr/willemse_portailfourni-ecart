@@ -13,10 +13,10 @@ namespace WebApplication6.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ListeProduitsFournisseursEntities : DbContext
+    public partial class INFORMATIQUEEntities : DbContext
     {
-        public ListeProduitsFournisseursEntities()
-            : base("name=ListeProduitsFournisseursEntities")
+        public INFORMATIQUEEntities()
+            : base("name=INFORMATIQUEEntities")
         {
         }
     
@@ -25,7 +25,6 @@ namespace WebApplication6.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<F_ARTFOURNISS> F_ARTFOURNISS { get; set; }
-        public virtual DbSet<F_ARTICLE> F_ARTICLE { get; set; }
+        public virtual DbSet<v_MP_ArtFournisseur> v_MP_ArtFournisseur { get; set; }
     }
 }

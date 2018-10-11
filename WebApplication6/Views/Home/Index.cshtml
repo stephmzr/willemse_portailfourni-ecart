@@ -1,15 +1,10 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+                /**/
+
+                ViewBag.Title = "Home Page";
 }
 
 @*<div class="jumbotron">
-    <h2 style="color : darkgreen; font-weight: bold">Portail fournisseur Willemse France</h2>
-    <br>
-
-    <p><a href="https://willemsefrance.fr" class="btn btn-primary btn-lg">Lien vers notre site web &raquo;</a></p>
-</div>*@
-
-<div class="jumbotron">
 
     <h1 class="display-4">Bienvenue sur le portail fournisseur</h1>
     <br/>
@@ -18,4 +13,100 @@
 
     <br />
     <hr class="my-4">
+    </div>*@
+
+
+@using WebApplication6.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Connexion au portail";
+}
+
+@if (!Request.IsAuthenticated)
+{
+
+
+    <h2>@ViewBag.Title.</h2>
+    <div class="row">
+
+        <div class="col-md-6">
+            <section id="loginForm">
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <h4>Saisissez vos identifiants pour vous connecter.</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <div class="checkbox">
+                                @Html.CheckBoxFor(m => m.RememberMe)
+                                @Html.LabelFor(m => m.RememberMe)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Connexion" class="btn btn-success" />
+                        </div>
+                    </div>
+                }
+            </section>
+        </div>
+        <div class="col-md2">
+            <img src="/Content/Images/willemseaccueil.png" class="img-rounded" alt="Portail Willemse">
+
+        </div>
     </div>
+
+}
+else
+{
+    @*<div class="row">
+        <div class="col-md-2">
+            <br/>
+            <img class="" src="/Content/Images/willemseaccueil.png"  alt="Portail Willemse">
+        </div>
+        <div class="col">*@
+
+    <div class="jumbotron">
+        <center>
+            <h2 class="display-4">Bienvenue sur le portail fournisseur</h2>
+            <br />
+            <button type="button" class="btn navbar-btn btn-success btn-lg bouton-image monBoutonCarton" onclick="location.href='@Url.Action("Index", "Produits")'">Catalogue de produits</button>&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn navbar-btn btn-success btn-lg bouton-image monBoutonCamion" style="margin-left : 10px" onclick="location.href='@Url.Action("Index", "Commandes")'">Suivi des commandes</button>
+        </center>
+
+        <br />
+        <hr class="my-4">
+
+
+        <h4>Dernières nouveautés du portail</h4>
+        <b>11/10/2018 : </b><br />L'envoi de vos commandes intègre désormais l'ensemble des commandes dans un seul fichier CSV. <br />
+        Cela vous permettra d'intégrer les commandes Willemse plus rapidement dans votre système informatique.<br />
+        Nous avons également renommé les nom des colonnes pour satisfaire vos besoins.<br />
+        Nouvelles colonnes: <br /> - Les nom et prénom du client sont concaténés dans un champ, <br /> - Le numéro de commande Willemse apparait en première colonne, <br /> - Le champ complément d'adresse est également disponible.
+
+    </div>
+
+
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -218,6 +218,7 @@
     <Compile Include="Controllers\BonLivraisonPDFController.cs" />
     <Compile Include="Controllers\CommandesController.cs" />
     <Compile Include="Controllers\ExportToCSVController.cs" />
+    <Compile Include="Controllers\GetFournisseurDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProduitsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -285,6 +286,24 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ListeProduitsFournisseurs.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\v_artfouniss.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>v_artfouniss.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\v_artfouniss.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>v_artfouniss.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\v_artfouniss.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>v_artfouniss.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\v_MP_ArtFournisseur.cs">
+      <DependentUpon>v_artfouniss.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -331,6 +350,16 @@
       <DependentUpon>ListeProduitsFournisseurs.edmx</DependentUpon>
       <LastGenOutput>ListeProduitsFournisseurs.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\v_artfouniss.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>v_artfouniss.edmx</DependentUpon>
+      <LastGenOutput>v_artfouniss.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\v_artfouniss.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>v_artfouniss.edmx</DependentUpon>
+      <LastGenOutput>v_artfouniss.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
@@ -369,6 +398,13 @@
     </EntityDeploy>
     <Content Include="Models\ListeFournisseurs.edmx.diagram">
       <DependentUpon>ListeFournisseurs.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\v_artfouniss.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>v_artfouniss.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\v_artfouniss.edmx.diagram">
+      <DependentUpon>v_artfouniss.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
@@ -506,6 +542,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\" />
     <Folder Include="Images\" />
+    <Folder Include="Views\GetFournisseurData\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -17,7 +17,7 @@ public class BonLivraisonPDFController : Controller
 {
 
     private ApplicationDbContext dbA = new ApplicationDbContext();
-    private ListecommandesEntities DB = new ListecommandesEntities();
+    private ListeCommandesEntities DB = new ListeCommandesEntities();
 
 
     private ApplicationUser CurrentUser

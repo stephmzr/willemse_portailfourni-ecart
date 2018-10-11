@@ -20,9 +20,10 @@ namespace WebApplication6.Controllers
     {
 
 
-        public ListecommandesEntities DB = new ListecommandesEntities(); //* table des produits fournisseurs (model : produitfournisseur )
-        private ApplicationDbContext dbA = new ApplicationDbContext();
 
+        public ListeProduitsFournisseursEntities DB = new ListeProduitsFournisseursEntities(); //* table des produits fournisseurs (model : produitfournisseur )
+        private ApplicationDbContext dbA = new ApplicationDbContext();
+        public INFORMATIQUEEntities v = new INFORMATIQUEEntities();
 
         // Récupérer l'identité de l'utilisateur connecté
         private ApplicationUser CurrentUser
@@ -48,7 +49,7 @@ namespace WebApplication6.Controllers
                 recherche = currentFilter;
             }
             ViewBag.CurrentFilter = recherche;
-            var produits = DB.F_ARTFOURNISS.Where(d => d.CT_Num == CurrentUser.Id).OrderByDescending(x => x.CT_Num).ToList();
+            var produits = v.v_MP_ArtFournisseur.Where(d => d.CT_Num == CurrentUser.Id).OrderByDescending(x => x.CT_Num).ToList();
             if (!string.IsNullOrEmpty(recherche) && !string.IsNullOrWhiteSpace(recherche))
             {
                 produits = produits.Where(d => ((d.CT_Num == CurrentUser.Id) && (d.AR_Ref.Equals(recherche)))).ToList();
@@ -59,7 +60,7 @@ namespace WebApplication6.Controllers
         }
 
         // GET: Produits/Details/id (détails d'un produit)
-        public ActionResult Details(string id )
+        public ActionResult Details(string id)
         {
             if (id == null)
             {
@@ -74,6 +75,11 @@ namespace WebApplication6.Controllers
 
             return View(item);
 
+        }
+
+        public ActionResult FiltrerProduitsDispo()
+        {
+            return Redirect("Home/Index");
         }
 
         // appel de procédure stockée pour afficher détails d'un produit
