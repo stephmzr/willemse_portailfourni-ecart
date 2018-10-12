@@ -218,7 +218,7 @@
     <Compile Include="Controllers\BonLivraisonPDFController.cs" />
     <Compile Include="Controllers\CommandesController.cs" />
     <Compile Include="Controllers\ExportToCSVController.cs" />
-    <Compile Include="Controllers\GetFournisseurDataController.cs" />
+    <Compile Include="Controllers\UploadCatalogueController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProduitsController.cs" />
     <Compile Include="Global.asax.cs">

@@ -1,5 +1,4 @@
-﻿
-@model PagedList.IPagedList<WebApplication6.Models.v_MP_ArtFournisseur>
+﻿@model PagedList.IPagedList<WebApplication6.Models.v_MP_ArtFournisseur>
 @using PagedList.Mvc
 
 @{
@@ -7,48 +6,61 @@
 }
 
 <br />
-<div class="row">
-    <div class="col-xs-8">
-        <h2 style="color:darkgreen;">@ViewBag.Title</h2>
+<div class="jumbotron">
+
+    <div class="row">
+        <div class="col-xs-8">
+            <h2 style="color:darkgreen;">@ViewBag.Title</h2>
+        </div>
+        <div class="col-xs-4">
+
+            @using (Html.BeginForm("Index", "UploadCatalogue", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <b>
+                    <label for="file" style="color : darkgreen">Envoyer votre catalogue :</label>
+                </b>
+                <input type="file" name="file" id="file" accept="csv, xls, xlsx"/>
+                <input type="submit" value="Envoyer" class="btn btn-success" style="float : right; margin : 20px;" />
+                <br><br>
+                @ViewBag.Message
+            }
+
+
+        </div>
+    </div>
+
+    <div class="row">
+
+        <br />
+
+        <div class="col-xs-4">
+            <div class="form-inline">
+                @using (Html.BeginForm("Index", "Produits", FormMethod.Get))
+                {
+                    @Html.TextBox("recherche", "", ViewBag.CurrentFilter as string, new { @class = "form-control", placeholder = "Saisir la référence produit" })
+                    <input type="submit" value="Rechercher" class="btn btn-success active" />
+                }
+            </div>
+        </div>
+
+        <div class="col-xs-4">
+            <div class="form-inline">
+                @using (Html.BeginForm("Index", "Produits", FormMethod.Get))
+                {
+                    <input type="submit" id="button" name="buttonNonDispo" onclick="location.href='@Url.Action("FilterProduitsDispo", "Produits")'" value="Filtrer produits non dispo" class="btn btn-success active" />
+                }
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="form-inline">
+                @using (Html.BeginForm("Index", "Produits", FormMethod.Get))
+                {
+                    <input type="submit" id="button" name="buttonDispo" onclick="location.href='@Url.Action("FilterProduitsDispo", "Produits")'" value="Filtrer produits dispo" class="btn btn-success active" />
+                }
+            </div>
+        </div>
     </div>
 </div>
-<div class="row">
-    <br />
-
-    <div class="col-xs-4">
-        <div class="form-inline">
-            @using (Html.BeginForm("Index", "Produits", FormMethod.Get))
-            {
-                @Html.TextBox("recherche", "", ViewBag.CurrentFilter as string, new { @class = "form-control", placeholder = "Saisir la référence produit" })
-                <input type="submit" value="Rechercher" class="btn btn-success active" />
-            }
-        </div>
-    </div>
-
-    <div class="col-xs-4">
-        <div class="form-inline">
-            @using (Html.BeginForm("Index", "Produits", FormMethod.Get))
-            {
-                <input type="submit" id="filtre" onclick="location.href='@Url.Action("FilterProduitsDispo", "Produits")'" value="Filtrer produits dispo" class="btn btn-success active" />
-            }
-        </div>
-    </div>
-
-    <div class="col-xs-4">
-        @using (Html.BeginForm("Upload","GetFournisseurData", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-        <b>
-            <label for="file" style="color : darkgreen">Envoyer votre catalogue :</label>
-        </b>
-        <input type="file" name="file" id="file" accept="csv, xls, xlsx"/><br><br>
-        <input type="submit" value="Envoyer" class="btn btn-success" />
-        <br><br>
-        @ViewBag.Message
-        }
-    </div>
-
-
-    </div>
     <br />
     @{
 

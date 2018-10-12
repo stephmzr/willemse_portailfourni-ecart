@@ -67,28 +67,29 @@
                 }
             </section>
         </div>
-        <div class="col-md2">
-            <img src="/Content/Images/willemseaccueil.png" class="img-rounded" alt="Portail Willemse">
+        
+            <img src="/Content/Images/willemseaccueil.png" class="img-rounded" style="margin-top: 50px" alt="Portail Willemse">
 
-        </div>
+        
     </div>
 
 }
 else
 {
-    @*<div class="row">
-        <div class="col-md-2">
-            <br/>
-            <img class="" src="/Content/Images/willemseaccueil.png"  alt="Portail Willemse">
-        </div>
-        <div class="col">*@
 
     <div class="jumbotron">
         <center>
             <h2 class="display-4">Bienvenue sur le portail fournisseur</h2>
             <br />
-            <button type="button" class="btn navbar-btn btn-success btn-lg bouton-image monBoutonCarton" onclick="location.href='@Url.Action("Index", "Produits")'">Catalogue de produits</button>&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn navbar-btn btn-success btn-lg bouton-image monBoutonCamion" style="margin-left : 10px" onclick="location.href='@Url.Action("Index", "Commandes")'">Suivi des commandes</button>
+            @if (Request.IsAuthenticated && !User.IsInRole("Admin"))
+            {
+                <button type="button" class="btn navbar-btn btn-success btn-lg bouton-image monBoutonCarton" onclick="location.href='@Url.Action("Index", "Produits")'">Catalogue de produits</button>
+                <button type="button" class="btn navbar-btn btn-success btn-lg bouton-image monBoutonCamion" style="margin-left : 10px" onclick="location.href='@Url.Action("Index", "Commandes")'">Suivi des commandes</button>
+            }
+            else if (Request.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <button type="button" class="btn navbar-btn btn-success btn-lg bouton-image monBoutonAdmin" onclick="location.href='@Url.Action("Index", "Admin")'">Interface administrateur</button>
+            }
         </center>
 
         <br />

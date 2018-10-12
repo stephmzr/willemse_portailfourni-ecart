@@ -19,36 +19,36 @@
                 </a>
 
             </div>
+            @*
+        @if (Request.IsAuthenticated && (!User.IsInRole("Admin")))
+        {
+            <ul class="nav navbar-nav">
+                <li>
+                    <button type="button" class="btn navbar-btn btn-success btn-lg" onclick="location.href='@Url.Action("Index", "Produits")'">Catalogue de produits</button>
+                </li>
+                <li>
+                    <button type="button" class="btn navbar-btn btn-success btn-lg" style="margin-left : 10px" onclick="location.href='@Url.Action("Index", "Commandes")'">Suivi des commandes</button>
+                </li>
+            </ul>
+        }
 
-            @if (Request.IsAuthenticated && (!User.IsInRole("Admin")))
-            {
-                @*<ul class="nav navbar-nav">
-                    <li>
-                        <button type="button" class="btn navbar-btn btn-success btn-lg" onclick="location.href='@Url.Action("Index", "Produits")'">Catalogue de produits</button>
-                    </li>
-                    <li>
-                        <button type="button" class="btn navbar-btn btn-success btn-lg" style="margin-left : 10px" onclick="location.href='@Url.Action("Index", "Commandes")'">Suivi des commandes</button>
-                    </li>
-                </ul>*@
-            }
-
-            else if (User.IsInRole("Admin") && Request.IsAuthenticated)
-            {
-                <ul class="nav navbar-nav">
-                    <li>
-                        <button type="button" class="btn navbar-btn btn-success btn-lg" onclick="location.href='@Url.Action("Index", "Admin")'">Interface administrateur</button>
-                    </li>
-                </ul>
-            }
-
+        else if (User.IsInRole("Admin") && Request.IsAuthenticated)
+        {
+            <ul class="nav navbar-nav">
+                <li>
+                    <button type="button" class="btn navbar-btn btn-success btn-lg" onclick="location.href='@Url.Action("Index", "Admin")'">Interface administrateur</button>
+                </li>
+            </ul>
+        }
+            *@
             <div class="navbar navbar-header navbar-right">
                 @Html.Partial("_LoginPartial")
             </div>
 
 
 
-            </div>
-    </nav>
+        </div>  
+</nav>
 
 
 

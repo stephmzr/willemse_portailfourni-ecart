@@ -12,6 +12,7 @@ using System.Net;
 using PagedList;
 using System.Data.SqlClient;
 using System.Data;
+using System.IO;
 
 namespace WebApplication6.Controllers
 {
@@ -38,8 +39,9 @@ namespace WebApplication6.Controllers
 
         // La page d'accueil du catalogue de produits (liste tous les produits d'un fournisseur)
         [HttpGet]
-        public ActionResult Index(string currentFilter, string recherche, int? page)
+        public ActionResult Index(string currentFilter, string recherche, int? page, string buttonNonDispo, string buttonDispo)
         {
+
             if (recherche != null)
             {
                 page = 1;
@@ -50,14 +52,29 @@ namespace WebApplication6.Controllers
             }
             ViewBag.CurrentFilter = recherche;
             var produits = v.v_MP_ArtFournisseur.Where(d => d.CT_Num == CurrentUser.Id).OrderByDescending(x => x.CT_Num).ToList();
+            var filtreProduitsNonDispo = v.v_MP_ArtFournisseur.Where(d => d.CODE_STATUT == "Epuisé" && d.CT_Num == CurrentUser.Id).OrderByDescending(x => x.CT_Num).ToList();
             if (!string.IsNullOrEmpty(recherche) && !string.IsNullOrWhiteSpace(recherche))
             {
                 produits = produits.Where(d => ((d.CT_Num == CurrentUser.Id) && (d.AR_Ref.Equals(recherche)))).ToList();
             }
+            if (buttonNonDispo != null)
+            {
+                produits = v.v_MP_ArtFournisseur.Where(d => d.CODE_STATUT == "Epuisé" && d.CT_Num == CurrentUser.Id).OrderByDescending(x => x.CT_Num).ToList();
+
+            }
+            if (buttonDispo != null)
+            {
+                produits = v.v_MP_ArtFournisseur.Where(d => d.CODE_STATUT == "Commercialisé" && d.CT_Num == CurrentUser.Id).OrderByDescending(x => x.CT_Num).ToList();
+
+            }
+
             int pageSize = 25;
             int pageNumber = (page ?? 1);
             return View(produits.ToPagedList(pageNumber, pageSize));
+
+
         }
+    
 
         // GET: Produits/Details/id (détails d'un produit)
         public ActionResult Details(string id)
@@ -101,9 +118,7 @@ namespace WebApplication6.Controllers
                 arttemp.AR_Design = ds["AR_Design"].ToString();
                 arttemp.AR_Ref = ds["AR_Ref"].ToString();
                 arttemp.AR_PrixAch = Decimal.Parse(ds["AR_PrixAch"].ToString());
-                arttemp.AR_Ref = ds["AR_Ref"].ToString();
-
-
+               
                 con.Close();
 
                 return arttemp;
@@ -111,7 +126,22 @@ namespace WebApplication6.Controllers
             }
         }
 
+        //public ActionResult FilterProduitsDispo(int? page)
+
+        //{
+        //    var filtreProduitsNonDispo = v.v_MP_ArtFournisseur.Where(d => d.CODE_STATUT == "Epuisé" && d.CT_Num == CurrentUser.Id).OrderByDescending(x => x.CT_Num).ToList(); 
+
+        //    int pageSize = 25;
+        //    int pageNumber = (page ?? 1);
+        //    return View("Index", filtreProduitsNonDispo.ToPagedList(pageNumber, pageSize));
+
+
+        //}
+       
 
     }
+
+
 }
+
 
