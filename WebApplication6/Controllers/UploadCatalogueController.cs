@@ -34,13 +34,11 @@ namespace WebApplication6.Controllers
                 if (file != null && file.ContentLength > 0)
                 {
 
-
-
-
                     try
                     {
                         var fileName = Path.GetFileName(file.FileName);
-                        var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
+                        var path = Path.Combine(Server.MapPath("/UploadsCatalogue"), fileName);
+                        //var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
                         file.SaveAs(path);
                         ViewBag.Message = "File uploaded successfully";
                     }
@@ -55,7 +53,6 @@ namespace WebApplication6.Controllers
                     ViewBag.Message = "You have not specified a file.";
                 }
 
-
             }
             else
             {
@@ -65,8 +62,6 @@ namespace WebApplication6.Controllers
 
             return RedirectToAction("Index", "Produits");
                 
-
-
         }
 
     }

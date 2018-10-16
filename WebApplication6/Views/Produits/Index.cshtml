@@ -43,24 +43,28 @@
             </div>
         </div>
 
-        <div class="col-xs-4">
-            <div class="form-inline">
+        <div class="col-xs-3">
+            <div style="display : inline" class="form-inline">
+
                 @using (Html.BeginForm("Index", "Produits", FormMethod.Get))
                 {
                     <input type="submit" id="button" name="buttonNonDispo" onclick="location.href='@Url.Action("FilterProduitsDispo", "Produits")'" value="Filtrer produits non dispo" class="btn btn-success active" />
                 }
             </div>
         </div>
-        <div class="col-xs-4">
-            <div class="form-inline">
-                @using (Html.BeginForm("Index", "Produits", FormMethod.Get))
-                {
-                    <input type="submit" id="button" name="buttonDispo" onclick="location.href='@Url.Action("FilterProduitsDispo", "Produits")'" value="Filtrer produits dispo" class="btn btn-success active" />
-                }
+        <div class="col-xs-3">
+                <div style="display : inline" class="form-inline">
+            @using (Html.BeginForm("Index", "Produits", FormMethod.Get))
+            {
+                <input type="submit" id="button" name="buttonDispo" onclick="location.href='@Url.Action("FilterProduitsDispo", "Produits")'" value="Filtrer produits dispo" class="btn btn-success active" />
+            }
             </div>
+        
+        </div>
+
         </div>
     </div>
-</div>
+
     <br />
     @{
 
@@ -92,33 +96,78 @@
 
                 @foreach (var item in Model)
                 {
-                    <tr style="cursor: pointer" onclick="location.href='@(Url.Action("Details", new { id = item.AR_Ref }))'">
+                <tr>
 
-                        <td>
-                            @Html.DisplayFor(modelItem => item.AR_Ref)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.AR_Design)
-                        </td>
+                    <td style="cursor: pointer" onclick="location.href='@(Url.Action("Details", new { id = item.AR_Ref }))'">
+                        @Html.DisplayFor(modelItem => item.AR_Ref)
+                    </td>
+                    <td style="cursor: pointer" onclick="location.href='@(Url.Action("Details", new { id = item.AR_Ref }))'">
+                        @Html.DisplayFor(modelItem => item.AR_Design)
+                    </td>
 
-                        <td>
-                            @Html.DisplayFor(modelItem => item.AF_PrixAch)
-                            &euro;
-                        </td>
-                        <td>
-                            @{
-                                string parameterValue = item.CODE_STATUT == "Epuisé" ? "Non" : "Oui";
+                    <td style="cursor: pointer" onclick="location.href='@(Url.Action("Details", new { id = item.AR_Ref }))'">
+                        @Html.DisplayFor(modelItem => item.AF_PrixAch)
+                        &euro;
+                    </td>
+                    <td style="cursor: pointer" onclick="location.href='@(Url.Action("Details", new { id = item.AR_Ref }))'">
+                        @{
+                            string parameterValue = item.CODE_STATUT == "Epuisé" ? "Non" : "Oui";
+                        }
+                        @Html.DisplayFor(modelItem => parameterValue)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Details", "Produits", new { id = item.AR_Ref })"><span class="glyphicon glyphicon-eye-open"></span></a>
+                        @Html.ActionLink("Détails", "Details", new { id = item.AR_Ref })
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="">
+                            @if (parameterValue == "Oui")
+                            {
+                                <button type="button" class="btn btn-success btn-xs" onclick="location.href='@Url.Action("ActionEpuiser", "Produits", new { refproduit = item.AR_Ref })'">Epuiser produit</button>
                             }
-                            @Html.DisplayFor(modelItem => parameterValue)
-                        </td>
-                        <td>
-                            <a href="@Url.Action("Details", "Produits", new { id = item.AR_Ref })"><span class="glyphicon glyphicon-eye-open"></span></a>
-                            @Html.ActionLink("Détails", "Details", new { id = item.AR_Ref })
-                        </td>
+                                <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modifPrixModal" data-titre="Modifier prix du produit @item.AR_Ref ?" data-refproduit="toto" @*onclick="location.href='@Url.Action("ActionModifierPrix", "Produits", new { refproduit = item.AR_Ref })'"*@>Modifier prix d'achat</button>
+                        </div>
+                    </td>
+                    <td style="background-color: white; border : unset;" class="">
+                        
+                    </td>
 
-                    </tr>
+                </tr>
                 }
             </table>
+
+            <div class="modal fade" id="modifPrixModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="modal-body">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <div class="form-group">
+                                    @using (Html.BeginForm("ActionModifierPrix", "Produits", FormMethod.Post))
+                                    {
+                                        <input type="hidden" name="refproduit" id="modal-refproduit" />
+                                        <label for="newprix">Nouveau prix :</label>
+                                        <input type="text" class="form-control" name="newprix" />
+
+                                        <hr />
+                                        <input type="submit" style="float: right;"  value="Valider" class="btn btn-success" />
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
             <hr />
             <div class="container">
                 <div class="row">
@@ -132,20 +181,34 @@
         }
     }
 
+  <script>
+      $(document).ready(function () {
+          $('[data-toggle="popover"]').popover({
+          })
+      });
 
-            <script type="text/javascript">
-                function Checkfiles() {
-                    var fup = document.getElementById('filename');
-                    var fileName = fup.value;
-                    var ext = fileName.substring(fileName.lastIndexOf('.') + 1);
+      // data-* attributes to scan when populating modal values
+      var ATTRIBUTES = ['titre', 'refproduit'];
 
-                    if (ext == "csv" || ext == "xls" || ext == "xlsx") {
-                        return true;
-                    }
-                    else {
-                        alert("Nous acceptons uniquement les formats CSV, XLS et XLSX");
-                        return false;
-                    }
-                }
-            </script>
+      $('[data-toggle="modal"]').on('click', function (e) {
+          // convert target (e.g. the button) to jquery object
+          var $target = $(e.target);
+          // modal targeted by the button
+          var modalSelector = $target.data('target');
 
+          // iterate over each possible data-* attribute
+          ATTRIBUTES.forEach(function (attributeName) {
+              // retrieve the dom element corresponding to current attribute
+              var $modalAttribute = $(modalSelector + ' #modal-' + attributeName);
+              var dataValue = $target.data(attributeName);
+
+              // if the attribute value is empty, $target.data() will return undefined.
+              // In JS boolean expressions return operands and are not coerced into
+              // booleans. That way is dataValue is undefined, the left part of the following
+              // Boolean expression evaluate to false and the empty string will be returned
+              $modalAttribute.text(dataValue || '');
+              $modalAttribute.val(dataValue || '');
+
+          });
+      });
+</script>

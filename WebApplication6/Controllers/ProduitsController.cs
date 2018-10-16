@@ -26,6 +26,7 @@ namespace WebApplication6.Controllers
         private ApplicationDbContext dbA = new ApplicationDbContext();
         public INFORMATIQUEEntities v = new INFORMATIQUEEntities();
 
+
         // Récupérer l'identité de l'utilisateur connecté
         private ApplicationUser CurrentUser
         {
@@ -84,7 +85,7 @@ namespace WebApplication6.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
        
-            F_ARTICLE item = DBArticles.GetarticleView(id);
+            v_MP_ArtFournisseur item = DBArticles.GetarticleView(id);
             if (item == null)
             {
                 return HttpNotFound();
@@ -94,17 +95,13 @@ namespace WebApplication6.Controllers
 
         }
 
-        public ActionResult FiltrerProduitsDispo()
-        {
-            return Redirect("Home/Index");
-        }
 
         // appel de procédure stockée pour afficher détails d'un produit
         public static class DBArticles
         {
-            public static F_ARTICLE GetarticleView(string id)
+            public static v_MP_ArtFournisseur GetarticleView(string id)
             {
-                F_ARTICLE arttemp = new F_ARTICLE();
+                v_MP_ArtFournisseur arttemp = new v_MP_ArtFournisseur();
                 SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DatabaseInfo"].ConnectionString);
                 con.Open();
                 SqlCommand cmd = new SqlCommand();
@@ -118,7 +115,20 @@ namespace WebApplication6.Controllers
                 arttemp.AR_Design = ds["AR_Design"].ToString();
                 arttemp.AR_Ref = ds["AR_Ref"].ToString();
                 arttemp.AR_PrixAch = Decimal.Parse(ds["AR_PrixAch"].ToString());
-               
+                arttemp.AR_Ref = ds["AR_PoidsNet"].ToString();
+                arttemp.AR_Ref = ds["DEBUT_LIVRABILITE_AUTOMNE"].ToString();
+                arttemp.AR_Ref = ds["DEBUT_LIVRABILITE_PRINTEMPS"].ToString();
+                arttemp.AR_Ref = ds["FIN_LIVRABILITE_AUTOMNE"].ToString();
+                arttemp.AR_Ref = ds["FIN_LIVRABILITE_PRINTEMPS"].ToString();
+                arttemp.AR_Ref = ds["AR_Garantie"].ToString();
+                arttemp.AR_Ref = ds["HAUTEUR"].ToString();
+                arttemp.AR_Ref = ds["LARGEUR"].ToString();
+                arttemp.AR_Ref = ds["LONGUEUR"].ToString();
+
+
+
+
+
                 con.Close();
 
                 return arttemp;
@@ -126,18 +136,31 @@ namespace WebApplication6.Controllers
             }
         }
 
-        //public ActionResult FilterProduitsDispo(int? page)
 
-        //{
-        //    var filtreProduitsNonDispo = v.v_MP_ArtFournisseur.Where(d => d.CODE_STATUT == "Epuisé" && d.CT_Num == CurrentUser.Id).OrderByDescending(x => x.CT_Num).ToList(); 
+        public ActionResult ActionEpuiser(string refproduit)
 
-        //    int pageSize = 25;
-        //    int pageNumber = (page ?? 1);
-        //    return View("Index", filtreProduitsNonDispo.ToPagedList(pageNumber, pageSize));
+        {
+            var produitAEpuiser = v.v_MP_ArtFournisseur.Where(d => d.AR_Ref == refproduit);
 
+            foreach (var produit in produitAEpuiser)
+            {
+                produit.CODE_STATUT = "Epuisé";
+            }
+            v.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
-        //}
-       
+        public ActionResult ActionModifierPrix(string refproduit, decimal newprix)
+
+        {
+            var prixAModifier = v.v_MP_ArtFournisseur.Where(d => d.AR_Ref == refproduit);
+            foreach (var produit in prixAModifier)
+            {
+                produit.AF_PrixAch = newprix;
+            }
+            v.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
     }
 

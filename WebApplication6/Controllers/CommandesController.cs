@@ -123,6 +123,19 @@ namespace WebApplication6.Controllers
         }
 
 
+        public ActionResult ActionAjoutTracking(string numcommande, string lientracking, string dateExped)
+        {
+            var commande = db.F_DOCENTETE.Where(d => d.DO_Piece == numcommande);
+
+            foreach (var item in commande)
+            {
+
+
+            }
+            return RedirectToAction("Index");
+        }
+
+
         public static string StatusCommande(string identif)
         {
             switch (identif)

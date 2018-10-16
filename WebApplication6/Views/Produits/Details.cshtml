@@ -1,5 +1,5 @@
-﻿@model WebApplication6.Models.F_ARTICLE
-@using WebApplication6.Models
+﻿@model WebApplication6.Models.v_MP_ArtFournisseur
+
 
 
 @{
@@ -10,15 +10,52 @@
 
 
 <h2 style="color:darkgreen;">Details du produit @Model.AR_Design</h2>
+@Model.AR_Ref
 
 <br />
 <div class="row">
     <div class="col-xs-3">
         <ul>
-            <li><b style="color:darkgreen;">Désignation produit</b><br />@Model.AR_Design</li>
+            <li><b style="color:darkgreen;">Poids net :</b><br />@Model.AR_PoidsNet</li>
         </ul>
     </div>
 </div>
+<div class="row">
+    <div class="col-xs-3">
+        <ul>
+            <li><b style="color:darkgreen;">Début livrabilité printemps</b><br />@Model.DEBUT_LIVRABILITE_PRINTEMPS</li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-3">
+        <ul>
+            <li><b style="color:darkgreen;">Fin livrabilité printemps</b><br />@Model.FIN_LIVRABILITE_PRINTEMPS</li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-3">
+        <ul>
+            <li><b style="color:darkgreen;">Début livrabilité automne</b><br />@Model.DEBUT_LIVRABILITE_AUTOMNE</li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-3">
+        <ul>
+            <li><b style="color:darkgreen;">Fin livrabilité automne</b><br />@Model.FIN_LIVRABILITE_AUTOMNE</li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-3">
+        <ul>
+            <li><b style="color:darkgreen;">Fin livrabilité automne</b><br />@Model.AR_Ref</li>
+        </ul>
+    </div>
+</div>
+
 
 
 
@@ -26,3 +63,6 @@
 
 <a href="javascript:history.back()"><span class="glyphicon glyphicon-arrow-left"></span></a>
 <a href="javascript:history.back()"> Retour aux produits</a>
+
+
+

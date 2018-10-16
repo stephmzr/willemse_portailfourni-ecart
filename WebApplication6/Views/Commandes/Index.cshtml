@@ -37,80 +37,179 @@
         </div>
         <br /><br />
 
-       
-                    <table class="table table-striped table-hover list-group" >
-                        <tr style="color:darkgreen">
-                            <th>
-                                N° commande
-                            </th>
-                            <th>
-                                Date de la commande
-                            </th>
-                            <th>
-                                Montant HT
-                            </th>
-                            <th>
-                                &nbsp;
-                            </th>
-                            <th>
-                                &nbsp;
-                            </th>
-                            <th>
-                                &nbsp;
-                            </th>
-                            <th>
-                                &nbsp;
-                            </th>
 
-                        </tr>
+        <table class="table table-striped table-hover list-group">
+            <tr style="color:darkgreen">
+                <th>
+                    &nbsp;
+                </th>
+                <th>
+                    N° commande
+                </th>
+                <th>
+                    Date de la commande
+                </th>
+                <th>
+                    Montant HT
+                </th>
+                <th>
+                    &nbsp;
+                </th>
+                <th>
+                    &nbsp;
+                </th>
+                <th>
+                    &nbsp;
+                </th>
+                <th>
+                    &nbsp;
+                </th>
 
-                        @foreach (var item in Model)
-                        {                        
-                           
+            </tr>
 
-                        <tr style="cursor: pointer;" onclick="location.href='@(Url.Action("SuiviCommandes", new { id = item.DO_Piece }))'">
+            @foreach (var item in Model)
+            {
 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DO_Piece)
-                            </td>
-                            <td>
-                                @{
-                                    string parameterValue = item.DO_Date.ToString().Remove(10, 9);
-                                }
-                                @Html.DisplayFor(modelItem => parameterValue)
-                            </td>
-                            @*<td>
-                                @WebApplication6.Controllers.CommandesController.StatusCommande(Html.DisplayFor(modelItem => item.DO_Type).ToString())
-                            </td>*@
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DO_TotalHT)
-                                &euro;
-                            </td>
-                            <td>
-                                <a href="/Manage"><span class="glyphicon glyphicon-eye-open"></span></a>
-                                @Html.ActionLink("Détails", "SuiviCommandes", new { id = item.DO_Piece })
-                            </td>
-                            <td>
-                                <a href="@Url.Action("ExportToCSV", "ExportToCSV", new { Id = item.DO_Piece})"><span class="glyphicon glyphicon-file"></span></a>
-                                <a href="@Url.Action("ExportToCSV", "ExportToCSV", new { Id = item.DO_Piece})">Export CSV</a>
-                            </td>
 
-                            <td style="text-align:center"></td>
-                            <td>
-                                <a href="@Url.Action("BonLivraisonPDF", "BonLivraisonPDF", new { Id = item.DO_Piece, target = "_blank"})"><span class="glyphicon glyphicon-file"></span></a>
-                                <a href="@Url.Action("BonLivraisonPDF", "BonLivraisonPDF", new { Id = item.DO_Piece,  target = "_blank"})">Bon livraison</a>
-                            </td>
-                        </tr>
-                           
-
+                <tr>
+                    <td>
+                        <a href="@Url.Action("SuiviCommandes", "Commandes", new { Id = item.DO_Piece})"><span class="glyphicon glyphicon-eye-open" style="color : darkgreen"></span></a>
+                    </td>
+                    <td style="cursor: pointer;" onclick="location.href='@(Url.Action("SuiviCommandes", new { id = item.DO_Piece }))'">
+                        @Html.DisplayFor(modelItem => item.DO_Piece)
+                    </td>
+                    <td style="cursor: pointer;" onclick="location.href='@(Url.Action("SuiviCommandes", new { id = item.DO_Piece }))'">
+                        @{
+                            string parameterValue = item.DO_Date.ToString().Remove(10, 9);
                         }
+                        @Html.DisplayFor(modelItem => parameterValue)
+                    </td>
+                    @*<td>
+                            @WebApplication6.Controllers.CommandesController.StatusCommande(Html.DisplayFor(modelItem => item.DO_Type).ToString())
+                        </td>*@
+                    <td style="cursor: pointer;" onclick="location.href='@(Url.Action("SuiviCommandes", new { id = item.DO_Piece }))'">
+                        @Html.DisplayFor(modelItem => item.DO_TotalHT)
+                        &euro;
+                    </td>
 
-                    </table>
+                    <td>
+                        <a href="@Url.Action("ExportToCSV", "ExportToCSV", new { Id = item.DO_Piece})"><span class="glyphicon glyphicon-file"></span></a>
+                        <a href="@Url.Action("ExportToCSV", "ExportToCSV", new { Id = item.DO_Piece})">Export CSV</a>
+                    </td>
+
+                    <td style="text-align:center"></td>
+                    <td>
+                        <a href="@Url.Action("BonLivraisonPDF", "BonLivraisonPDF", new { Id = item.DO_Piece, target = "_blank"})"><span class="glyphicon glyphicon-file"></span></a>
+                        <a href="@Url.Action("BonLivraisonPDF", "BonLivraisonPDF", new { Id = item.DO_Piece,  target = "_blank"})">Bon livraison</a>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#commandeModal" data-numcommande="@item.DO_Piece" @*onclick="location.href='@Url.Action("ActionAjoutTracking", "Commande", new { numcommande = item.DO_Piece })'"*@>Ajout date expédition ou lien tracking</button>
+                    </td>
+                </tr>
+
+
+            }
+
+        </table>
     }
-   
+
+    @*<div class="modal fade" id="commandeModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+
+
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        @using (Html.BeginForm("ActionAjoutTracking", "Commandes", FormMethod.Post))
+                        {
+                            @*<label for="date-exped">Date d'expédition prévue :</label>
+                    <br/>
+                    <input type="text" class="" name="date-exped" />
+                            <br />
+                            <label for="lientracking">Lien tracking : </label>
+                            <textarea class="form-control" name="lientracking"></textarea>
+                            <hr />
+                            <input type="submit" style="display : inline; float : right;" value="Valider" class="btn btn-success" />
+                        }
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>*@
+
+    <div class="modal fade" id="commandeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <div class="form-group">
+                            @using (Html.BeginForm("ActionAjoutTracking", "Commandes", FormMethod.Post))
+                            {
+                                <input type="hidden" name="numcommande" />
+                                <label for="lientracking">Lien tracking :</label>
+                                <input type="text" class="form-control" name="lientracking" />
+                                <br/>
+                                <label for="dateExped">Date d'expédition prévue :</label>
+                                <input type="text" class="form-control" name="dateExped" />
+                                <hr />
+                                <input type="submit" style="float: right;" value="Valider" class="btn btn-success" />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
 
 
     <span class="text-info">Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) sur @Model.PageCount</span>
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))
 </div>
 
+
+<script>
+
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover({
+        })
+    });
+
+    // data-* attributes to scan when populating modal values
+    var ATTRIBUTES = ['titre', 'numcommande'];
+
+    $('[data-toggle="modal"]').on('click', function (e) {
+        // convert target (e.g. the button) to jquery object
+        var $target = $(e.target);
+        // modal targeted by the button
+        var modalSelector = $target.data('target');
+
+        // iterate over each possible data-* attribute
+        ATTRIBUTES.forEach(function (attributeName) {
+            // retrieve the dom element corresponding to current attribute
+            var $modalAttribute = $(modalSelector + ' #modal-' + attributeName);
+            var dataValue = $target.data(attributeName);
+
+            // if the attribute value is empty, $target.data() will return undefined.
+            // In JS boolean expressions return operands and are not coerced into
+            // booleans. That way is dataValue is undefined, the left part of the following
+            // Boolean expression evaluate to false and the empty string will be returned
+            $modalAttribute.text(dataValue || '');
+            $modalAttribute.val(dataValue || '');
+        });
+    });
+
+</script>
