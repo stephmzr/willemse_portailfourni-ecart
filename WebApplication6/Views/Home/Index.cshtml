@@ -1,20 +1,6 @@
 ﻿@{
-                /**/
-
-                ViewBag.Title = "Home Page";
+   ViewBag.Title = "Home Page";
 }
-
-@*<div class="jumbotron">
-
-    <h1 class="display-4">Bienvenue sur le portail fournisseur</h1>
-    <br/>
-
-    <button class="btn-lg btn-success pull-right" onclick="location.href='https://willemsefrance.fr'">Lien vers notre site web &raquo;</button> <br />
-
-    <br />
-    <hr class="my-4">
-    </div>*@
-
 
 @using WebApplication6.Models
 @model LoginViewModel
@@ -85,6 +71,7 @@ else
             {
                 <button type="button" class="btn navbar-btn btn-success btn-lg bouton-image monBoutonCarton" onclick="location.href='@Url.Action("Index", "Produits")'">Catalogue de produits</button>
                 <button type="button" class="btn navbar-btn btn-success btn-lg bouton-image monBoutonCamion" style="margin-left : 10px" onclick="location.href='@Url.Action("Index", "Commandes")'">Suivi des commandes</button>
+
             }
             else if (Request.IsAuthenticated && User.IsInRole("Admin"))
             {

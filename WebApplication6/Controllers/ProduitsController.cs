@@ -134,7 +134,10 @@ namespace WebApplication6.Controllers
                 return arttemp;
 
             }
+
+            
         }
+
 
 
         public ActionResult ActionEpuiser(string refproduit)

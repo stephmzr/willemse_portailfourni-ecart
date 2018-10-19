@@ -2,6 +2,7 @@
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
@@ -123,31 +124,27 @@ namespace WebApplication6.Controllers
         }
 
 
-        public ActionResult ActionAjoutTracking(string numcommande, string lientracking, string dateExped)
+        public ActionResult ActionAjoutTracking(string numcommande, string lientracking, DateTime dateExped)
         {
-            var commande = db.F_DOCENTETE.Where(d => d.DO_Piece == numcommande);
 
-            foreach (var item in commande)
-            {
+            string cnnString = System.Configuration.ConfigurationManager.ConnectionStrings["DatabaseInfo"].ConnectionString;
 
-
-            }
+            SqlConnection cnn = new SqlConnection(cnnString);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = cnn;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "TEST_MAJ";
+            cmd.Parameters.Add(new SqlParameter("@numcommande", SqlDbType.NVarChar));
+            cmd.Parameters["@numcommande"].Value = numcommande;
+            cmd.Parameters.Add(new SqlParameter("@lientracking", SqlDbType.NVarChar));
+            cmd.Parameters["@lientracking"].Value = lientracking;
+            cmd.Parameters.Add(new SqlParameter("@dateExped", SqlDbType.DateTime));
+            cmd.Parameters["@dateExped"].Value = dateExped;
+            cnn.Open();
+            object o = cmd.ExecuteScalar();
+            cnn.Close();
             return RedirectToAction("Index");
-        }
 
-
-        public static string StatusCommande(string identif)
-        {
-            switch (identif)
-            {
-                case "12": return "Envoyé";
-                case "13": return "Réceptionné";
-                case "14": return "Facturé";
-                case "16": return "Saisi";
-                case "17": return "Comptabilisé";
-
-                default: return "unknown";
-            }
         }
 
     }

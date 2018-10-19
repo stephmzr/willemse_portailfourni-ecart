@@ -158,6 +158,11 @@ namespace WebApplication6.Controllers
 
         }
 
+        public ActionResult NouveauProduit(string id)
+        {
+            return View();
+        }
+
 
 
     }

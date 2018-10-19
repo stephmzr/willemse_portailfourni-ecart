@@ -5,6 +5,14 @@
     ViewBag.Title = "Votre Catalogue de produits en ligne";
 }
 
+<head>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+
+
+</head>
 <br />
 <div class="jumbotron">
 
@@ -19,7 +27,7 @@
                 <b>
                     <label for="file" style="color : darkgreen">Envoyer votre catalogue :</label>
                 </b>
-                <input type="file" name="file" id="file" accept="csv, xls, xlsx"/>
+                <input type="file" name="file" id="file" accept="csv, xls, xlsx" />
                 <input type="submit" value="Envoyer" class="btn btn-success" style="float : right; margin : 20px;" />
                 <br><br>
                 @ViewBag.Message
@@ -53,51 +61,56 @@
             </div>
         </div>
         <div class="col-xs-3">
-                <div style="display : inline" class="form-inline">
-            @using (Html.BeginForm("Index", "Produits", FormMethod.Get))
-            {
-                <input type="submit" id="button" name="buttonDispo" onclick="location.href='@Url.Action("FilterProduitsDispo", "Produits")'" value="Filtrer produits dispo" class="btn btn-success active" />
-            }
-            </div>
-        
-        </div>
-
-        </div>
-    </div>
-
-    <br />
-    @{
-
-        if (Model.Count() == 0)
-        {
-            <p class="text-danger">Vous n'avez pas encore ajouté de produits.</p>
-        }
-        else
-        {
-            <br />
-            <table class="table table-hover">
-                <tr>
-                    <th style="color:darkgreen;">
-                        Référence Produit
-                    </th>
-                    <th style="color:darkgreen;">
-                        Libellé
-                    </th>
-                    <th style="color:darkgreen;">
-                        Prix Cession HT
-                    </th>
-                    <th style="color:darkgreen;">
-                        Disponible à la vente
-                    </th>
-                    <th style="color:darkgreen;">
-                        &nbsp;
-                    </th>
-                </tr>
-
-                @foreach (var item in Model)
+            <div style="display : inline" class="form-inline">
+                @using (Html.BeginForm("Index", "Produits", FormMethod.Get))
                 {
-                <tr>
+                    <input type="submit" id="button" name="buttonDispo" onclick="location.href='@Url.Action("FilterProduitsDispo", "Produits")'" value="Filtrer produits dispo" class="btn btn-success active" />
+                }
+            </div>
 
+        </div>
+
+    </div>
+</div>
+
+<br />
+@{
+
+    if (Model.Count() == 0)
+    {
+        <p class="text-danger">Vous n'avez pas encore ajouté de produits.</p>
+    }
+    else
+    {
+        <br />
+        <table class="table table-hover">
+            <tr>
+                <th>
+
+                </th>
+                <th style="color:darkgreen;">
+                    Référence Produit
+                </th>
+                <th style="color:darkgreen;">
+                    Libellé
+                </th>
+                <th style="color:darkgreen;">
+                    Prix Cession HT
+                </th>
+                <th style="color:darkgreen;">
+                    Disponible à la vente
+                </th>
+                <th style="color:darkgreen;">
+                    &nbsp;
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a href="@Url.Action("SuiviCommandes", "Commandes", new { Id = item.AR_Ref})"><span class="glyphicon glyphicon-eye-open" style="color : green"></span></a>
+                    </td>
                     <td style="cursor: pointer" onclick="location.href='@(Url.Action("Details", new { id = item.AR_Ref }))'">
                         @Html.DisplayFor(modelItem => item.AR_Ref)
                     </td>
@@ -116,99 +129,113 @@
                         @Html.DisplayFor(modelItem => parameterValue)
                     </td>
                     <td>
-                        <a href="@Url.Action("Details", "Produits", new { id = item.AR_Ref })"><span class="glyphicon glyphicon-eye-open"></span></a>
-                        @Html.ActionLink("Détails", "Details", new { id = item.AR_Ref })
-                    </td>
-                    <td>
                         <div class="btn-group" role="group" aria-label="">
                             @if (parameterValue == "Oui")
                             {
-                                <button type="button" class="btn btn-success btn-xs" onclick="location.href='@Url.Action("ActionEpuiser", "Produits", new { refproduit = item.AR_Ref })'">Epuiser produit</button>
+                                <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#epuiserModal" data-titre="Etes-vous sûr de vouloir épuiser le produit @item.AR_Design ?" data-refproduit="@item.AR_Ref">Epuiser produit</button>
                             }
-                                <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modifPrixModal" data-titre="Modifier prix du produit @item.AR_Ref ?" data-refproduit="toto" @*onclick="location.href='@Url.Action("ActionModifierPrix", "Produits", new { refproduit = item.AR_Ref })'"*@>Modifier prix d'achat</button>
+                            <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modifPrixModal" data-titre="Modifier prix du produit @item.AR_Ref ?" data-refproduit="@item.AR_Ref" data-ancienprix="Prix actuel : @item.AR_PrixAch">Modifier prix d'achat</button>
                         </div>
                     </td>
-                    <td style="background-color: white; border : unset;" class="">
-                        
-                    </td>
+                    <td style="background-color: white; border : unset;" class=""></td>
 
                 </tr>
-                }
-            </table>
+            }
+        </table>
 
-            <div class="modal fade" id="modifPrixModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <div class="modal-body">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <div class="form-group">
-                                    @using (Html.BeginForm("ActionModifierPrix", "Produits", FormMethod.Post))
-                                    {
-                                        <input type="hidden" name="refproduit" id="modal-refproduit" />
-                                        <label for="newprix">Nouveau prix :</label>
-                                        <input type="text" class="form-control" name="newprix" />
+        <div class="modal fade" id="modifPrixModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 id="modal-titre"></h4>
+                        <div class="modal-body">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <div class="form-group">
+                                @using (Html.BeginForm("ActionModifierPrix", "Produits", FormMethod.Post))
+                                {
+                                    <input type="hidden" name="refproduit" id="modal-refproduit" />
+                                    <label for="newprix">Nouveau prix :</label>
+                                    <input type="text" class="form-control" placeholder="modal-ancienprix" name="newprix" />
 
-                                        <hr />
-                                        <input type="submit" style="float: right;"  value="Valider" class="btn btn-success" />
-                                    }
+                                    <hr />
+                                    <input type="submit" style="float: right;" value="Valider" class="btn btn-success" />
+                                }
 
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-
-
-
-
-
-
-            <hr />
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-6">
-                        <span class="text-info">Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) sur @Model.PageCount</span>
-                        @Html.PagedListPager(Model, page => Url.Action("Index",
-                new { page, currentFilter = ViewBag.CurrentFilter }))
+        <div class="modal fade" id="epuiserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 id="modal-titre"></h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        @using (Html.BeginForm("ActionEpuiser", "Produits", FormMethod.Post))
+                        {
+                            <input type="hidden" name="refproduit" id="modal-refproduit" />
+                            <input type="submit" style="float: right;" value="Oui" class="btn btn-success btn-lg" />
+                        }
                     </div>
                 </div>
             </div>
-        }
+        </div>
+
+
+
+
+
+        <hr />
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-6">
+                    <span class="text-info">Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) sur @Model.PageCount</span>
+                    @Html.PagedListPager(Model, page => Url.Action("Index",
+            new { page, currentFilter = ViewBag.CurrentFilter }))
+                </div>
+            </div>
+        </div>
     }
+}
 
-  <script>
-      $(document).ready(function () {
-          $('[data-toggle="popover"]').popover({
-          })
-      });
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover({
+        })
+    });
 
-      // data-* attributes to scan when populating modal values
-      var ATTRIBUTES = ['titre', 'refproduit'];
+    // data-* attributes to scan when populating modal values
+    var ATTRIBUTES = ['titre', 'refproduit', 'ancienprix'];
 
-      $('[data-toggle="modal"]').on('click', function (e) {
-          // convert target (e.g. the button) to jquery object
-          var $target = $(e.target);
-          // modal targeted by the button
-          var modalSelector = $target.data('target');
+    $('[data-toggle="modal"]').on('click', function (e) {
+        // convert target (e.g. the button) to jquery object
+        var $target = $(e.target);
+        // modal targeted by the button
+        var modalSelector = $target.data('target');
 
-          // iterate over each possible data-* attribute
-          ATTRIBUTES.forEach(function (attributeName) {
-              // retrieve the dom element corresponding to current attribute
-              var $modalAttribute = $(modalSelector + ' #modal-' + attributeName);
-              var dataValue = $target.data(attributeName);
+        // iterate over each possible data-* attribute
+        ATTRIBUTES.forEach(function (attributeName) {
+            // retrieve the dom element corresponding to current attribute
+            var $modalAttribute = $(modalSelector + ' #modal-' + attributeName);
+            var dataValue = $target.data(attributeName);
 
-              // if the attribute value is empty, $target.data() will return undefined.
-              // In JS boolean expressions return operands and are not coerced into
-              // booleans. That way is dataValue is undefined, the left part of the following
-              // Boolean expression evaluate to false and the empty string will be returned
-              $modalAttribute.text(dataValue || '');
-              $modalAttribute.val(dataValue || '');
+            // if the attribute value is empty, $target.data() will return undefined.
+            // In JS boolean expressions return operands and are not coerced into
+            // booleans. That way is dataValue is undefined, the left part of the following
+            // Boolean expression evaluate to false and the empty string will be returned
+            $modalAttribute.text(dataValue || '');
+            $modalAttribute.val(dataValue || '');
 
-          });
-      });
+        });
+    });
 </script>

@@ -6,6 +6,13 @@
 }
 
 
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+
+</head>
+
 <div class="container">
     <h2 style="color:darkgreen;">@ViewBag.Title</h2>
     <br /><br />
@@ -73,7 +80,7 @@
 
                 <tr>
                     <td>
-                        <a href="@Url.Action("SuiviCommandes", "Commandes", new { Id = item.DO_Piece})"><span class="glyphicon glyphicon-eye-open" style="color : darkgreen"></span></a>
+                        <a href="@Url.Action("SuiviCommandes", "Commandes", new { Id = item.DO_Piece})"><span class="glyphicon glyphicon-eye-open" style="color : green"></span></a>
                     </td>
                     <td style="cursor: pointer;" onclick="location.href='@(Url.Action("SuiviCommandes", new { id = item.DO_Piece }))'">
                         @Html.DisplayFor(modelItem => item.DO_Piece)
@@ -103,7 +110,7 @@
                         <a href="@Url.Action("BonLivraisonPDF", "BonLivraisonPDF", new { Id = item.DO_Piece,  target = "_blank"})">Bon livraison</a>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#commandeModal" data-numcommande="@item.DO_Piece" @*onclick="location.href='@Url.Action("ActionAjoutTracking", "Commande", new { numcommande = item.DO_Piece })'"*@>Ajout date expédition ou lien tracking</button>
+                        <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#commandeModal" data-dateExped="@item.DATE_EXPEDITION" data-numcommande="@item.DO_Piece" data-lientracking="@item.LIEN_TRACKING_1@item.LIEN_TRACKING_2@item.LIEN_TRACKING_3">Ajout date expédition ou lien tracking</button>
                     </td>
                 </tr>
 
@@ -113,37 +120,10 @@
         </table>
     }
 
-    @*<div class="modal fade" id="commandeModal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-
-
-
-                    <div class="modal-body">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        @using (Html.BeginForm("ActionAjoutTracking", "Commandes", FormMethod.Post))
-                        {
-                            @*<label for="date-exped">Date d'expédition prévue :</label>
-                    <br/>
-                    <input type="text" class="" name="date-exped" />
-                            <br />
-                            <label for="lientracking">Lien tracking : </label>
-                            <textarea class="form-control" name="lientracking"></textarea>
-                            <hr />
-                            <input type="submit" style="display : inline; float : right;" value="Valider" class="btn btn-success" />
-                        }
-                    </div>
-                </div>
-                </div>
-            </div>
-        </div>*@
-
     <div class="modal fade" id="commandeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header"> 
                     <div class="modal-body">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -151,12 +131,15 @@
                         <div class="form-group">
                             @using (Html.BeginForm("ActionAjoutTracking", "Commandes", FormMethod.Post))
                             {
-                                <input type="hidden" name="numcommande" />
+
+                                <input type="hidden" name="numcommande" id="modal-numcommande" />
+
                                 <label for="lientracking">Lien tracking :</label>
-                                <input type="text" class="form-control" name="lientracking" />
-                                <br/>
-                                <label for="dateExped">Date d'expédition prévue :</label>
-                                <input type="text" class="form-control" name="dateExped" />
+                                <input type="text" class="form-control" name="lientracking" id="modal-lientracking" />
+                                <br />
+                                <label for="dateExped" >Date d'expédition prévue :</label>
+                                <input type="date" id="modal-dateExped" name="dateExped" style="width:10em;" class="form-control" />
+
                                 <hr />
                                 <input type="submit" style="float: right;" value="Valider" class="btn btn-success" />
                             }
@@ -189,7 +172,7 @@
     });
 
     // data-* attributes to scan when populating modal values
-    var ATTRIBUTES = ['titre', 'numcommande'];
+    var ATTRIBUTES = ['titre', 'numcommande', 'dateExped', 'lientracking'];
 
     $('[data-toggle="modal"]').on('click', function (e) {
         // convert target (e.g. the button) to jquery object
@@ -211,5 +194,8 @@
             $modalAttribute.val(dataValue || '');
         });
     });
+
+
+
 
 </script>
