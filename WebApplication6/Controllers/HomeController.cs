@@ -12,8 +12,5 @@ namespace WebApplication6.Controllers
         {
             return View();
         }
-
     }
-
-       
-    }
+}

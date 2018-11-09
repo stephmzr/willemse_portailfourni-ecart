@@ -48,7 +48,7 @@ namespace WebApplication6.Controllers
                 {
                     if (String.IsNullOrEmpty(commande.POINT_RETRAIT_RELAIS))
                     {
-                        sw.WriteLine(string.Format("\"{0}\";\"{1}\";\"{2}\";\"{3}\";\"{4}\";\"{5}\";\"{6}\";\"{7}\";\"{8}\";\"{9}\";\"{10}\";\"{11}\";\"{12}\";\"{13}\"",
+                        sw.WriteLine(string.Format("\"{0}\";\"{1}\";\"{2}\";\"{3}\";\"{4}\";\"{5}\";\"{6}\";\"{7}\";\"{8}\";\"{9}\";\"{10}\";\"{11}\";\"{12}\"",
 
 
                                 ligne.AF_RefFourniss,
@@ -71,7 +71,7 @@ namespace WebApplication6.Controllers
                     else
                     {
 
-                        sw.WriteLine(string.Format("\"{0}\";\"{1}\";\"{2}\";\"{3}\";\"{4}\";\"{5}\";\"{6}\";\"{7}\";\"{8}\";\"{9}\";\"{10}\";\"{11}\";\"{12}\";\"{13}\"",
+                        sw.WriteLine(string.Format("\"{0}\";\"{1}\";\"{2}\";\"{3}\";\"{4}\";\"{5}\";\"{6}\";\"{7}\";\"{8}\";\"{9}\";\"{10}\";\"{11}\";\"{12}\"",
 
                             ligne.AF_RefFourniss,
                             ligne.DL_Design,

@@ -1,5 +1,5 @@
 ﻿@{
-   ViewBag.Title = "Home Page";
+    ViewBag.Title = "Home Page";
 }
 
 @using WebApplication6.Models
@@ -53,10 +53,10 @@
                 }
             </section>
         </div>
-        
-            <img src="/Content/Images/willemseaccueil.png" class="img-rounded" style="margin-top: 50px" alt="Portail Willemse">
 
-        
+        <img src="/Content/Images/willemseaccueil.png" class="img-rounded" style="margin-top: 50px" alt="Portail Willemse">
+
+
     </div>
 
 }
@@ -84,10 +84,11 @@ else
 
 
         <h4>Dernières nouveautés du portail</h4>
-        <b>11/10/2018 : </b><br />L'envoi de vos commandes intègre désormais l'ensemble des commandes dans un seul fichier CSV. <br />
-        Cela vous permettra d'intégrer les commandes Willemse plus rapidement dans votre système informatique.<br />
-        Nous avons également renommé les nom des colonnes pour satisfaire vos besoins.<br />
-        Nouvelles colonnes: <br /> - Les nom et prénom du client sont concaténés dans un champ, <br /> - Le numéro de commande Willemse apparait en première colonne, <br /> - Le champ complément d'adresse est également disponible.
+        <b>08/11/2018 : </b><br />
+        - Vous pouvez maintenant nous envoyer votre catalogue de produits. <br />
+        - Vous pouvez maintenant renseigner la date d'expédition prévue pour vos commandes, ainsi que le lien de tracking du colis. <br/>
+        - Il est maintenant indiqué si un produit est disponible à la vente ou pas.
+
 
     </div>
 
@@ -98,3 +99,5 @@ else
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+

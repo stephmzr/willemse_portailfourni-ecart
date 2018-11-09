@@ -75,7 +75,6 @@ namespace WebApplication6.Controllers
 
 
         }
-    
 
         // GET: Produits/Details/id (détails d'un produit)
         public ActionResult Details(string id)
@@ -94,7 +93,6 @@ namespace WebApplication6.Controllers
             return View(item);
 
         }
-
 
         // appel de procédure stockée pour afficher détails d'un produit
         public static class DBArticles
@@ -126,9 +124,6 @@ namespace WebApplication6.Controllers
                 arttemp.AR_Ref = ds["LONGUEUR"].ToString();
 
 
-
-
-
                 con.Close();
 
                 return arttemp;
@@ -137,8 +132,6 @@ namespace WebApplication6.Controllers
 
             
         }
-
-
 
         public ActionResult ActionEpuiser(string refproduit)
 

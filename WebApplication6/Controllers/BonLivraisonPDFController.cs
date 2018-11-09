@@ -29,7 +29,6 @@ public class BonLivraisonPDFController : Controller
         }
     }
 
-
     public ActionResult BonLivraisonPDF(string id)
     {
 
@@ -37,25 +36,17 @@ public class BonLivraisonPDFController : Controller
         //  string pdfTemplate = @"C:\Users\SM\Desktop\templateachat.pdf";
         string newFile = @"C:\BL\" + id + ".pdf";
 
-
         PdfReader pdfReader = new PdfReader(pdfTemplate);
-
-
 
         if (System.IO.File.Exists(newFile))
         {
-
             return File(newFile, "application /pdf");
-
         }
-
         else
         {
             ListeCommandesEntities DB = new ListeCommandesEntities();
-            ListeFournisseursEntities DBF = new ListeFournisseursEntities();
-      
-            PdfStamper pdfStamper = new PdfStamper(pdfReader, new FileStream(newFile, FileMode.CreateNew, FileAccess.ReadWrite));
-                
+            ListeFournisseursEntities DBF = new ListeFournisseursEntities();     
+            PdfStamper pdfStamper = new PdfStamper(pdfReader, new FileStream(newFile, FileMode.CreateNew, FileAccess.ReadWrite));         
 
             var F_DOCENTETE = DB.F_DOCENTETE.Where(d => d.DO_Piece == id && d.DO_Domaine == 1 && d.DO_Type == 12 && !d.DO_Ref.Equals("")).ToList(); 
             var F_DOCLIGNE = DB.F_DOCLIGNE.Where(d => d.DO_Piece == id).ToList();
@@ -94,8 +85,6 @@ public class BonLivraisonPDFController : Controller
                     form.SetField("emailclient", infoclient.EMAIL_LIVRAISON);
                 }
 
-
-
                 var F_COMPTET = DBF.F_COMPTET.Where(d => d.CT_Num == infoclient.DO_Tiers && d.CT_Type == 1).ToList();
                 foreach (var infofourni in F_COMPTET)
                 {
@@ -106,12 +95,10 @@ public class BonLivraisonPDFController : Controller
                     form.SetField("villefournisseur", infofourni.CT_Ville);
                 }
             }
-
             
             //remplit chaque ligne de commande
             foreach (var produit in F_DOCLIGNE)
-            {
-                
+            {               
                 // a passer en boucle for pour réduire taille du code
                 //for (produit.DL_Ligne = 0; produit.DL_Ligne <= 10000; produit.DL_Ligne++1000)
                 if (produit.DL_Ligne == 1000)
@@ -205,12 +192,7 @@ public class BonLivraisonPDFController : Controller
             return File(newFile, "application /pdf");
 
         }
-
-
-
-
     }
-
 
 
     public ActionResult GenererTousLesBons(string Id)

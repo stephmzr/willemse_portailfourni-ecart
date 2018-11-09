@@ -40,7 +40,6 @@ namespace WebApplication6.Controllers
             }
         }
 
-
         // Récupérer l'identité de l'utilisateur connecté
         private ApplicationUser CurrentUser
         {
@@ -51,8 +50,6 @@ namespace WebApplication6.Controllers
             }
         }
 
-
-
         // GET: Admin
         public ActionResult Index(int? page)
         {
@@ -62,8 +59,6 @@ namespace WebApplication6.Controllers
             int pageSize = 25;
             int pageNumber = (page ?? 1);
             
-
-
 
             if (User.IsInRole("Admin"))
             {
@@ -97,8 +92,6 @@ namespace WebApplication6.Controllers
             int pageNumber = (page ?? 1);
             return View(commandes.ToPagedList(pageNumber, pageSize));
         }
-
-
 
 
         //appel d'une procédure stockée pour afficher les détails d'une commande
