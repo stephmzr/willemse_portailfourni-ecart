@@ -10,7 +10,7 @@ namespace Ecartcommande_cheque.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index(string numeroclient, string numerocommande, int? page)
+        public ActionResult Index(string numeroclient, string numeroOxatis, int? page, string sortOrder)
         {
 
             EcartReglementEntities db = new EcartReglementEntities();
@@ -23,12 +23,20 @@ namespace Ecartcommande_cheque.Controllers
                 tableau = db.ecart_reglement.Where(d => d.ER_Tiers == numeroclient).ToList();
                 
             }
-            if (numerocommande != null)
+            if (numeroOxatis != null)
             {
-                tableau = db.ecart_reglement.Where(d => d.ER_piece == numerocommande).ToList();
+                tableau = db.ecart_reglement.Where(d => d.ER_Oxatis == numeroOxatis).ToList();
             }
 
+            ViewBag.EcartSort = String.IsNullOrEmpty(sortOrder) ? "EcartSort" : "";
 
+
+            switch (sortOrder)
+            {
+                case "EcartSort":
+                    tableau = db.ecart_reglement.Where(d => d.ER_statut != "Cloturé").OrderByDescending(d => d.ER_ecart).ToList();
+                    break;
+            }
 
 
             int pageSize = 25;
@@ -37,12 +45,11 @@ namespace Ecartcommande_cheque.Controllers
             
         } 
 
-        //[HttpPost]
         public ActionResult ActionCloturer(string commentaire, string numcommande)
         {
 
             EcartReglementEntities db = new EcartReglementEntities();
-
+            
             var tableau = db.ecart_reglement.Where(d => d.ER_piece == numcommande && d.ER_statut != "Cloturé");
 
 
