@@ -1,17 +1,22 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebApplication6.Models;
 
 namespace WebApplication6.Controllers
 {
     public class UploadCatalogueController : Controller
     {
+        private ApplicationDbContext dbA = new ApplicationDbContext();
 
         private ApplicationUser CurrentUser
         {
+
             get
             {
                 string currentUserId = User.Identity.GetUserId();
@@ -78,6 +83,27 @@ namespace WebApplication6.Controllers
             }
             return null;
         }
+
+        //fonction ancien portail
+        //public class FicheProduitViewModel : IValidatableObject
+        //{
+        //    [Required(ErrorMessage = "Il faut obligatoirement  un fichier")]
+        //    [Display(Name = "Fichier")]
+        //    [DataType(DataType.Upload)]
+        //    //[FileExtensions(ErrorMessage = "L'extension du fichier doit etre en .xlsx ou en .xls", Extensions = "xlsx")]
+        //    public HttpPostedFileBase FicPro { get; set; }
+        //    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        //    {
+        //        if (FicPro != null && FicPro.ContentLength > 0)
+        //        {
+        //            string ext = System.IO.Path.GetExtension(FicPro.FileName);
+        //            if (!ext.Equals(".xlsx"))
+        //            {
+        //                yield return new ValidationResult("Le Fichier est incorrect. Il doit être en '.xlsx' ", new[] { "FicPro" });
+        //            }
+        //        }
+        //    }
+        //}
 
     }
 }
