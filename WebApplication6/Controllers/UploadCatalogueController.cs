@@ -10,18 +10,22 @@ namespace WebApplication6.Controllers
     public class UploadCatalogueController : Controller
     {
 
+        private ApplicationUser CurrentUser
+        {
+            get
+            {
+                string currentUserId = User.Identity.GetUserId();
+                return dbA.Users.FirstOrDefault(x => x.Id == currentUserId);
+            }
+        }
 
-
-        public ActionResult UploadCatalogue()
+        public ActionResult Index()
         {
             return View();
         }
 
-
-
-
         [HttpPost]
-        public ActionResult Index(HttpPostedFileBase file)
+        public ActionResult PostFichier(HttpPostedFileBase file)
         {
 
             var extensionFichier = new[] { ".xls", ".csv", ".xlsx" };
@@ -62,6 +66,17 @@ namespace WebApplication6.Controllers
 
             return RedirectToAction("Index", "Produits");
                 
+        }
+
+
+        public FileResult Download(string id)
+        {
+            if (!string.IsNullOrEmpty(id) && id.Equals("Pro"))
+            {
+                string filename = "MP_" + CurrentUser.Societe.Replace(" ", string.Empty) + "_Produits.xlsx";
+                return File(Path.Combine(Server.MapPath(appData), p.modeleProduits), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename);
+            }
+            return null;
         }
 
     }

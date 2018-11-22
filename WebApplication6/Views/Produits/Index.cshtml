@@ -13,19 +13,7 @@
             <h2 style="color:darkgreen;">@ViewBag.Title</h2>
         </div>
         <div class="col-xs-4">
-
-            @using (Html.BeginForm("Index", "UploadCatalogue", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <b>
-                    <label for="file" style="color : darkgreen">Envoyer votre catalogue :</label>
-                </b>
-                <input type="file" name="file" id="file" accept="csv, xls, xlsx" />
-                <input type="submit" value="Envoyer" class="btn btn-success" style="float : right; margin : 20px;" />
-                <br><br>
-                @ViewBag.Message
-            }
-
-
+            <a href="/UploadCatalogue/Index"><span class="btn btn-success">Ajoutez votre catalogue</span></a>
         </div>
     </div>
 

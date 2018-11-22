@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+@*@using (Html.BeginForm("GetFichier", "UploadCatalogue", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <b>
+            <label for="file" style="color : darkgreen">Envoyer votre catalogue :</label>
+        </b>
+        <input type="file" name="file" id="file" accept="csv, xls, xlsx" />
+        <input type="submit" value="Envoyer" class="btn btn-success" style="float : right; margin : 20px;" />
+        <br><br>
+        @ViewBag.Message
+    }*@
+
+<div class="panel panel-success ">
+    <div class="panel-heading text-center">
+        <h4>
+            <span class="badge" style="font-size:large">1</span>
+            Téléchargez notre modèle de fichier
+        </h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col text-center" style="margin-top:10px">
+        <a class="btn btn-default btn-file" href="@Url.Action("Download",new { id = "Pro" })">
+            <span class="glyphicon glyphicon-import" role="button"></span>
+            Téléchargez le modèle
+        </a>
+    </div>
+</div>
+<br />
+
+<div class="panel panel-success ">
+    <div class="panel-heading text-center">
+        <h4>
+            <span class="badge" style="font-size:large">2</span>
+            Envoyez nous votre catalogue de produits
+        </h4>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col text-center" style="margin-top:10px">
+        @*<a class="btn btn-default btn-file" href="@Url.Action("Download",new { id = "Pro" })">
+                <span class="glyphicon glyphicon-import" role="button"></span>
+                Parcourir
+            </a>*@
+        @using (Html.BeginForm("PostFichier", "UploadCatalogue", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="form-group">
+                <input type="file" name="file" id="file" accept="csv, xls, xlsx" />
+                <p class="help-block">Formats de fichier acceptés : CSV, XLS et XLSX</p>
+                <input type="submit" value="Envoyer" class="btn btn-success" />
+            </div>
+            @ViewBag.Message
+        }
+    </div>
+</div>
+<br />
+
+<a href="javascript:history.back()"><span class="glyphicon glyphicon-arrow-left"></span></a>
+<a href="javascript:history.back()"> Retour aux produits</a>

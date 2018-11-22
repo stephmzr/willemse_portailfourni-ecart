@@ -47,3 +47,8 @@ textarea {
 
     background-image: url(/Content/Images/iconadmin.png);
 }
+
+#file {
+    text-align: center;
+    margin: auto;
+}
