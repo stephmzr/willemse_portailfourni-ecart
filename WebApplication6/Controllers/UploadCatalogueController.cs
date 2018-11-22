@@ -37,8 +37,8 @@ namespace WebApplication6.Controllers
                     try
                     {
                         var fileName = Path.GetFileName(file.FileName);
-                        var path = Path.Combine(Server.MapPath("/UploadsCatalogue"), fileName);
-                        //var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
+                        //var path = Path.Combine(Server.MapPath("/UploadsCatalogue"), fileName);
+                        var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
                         file.SaveAs(path);
                         ViewBag.Message = "File uploaded successfully";
                     }
