@@ -32,24 +32,21 @@ namespace WebApplication6.Controllers
         [HttpPost]
         public ActionResult PostFichier(HttpPostedFileBase file)
         {
-
-            var extensionFichier = new[] { ".xls", ".csv", ".xlsx" };
-            var checkextension = Path.GetExtension(file.FileName).ToLower();
-
-
-            if (extensionFichier.Contains(checkextension))
+            if (file != null && file.ContentLength > 0)
             {
 
-                if (file != null && file.ContentLength > 0)
-                {
+                var extensionFichier = new[] { ".xls", ".csv", ".xlsx", "" };
+                var checkextension = Path.GetExtension(file.FileName).ToLower();
 
+                if (extensionFichier.Contains(checkextension))
+                {
                     try
                     {
                         var fileName = Path.GetFileName(file.FileName);
                         //var path = Path.Combine(Server.MapPath("/UploadsCatalogue"), fileName);
                         var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
                         file.SaveAs(path);
-                        ViewBag.Message = "File uploaded successfully";
+                        ViewBag.Message = "Fichier envoyé avec succès.";
                     }
                     catch (Exception ex)
                     {
@@ -57,53 +54,18 @@ namespace WebApplication6.Controllers
                     }
                 }
 
-                else
-                {
-                    ViewBag.Message = "You have not specified a file.";
-                }
-
+                 else
+            {
+                ViewBag.ErreurFormat = "Nous n'acceptons que les formats CSV, XLS ou XLSX";
+            }
             }
             else
             {
-
-                ViewBag.Message = "Nous n'acceptons que les formats CSV, XLS ou XLSX";
+                ViewBag.Message = "Vous n'avez choisi aucun fichier";
             }
-
-            return RedirectToAction("Index", "Produits");
-                
+            return View("Index");
         }
 
-
-        //public FileResult Download(string id)
-        //{
-        //    if (!string.IsNullOrEmpty(id) && id.Equals("Pro"))
-        //    {
-        //        string filename = "MP_" + CurrentUser.Societe.Replace(" ", string.Empty) + "_Produits.xlsx";
-        //        return File(Path.Combine(Server.MapPath(appData), p.modeleProduits), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename);
-        //    }
-        //    return null;
-        //}
-
-        //fonction ancien portail
-        //public class FicheProduitViewModel : IValidatableObject
-        //{
-        //    [Required(ErrorMessage = "Il faut obligatoirement  un fichier")]
-        //    [Display(Name = "Fichier")]
-        //    [DataType(DataType.Upload)]
-        //    //[FileExtensions(ErrorMessage = "L'extension du fichier doit etre en .xlsx ou en .xls", Extensions = "xlsx")]
-        //    public HttpPostedFileBase FicPro { get; set; }
-        //    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        //    {
-        //        if (FicPro != null && FicPro.ContentLength > 0)
-        //        {
-        //            string ext = System.IO.Path.GetExtension(FicPro.FileName);
-        //            if (!ext.Equals(".xlsx"))
-        //            {
-        //                yield return new ValidationResult("Le Fichier est incorrect. Il doit être en '.xlsx' ", new[] { "FicPro" });
-        //            }
-        //        }
-        //    }
-        //}
 
     }
 }

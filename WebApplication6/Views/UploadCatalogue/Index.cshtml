@@ -37,7 +37,8 @@
                 <p class="help-block">Formats de fichier acceptés : CSV, XLS et XLSX</p>
                 <input type="submit" value="Envoyer" class="btn btn-success" />
             </div>
-            
+            <span style="color:green">@Html.Raw(ViewBag.Message)</span>
+            <span style="color:red">@Html.Raw(ViewBag.ErreurFormat)</span>
         }
     </div>
 </div>
