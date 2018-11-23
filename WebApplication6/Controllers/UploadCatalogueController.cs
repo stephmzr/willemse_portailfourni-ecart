@@ -7,12 +7,15 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication6.Models;
+using System.IO.Compression;
+
 
 namespace WebApplication6.Controllers
 {
     public class UploadCatalogueController : Controller
     {
         private ApplicationDbContext dbA = new ApplicationDbContext();
+        private string dossiersFournisseurs;
 
         private ApplicationUser CurrentUser
         {
@@ -34,7 +37,6 @@ namespace WebApplication6.Controllers
         {
             if (file != null && file.ContentLength > 0)
             {
-
                 var extensionFichier = new[] { ".xls", ".csv", ".xlsx", "" };
                 var checkextension = Path.GetExtension(file.FileName).ToLower();
 
@@ -53,15 +55,65 @@ namespace WebApplication6.Controllers
                         ViewBag.Message = "ERROR:" + ex.Message.ToString();
                     }
                 }
-
-                 else
-            {
+                else
+                {
                 ViewBag.ErreurFormat = "Nous n'acceptons que les formats CSV, XLS ou XLSX";
-            }
+                }
             }
             else
             {
-                ViewBag.Message = "Vous n'avez choisi aucun fichier";
+                ViewBag.PasDeFichier = "Vous n'avez choisi aucun fichier";
+            }
+            return View("Index");
+        }
+
+        //[HttpPost]
+        //public ActionResult PostArchiveImg(HttpPostedFileBase ArchiveZip)
+        //{
+
+        //    if (ArchiveZip != null && ArchiveZip.ContentLength > 0)
+        //    {
+
+        //        var extensionFichier = new[] { ".xls", ".csv", ".xlsx", "" };
+        //        var checkextension = Path.GetExtension(ArchiveZip.FileName).ToLower();
+
+        //        return View("Index");
+        //}
+
+
+        public ActionResult PostArchiveImg(HttpPostedFileBase imagesZip)
+        {
+            if (ModelState.IsValid)
+            {
+                if (imagesZip != null && imagesZip.ContentLength > 0)
+                {
+                    try
+                    {
+                        string idfou = CurrentUser.Id;
+                        string extractPath = Server.MapPath(dossiersFournisseurs + "/" + CurrentUser.Id + "/Images");
+                        string zipPath = Path.Combine(extractPath, imagesZip.FileName);
+                        string unzipPath = Path.Combine(extractPath, (Path.GetFileNameWithoutExtension(imagesZip.FileName)));
+                        if (Directory.Exists(unzipPath)) Directory.Delete(unzipPath, true);
+                        if (System.IO.File.Exists(zipPath)) System.IO.File.Delete(zipPath);
+                        imagesZip.SaveAs(zipPath);
+                        // Forcer à remplacer anciennes images:
+                        using (var zip = ZipFile.OpenRead(zipPath))
+                        {
+                            foreach (ZipArchiveEntry e in zip.Entries)
+                            {
+                            e.ExtractToFile(Path.Combine(extractPath, e.Name), true);
+                            }
+                        }
+                        System.IO.File.Delete(zipPath);
+                    }
+                    catch (Exception)
+                    {
+                      
+                    }
+
+
+                }
+
             }
             return View("Index");
         }

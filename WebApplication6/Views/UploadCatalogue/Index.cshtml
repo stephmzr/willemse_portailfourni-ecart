@@ -39,10 +39,33 @@
             </div>
             <span style="color:green">@Html.Raw(ViewBag.Message)</span>
             <span style="color:red">@Html.Raw(ViewBag.ErreurFormat)</span>
+            <span style="color:red">@Html.Raw(ViewBag.PasDeFichier)</span>
+        }
+    </div>
+</div>
+
+<div class="panel panel-success ">
+    <div class="panel-heading text-center">
+        <h4>
+            <span class="badge" style="font-size:large">3</span>
+            Envoyez nous votre archive d'images
+        </h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col text-center" style="margin-top:10px">
+        @using (Html.BeginForm("PostArchiveImg", "UploadCatalogue", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="form-group">
+                <input type="file" name="imagesZip" id="file"/>
+                <input type="submit" value="Envoyer" class="btn btn-success" />
+            </div>
+
         }
     </div>
 </div>
 <br />
 
-<a href="javascript:history.back()"><span class="glyphicon glyphicon-arrow-left"></span></a>
-<a href="javascript:history.back()"> Retour aux produits</a>
+<a href="@Url.Action("Index", "Produits")"><span class="glyphicon glyphicon-arrow-left"></span></a>
+<a href="@Url.Action("Index", "Produits")"> Retour aux produits</a>
