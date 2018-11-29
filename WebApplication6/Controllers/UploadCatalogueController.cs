@@ -85,10 +85,15 @@ namespace WebApplication6.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 if (imagesZip != null && imagesZip.ContentLength > 0)
                 {
-                    try
+                    var extensionFichier = new[] { ".zip", ".rar", "" };
+                    var checkextension = Path.GetExtension(imagesZip.FileName).ToLower();
+
+                    if (extensionFichier.Contains(checkextension))
                     {
+
                         string idfou = CurrentUser.Id;
                         string extractPath = Server.MapPath(dossiersFournisseurs + "/" + CurrentUser.Id + "/Images");
                         string zipPath = Path.Combine(extractPath, imagesZip.FileName);
@@ -105,14 +110,19 @@ namespace WebApplication6.Controllers
                             }
                         }
                         System.IO.File.Delete(zipPath);
+                        ViewBag.Zip = "Archive envoyée avec succès.";
                     }
-                    catch (Exception)
+                    else 
                     {
-                      
+                        ViewBag.Erreur = "Nous n'acceptons que les formats d'archive .zip ou .rar";
                     }
-
 
                 }
+                else
+                {
+                    ViewBag.Erreur = "Vous n'avez choisi aucun fichier";
+                }
+
 
             }
             return View("Index");

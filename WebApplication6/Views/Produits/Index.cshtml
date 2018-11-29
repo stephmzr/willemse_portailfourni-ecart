@@ -93,7 +93,7 @@
             {
                 <tr>
                     <td>
-                        <a href="@Url.Action("SuiviCommandes", "Commandes", new { Id = item.AR_Ref})"><span class="glyphicon glyphicon-eye-open" style="color : green"></span></a>
+                        <a href="@(Url.Action("Details", new { id = item.AR_Ref }))"><span class="glyphicon glyphicon-eye-open" style="color : green"></span></a>
                     </td>
                     <td style="cursor: pointer" onclick="location.href='@(Url.Action("Details", new { id = item.AR_Ref }))'">
                         @Html.DisplayFor(modelItem => item.AR_Ref)
@@ -174,10 +174,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
 
         <hr />
         <div class="container">
