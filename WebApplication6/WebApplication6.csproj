@@ -537,8 +537,8 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\SuiviCommandesAdmin.cshtml" />
     <Content Include="Views\Admin\DetailsCommandeAdmin.cshtml" />
-    <Content Include="Views\Admin\NouveauProduit.cshtml" />
     <Content Include="Views\UploadCatalogue\Index.cshtml" />
+    <Content Include="Views\UploadCatalogue\MappingChamps.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

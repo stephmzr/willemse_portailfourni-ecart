@@ -3,25 +3,6 @@
     <div class="panel-heading text-center">
         <h4>
             <span class="badge" style="font-size:large">1</span>
-            Téléchargez notre modèle de fichier
-        </h4>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col text-center" style="margin-top:10px">
-        <a class="btn btn-default btn-file" href="@Url.Action("Download",new { id = "Pro" })">
-            <span class="glyphicon glyphicon-import" role="button"></span>
-            Téléchargez le modèle
-        </a>
-    </div>
-</div>
-<br />
-
-<div class="panel panel-success ">
-    <div class="panel-heading text-center">
-        <h4>
-            <span class="badge" style="font-size:large">2</span>
             Envoyez nous votre catalogue de produits
         </h4>
     </div>
@@ -47,7 +28,7 @@
 <div class="panel panel-success ">
     <div class="panel-heading text-center">
         <h4>
-            <span class="badge" style="font-size:large">3</span>
+            <span class="badge" style="font-size:large">2</span>
             Envoyez nous votre archive d'images
         </h4>
     </div>
@@ -69,6 +50,21 @@
     </div>
 </div>
 <br />
+
+<div class="panel panel-success ">
+    <div class="panel-heading text-center">
+        <h4>
+            <span class="badge" style="font-size:large">3</span>
+            Traitement des champs du fichier
+        </h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col text-center" style="margin-top:10px">
+        <button type="button" class="btn btn-success"  onclick="location.href='@Url.Action("MappingChamps", "UploadCatalogue")'">Correspondance des champs</button>
+    </div>
+</div>
 
 <a href="@Url.Action("Index", "Produits")"><span class="glyphicon glyphicon-arrow-left"></span></a>
 <a href="@Url.Action("Index", "Produits")"> Retour aux produits</a>

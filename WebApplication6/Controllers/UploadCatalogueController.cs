@@ -15,11 +15,10 @@ namespace WebApplication6.Controllers
     public class UploadCatalogueController : Controller
     {
         private ApplicationDbContext dbA = new ApplicationDbContext();
-        private string dossiersFournisseurs;
+        //private string dossiersFournisseurs;
 
         private ApplicationUser CurrentUser
         {
-
             get
             {
                 string currentUserId = User.Identity.GetUserId();
@@ -67,19 +66,6 @@ namespace WebApplication6.Controllers
             return View("Index");
         }
 
-        //[HttpPost]
-        //public ActionResult PostArchiveImg(HttpPostedFileBase ArchiveZip)
-        //{
-
-        //    if (ArchiveZip != null && ArchiveZip.ContentLength > 0)
-        //    {
-
-        //        var extensionFichier = new[] { ".xls", ".csv", ".xlsx", "" };
-        //        var checkextension = Path.GetExtension(ArchiveZip.FileName).ToLower();
-
-        //        return View("Index");
-        //}
-
 
         public ActionResult PostArchiveImg(HttpPostedFileBase imagesZip)
         {
@@ -95,7 +81,7 @@ namespace WebApplication6.Controllers
                     {
 
                         string idfou = CurrentUser.Id;
-                        string extractPath = Server.MapPath(dossiersFournisseurs + "/" + CurrentUser.Id + "/Images");
+                        string extractPath = Server.MapPath("/" + CurrentUser.Id + "/Images");
                         string zipPath = Path.Combine(extractPath, imagesZip.FileName);
                         string unzipPath = Path.Combine(extractPath, (Path.GetFileNameWithoutExtension(imagesZip.FileName)));
                         if (Directory.Exists(unzipPath)) Directory.Delete(unzipPath, true);
@@ -110,24 +96,26 @@ namespace WebApplication6.Controllers
                             }
                         }
                         System.IO.File.Delete(zipPath);
-                        ViewBag.Zip = "Archive envoyée avec succès.";
+                        ViewBag.MessageZip = "Archive envoyée avec succès.";
                     }
                     else 
                     {
                         ViewBag.Erreur = "Nous n'acceptons que les formats d'archive .zip ou .rar";
                     }
-
                 }
                 else
                 {
                     ViewBag.Erreur = "Vous n'avez choisi aucun fichier";
                 }
-
-
             }
             return View("Index");
         }
 
+        public ActionResult MappingChamps()
+        {
+
+            return View();
+        }
 
     }
 }
