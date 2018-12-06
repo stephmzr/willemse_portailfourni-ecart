@@ -8,13 +8,15 @@ using System.Web;
 using System.Web.Mvc;
 using WebApplication6.Models;
 using System.IO.Compression;
-
+using System.Data.SqlClient;
+using System.Data;
 
 namespace WebApplication6.Controllers
 {
     public class UploadCatalogueController : Controller
     {
         private ApplicationDbContext dbA = new ApplicationDbContext();
+        MappingCatalogueEntities mapping = new MappingCatalogueEntities();
         //private string dossiersFournisseurs;
 
         private ApplicationUser CurrentUser
@@ -32,11 +34,11 @@ namespace WebApplication6.Controllers
         }
 
         [HttpPost]
-        public ActionResult PostFichier(HttpPostedFileBase file)
+        public ActionResult PostFichier(HttpPostedFileBase file, string id, string pathCSV)
         {
             if (file != null && file.ContentLength > 0)
             {
-                var extensionFichier = new[] { ".xls", ".csv", ".xlsx", "" };
+                var extensionFichier = new[] { ".csv", "" };
                 var checkextension = Path.GetExtension(file.FileName).ToLower();
 
                 if (extensionFichier.Contains(checkextension))
@@ -56,13 +58,30 @@ namespace WebApplication6.Controllers
                 }
                 else
                 {
-                ViewBag.ErreurFormat = "Nous n'acceptons que les formats CSV, XLS ou XLSX";
+                ViewBag.ErreurFormat = "Nous n'acceptons que les fichiers au format CSV";
                 }
             }
             else
             {
                 ViewBag.PasDeFichier = "Vous n'avez choisi aucun fichier";
             }
+
+
+            SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DatabaseWillemse"].ConnectionString);
+            con.Open();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "PF_TELECHARGE_CSV";
+            cmd.Parameters.Add("@FOURNI", SqlDbType.NVarChar);
+            cmd.Parameters["@FOURNI"].Value = id;
+            cmd.Parameters.Add("@FICHIER", SqlDbType.NVarChar);
+            cmd.Parameters["@FICHIER"].Value = pathCSV;
+
+            cmd.Connection = con;
+           
+            con.Close();
+            
+
             return View("Index");
         }
 
@@ -117,5 +136,30 @@ namespace WebApplication6.Controllers
             return View();
         }
 
+        public static MappingCatalogueEntities InsertBulkCSV(string id, string pathCSV)
+        {
+            MappingCatalogueEntities arttemp = new MappingCatalogueEntities();
+            SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DatabaseInfo"].ConnectionString);
+            con.Open();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "PF_TELECHARGE_CSV";
+            cmd.Parameters.Add("@FOURNI", SqlDbType.NVarChar);
+            cmd.Parameters["@FOURNI"].Value = id;
+            cmd.Parameters.Add("@FICHIER", SqlDbType.NVarChar);
+            cmd.Parameters["@FOURNI"].Value = pathCSV;
+
+            cmd.Connection = con;
+
+            con.Close();
+
+            return arttemp;
+
+        }
+
+
+        }
+
+
+
     }
-}

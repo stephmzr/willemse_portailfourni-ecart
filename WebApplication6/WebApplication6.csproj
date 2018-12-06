@@ -288,6 +288,30 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ListeProduitsFournisseurs.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\MappingCatalogueModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MappingCatalogueModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MappingCatalogueModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MappingCatalogueModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MappingCatalogueModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MappingCatalogueModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\pf_colonne_csv.cs">
+      <DependentUpon>MappingCatalogueModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\pf_contenu_csv.cs">
+      <DependentUpon>MappingCatalogueModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\pf_csv.cs">
+      <DependentUpon>MappingCatalogueModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\v_artfourniss.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -352,6 +376,16 @@
       <DependentUpon>ListeProduitsFournisseurs.edmx</DependentUpon>
       <LastGenOutput>ListeProduitsFournisseurs.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\MappingCatalogueModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MappingCatalogueModel.edmx</DependentUpon>
+      <LastGenOutput>MappingCatalogueModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\MappingCatalogueModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MappingCatalogueModel.edmx</DependentUpon>
+      <LastGenOutput>MappingCatalogueModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\v_artfourniss.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>v_artfourniss.edmx</DependentUpon>
@@ -408,6 +442,13 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <EntityDeploy Include="Models\MappingCatalogueModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MappingCatalogueModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\MappingCatalogueModel.edmx.diagram">
+      <DependentUpon>MappingCatalogueModel.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
@@ -538,7 +579,6 @@
     <Content Include="Views\Admin\SuiviCommandesAdmin.cshtml" />
     <Content Include="Views\Admin\DetailsCommandeAdmin.cshtml" />
     <Content Include="Views\UploadCatalogue\Index.cshtml" />
-    <Content Include="Views\UploadCatalogue\MappingChamps.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
