@@ -14,8 +14,6 @@
         @using (Html.BeginForm("PostFichier", "UploadCatalogue", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="form-group">
-        <input type="hidden" name="id" value="017" />
-        <input type="hidden" name="pathCSV" value="dfdfdfdf.csv" />
         <input type="file" name="file" id="file" />
         <p class="help-block">Format de fichier accepté : CSV</p>
         <input type="submit" value="Envoyer" class="btn btn-success" />

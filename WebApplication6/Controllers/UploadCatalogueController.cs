@@ -34,7 +34,7 @@ namespace WebApplication6.Controllers
         }
 
         [HttpPost]
-        public ActionResult PostFichier(HttpPostedFileBase file, string id, string pathCSV)
+        public ActionResult PostFichier(HttpPostedFileBase file)
         {
             if (file != null && file.ContentLength > 0)
             {
@@ -47,7 +47,7 @@ namespace WebApplication6.Controllers
                     {
                         var fileName = Path.GetFileName(file.FileName);
                         //var path = Path.Combine(Server.MapPath("/UploadsCatalogue"), fileName);
-                        var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
+                        var path = Path.Combine(Server.MapPath("~/Dossier_fournisseurs/"+ CurrentUser.Id), fileName);
                         file.SaveAs(path);
                         ViewBag.Message = "Fichier envoyé avec succès.";
                     }
@@ -58,7 +58,7 @@ namespace WebApplication6.Controllers
                 }
                 else
                 {
-                ViewBag.ErreurFormat = "Nous n'acceptons que les fichiers au format CSV";
+                    ViewBag.ErreurFormat = "Nous n'acceptons que les fichiers au format CSV";
                 }
             }
             else
@@ -68,19 +68,21 @@ namespace WebApplication6.Controllers
 
 
             SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DatabaseWillemse"].ConnectionString);
+
             con.Open();
             SqlCommand cmd = new SqlCommand();
+            //cmd.Connection = cn;
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "PF_TELECHARGE_CSV";
+            cmd.CommandText = "[OW_BP].[PF_TELECHARGE_CSV]";
             cmd.Parameters.Add("@FOURNI", SqlDbType.NVarChar);
-            cmd.Parameters["@FOURNI"].Value = id;
+            cmd.Parameters["@FOURNI"].Value = CurrentUser.Id;
             cmd.Parameters.Add("@FICHIER", SqlDbType.NVarChar);
-            cmd.Parameters["@FICHIER"].Value = pathCSV;
+            cmd.Parameters["@FICHIER"].Value = file.FileName;
 
             cmd.Connection = con;
-           
+            cmd.ExecuteNonQuery();
             con.Close();
-            
+
 
             return View("Index");
         }
@@ -111,13 +113,13 @@ namespace WebApplication6.Controllers
                         {
                             foreach (ZipArchiveEntry e in zip.Entries)
                             {
-                            e.ExtractToFile(Path.Combine(extractPath, e.Name), true);
+                                e.ExtractToFile(Path.Combine(extractPath, e.Name), true);
                             }
                         }
                         System.IO.File.Delete(zipPath);
                         ViewBag.MessageZip = "Archive envoyée avec succès.";
                     }
-                    else 
+                    else
                     {
                         ViewBag.Erreur = "Nous n'acceptons que les formats d'archive .zip ou .rar";
                     }
@@ -132,34 +134,10 @@ namespace WebApplication6.Controllers
 
         public ActionResult MappingChamps()
         {
-
-            return View();
+            var champs = mapping.pf_colonne_csv/*.Where(x => x.id_csv = CurrentUser.Id)*/.ToList();
+            return View(champs);
         }
-
-        public static MappingCatalogueEntities InsertBulkCSV(string id, string pathCSV)
-        {
-            MappingCatalogueEntities arttemp = new MappingCatalogueEntities();
-            SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DatabaseInfo"].ConnectionString);
-            con.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "PF_TELECHARGE_CSV";
-            cmd.Parameters.Add("@FOURNI", SqlDbType.NVarChar);
-            cmd.Parameters["@FOURNI"].Value = id;
-            cmd.Parameters.Add("@FICHIER", SqlDbType.NVarChar);
-            cmd.Parameters["@FOURNI"].Value = pathCSV;
-
-            cmd.Connection = con;
-
-            con.Close();
-
-            return arttemp;
-
-        }
-
-
-        }
-
 
 
     }
+}
