@@ -7,24 +7,19 @@
 
 <br />
 <div class="jumbotron">
-
     <div class="row">
         <div class="col-xs-8">
             <h2 style="color:darkgreen;">@ViewBag.Title</h2>
         </div>
-
         <div class="col-xs-4">
             <span class="btn btn-success active">
             <span class="glyphicon glyphicon-download-alt"></span>
                 <a href="/UploadCatalogue/Index" style="color : white;">Ajoutez votre catalogue</a>
             </span>
         </div>
-</div>
-
+    </div>
     <div class="row">
-
         <br />
-
         <div class="col-xs-4">
             <div class="form-inline">
                 @using (Html.BeginForm("Index", "Produits", FormMethod.Get))
@@ -51,9 +46,7 @@
                     <input type="submit" id="button" name="buttonDispo" onclick="location.href='@Url.Action("FilterProduitsDispo", "Produits")'" value="Filtrer produits dispo" class="btn btn-success active" />
                 }
             </div>
-
         </div>
-
     </div>
 </div>
 
@@ -127,6 +120,7 @@
             }
         </table>
 
+        @* Modal de modif du prix produit *@
         <div class="modal fade" id="modifPrixModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -154,6 +148,7 @@
             </div>
         </div>
 
+        @* Modal pour passer un produit en "épuisé" *@
         <div class="modal fade" id="epuiserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">

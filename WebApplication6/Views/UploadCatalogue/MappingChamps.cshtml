@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>MappingChamps</title>
+    <title>Mapping Champs</title>
 </head>
 <body>
     <table class="table">
@@ -14,23 +14,239 @@
             <th>
                 Champs Willemse
             </th>
+            <th></th>
+            <th></th>
             <th>
                 Vos champs
             </th>
 
+
         </tr>
-    
-    @foreach (var item in Model) {
+
         <tr>
             <td>
-
+                Référence produit
             </td>
+        </tr>
+        <tr>
+            <td>
+                Libellé produit
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Prix de vente HT
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Frais de port
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Prix de vente conseillé TTC
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Catégorie
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Délais de livraison
+            </td>
+        <tr>
+            <td>
+                Date de délivrabilité
+            </td>
+        <tr>
+            <td>
+                Nombre de pièce par paquet
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Longueur du produit
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Dimensions
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Statut
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Code barres
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Poids brut
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Argumentaire commercial
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Slogan
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Couleur
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Qualité livrée
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Garantie
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Photo principale
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Photo 2
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Photo 3
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Photo 4
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Photo 5
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Photo 6
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Photo 8
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Photo 9
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Photo 10
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Feuillage persistant
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Parfumé oui ou non
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Arrosage
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Niveau de soin
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Distance de plantation
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Période de floraison
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Période de récolte
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Période de semis
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Période de plantation
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Climat
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Type de sol
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Type d’utilisation
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Ensoleillement
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Gélif
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Culture possible en pot
+            </td>
+        </tr>
+        @foreach (var item in Model)
+        {
+        <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.colonne)
             </td>
         </tr>
-    }
-    
+        }
+
+
+
     </table>
 </body>
 </html>

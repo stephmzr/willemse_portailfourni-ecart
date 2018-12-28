@@ -50,7 +50,6 @@ namespace WebApplication6.Controllers
                     {
                         sw.WriteLine(string.Format("\"{0}\";\"{1}\";\"{2}\";\"{3}\";\"{4}\";\"{5}\";\"{6}\";\"{7}\";\"{8}\";\"{9}\";\"{10}\";\"{11}\";\"{12}\"",
 
-
                                 ligne.AF_RefFourniss,
                                 ligne.DL_Design,
                                 ligne.DL_Qte,
@@ -64,13 +63,10 @@ namespace WebApplication6.Controllers
                                 commande.TELEPHONE_FACTURATION,
                                 commande.CODE_POSTAL_LIVRAISON,
                                 commande.VILLE_LIVRAISON
-
-
                             ));
                     }
                     else
                     {
-
                         sw.WriteLine(string.Format("\"{0}\";\"{1}\";\"{2}\";\"{3}\";\"{4}\";\"{5}\";\"{6}\";\"{7}\";\"{8}\";\"{9}\";\"{10}\";\"{11}\";\"{12}\"",
 
                             ligne.AF_RefFourniss,
@@ -86,8 +82,6 @@ namespace WebApplication6.Controllers
                             commande.TELEPHONE_FACTURATION,
                             commande.CODE_POSTAL_FACTURATION,
                             commande.VILLE_FACTURATION
-
-
                             ));
                     }
                 }

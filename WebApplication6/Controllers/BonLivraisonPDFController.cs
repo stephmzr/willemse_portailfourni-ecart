@@ -32,8 +32,8 @@ public class BonLivraisonPDFController : Controller
     public ActionResult BonLivraisonPDF(string id)
     {
 
-          string pdfTemplate = @"C:\TPL\templateachat.pdf";
-        //  string pdfTemplate = @"C:\Users\SM\Desktop\templateachat.pdf";
+        string pdfTemplate = @"C:\TPL\templateachat.pdf";
+        //string pdfTemplate = @"C:\Users\SM\Desktop\templateachat.pdf";
         string newFile = @"C:\BL\" + id + ".pdf";
 
         PdfReader pdfReader = new PdfReader(pdfTemplate);

@@ -10,11 +10,8 @@
 
 @if (!Request.IsAuthenticated)
 {
-
-
-    <h2>@ViewBag.Title.</h2>
+<h2>@ViewBag.Title.</h2>
     <div class="row">
-
         <div class="col-md-6">
             <section id="loginForm">
                 @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -53,16 +50,13 @@
                 }
             </section>
         </div>
-
         <img src="/Content/Images/willemseaccueil.png" class="img-rounded" style="margin-top: 50px" alt="Portail Willemse">
-
 
     </div>
 
 }
 else
 {
-
     <div class="jumbotron">
         <center>
             <h2 class="display-4">Bienvenue sur le portail fournisseur</h2>
@@ -71,14 +65,12 @@ else
             {
                 <button type="button" class="btn navbar-btn btn-success btn-lg bouton-image monBoutonCarton" onclick="location.href='@Url.Action("Index", "Produits")'">Catalogue de produits</button>
                 <button type="button" class="btn navbar-btn btn-success btn-lg bouton-image monBoutonCamion" style="margin-left : 10px" onclick="location.href='@Url.Action("Index", "Commandes")'">Suivi des commandes</button>
-
             }
             else if (Request.IsAuthenticated && User.IsInRole("Admin"))
             {
                 <button type="button" class="btn navbar-btn btn-success btn-lg bouton-image monBoutonAdmin" onclick="location.href='@Url.Action("Index", "Admin")'">Interface administrateur</button>
             }
         </center>
-
         <br />
         <hr class="my-4">
 
@@ -89,12 +81,9 @@ else
         - Vous pouvez maintenant renseigner la date d'expédition prévue pour vos commandes, ainsi que le lien de tracking du colis. <br/>
         - Il est maintenant indiqué si un produit est disponible à la vente ou pas.
 
-
     </div>
 
-
 }
-
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

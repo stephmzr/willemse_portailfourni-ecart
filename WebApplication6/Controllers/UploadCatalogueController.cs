@@ -17,7 +17,6 @@ namespace WebApplication6.Controllers
     {
         private ApplicationDbContext dbA = new ApplicationDbContext();
         MappingCatalogueEntities mapping = new MappingCatalogueEntities();
-        //private string dossiersFournisseurs;
 
         private ApplicationUser CurrentUser
         {
@@ -71,7 +70,6 @@ namespace WebApplication6.Controllers
 
             con.Open();
             SqlCommand cmd = new SqlCommand();
-            //cmd.Connection = cn;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "[OW_BP].[PF_TELECHARGE_CSV]";
             cmd.Parameters.Add("@FOURNI", SqlDbType.NVarChar);
@@ -134,7 +132,9 @@ namespace WebApplication6.Controllers
 
         public ActionResult MappingChamps()
         {
-            var champs = mapping.pf_colonne_csv/*.Where(x => x.id_csv = CurrentUser.Id)*/.ToList();
+            List<string> champsWillemse = new List<string>(new string[] { "Référence produit", "Libellé produit", "Prix de vente HT", "Frais de port", "Prix de vente conseillé", "TTCCatégorie",
+                "Délais de livraison", "Date de délivrabilité", "Nombre de pièce par paquet", "Longueur du produit" });
+            var champs = mapping.pf_colonne_csv.ToList();
             return View(champs);
         }
 
