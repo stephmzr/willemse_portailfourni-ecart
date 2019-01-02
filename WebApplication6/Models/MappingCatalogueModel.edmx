@@ -4,15 +4,17 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MappingCatalogueModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MappingCatalogueModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="pf_colonne_csv">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_fournisseur" Type="varchar" MaxLength="15" />
           <Property Name="id_csv" Type="int" />
           <Property Name="id_colonne" Type="int" />
           <Property Name="colonne" Type="varchar" MaxLength="500" />
+          <Property Name="colonnewillemse" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="pf_contenu_csv">
           <Key>
@@ -27,8 +29,8 @@
           <Key>
             <PropertyRef Name="id_csv" />
           </Key>
-          <Property Name="id_csv" Type="int" Nullable="false" />
-          <Property Name="founisseur" Type="varchar" MaxLength="15" />
+          <Property Name="id_csv" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fournisseur" Type="varchar" MaxLength="15" />
           <Property Name="fichier" Type="varchar" MaxLength="500" />
           <Property Name="date_fichier" Type="datetime" />
         </EntityType>
@@ -37,8 +39,7 @@
           <EntitySet Name="pf_contenu_csv" EntityType="Self.pf_contenu_csv" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="pf_csv" EntityType="Self.pf_csv" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MappingCatalogueModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -50,6 +51,8 @@
           <Property Name="id_csv" Type="Int32" />
           <Property Name="id_colonne" Type="Int32" />
           <Property Name="colonne" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="id_fournisseur" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="colonnewillemse" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="pf_contenu_csv">
           <Key>
@@ -65,9 +68,9 @@
             <PropertyRef Name="id_csv" />
           </Key>
           <Property Name="id_csv" Type="Int32" Nullable="false" />
-          <Property Name="founisseur" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="fichier" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="date_fichier" Type="DateTime" Precision="3" />
+          <Property Name="fournisseur" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityContainer Name="MappingCatalogueEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="pf_colonne_csv" EntityType="Self.pf_colonne_csv" />
@@ -83,6 +86,8 @@
           <EntitySetMapping Name="pf_colonne_csv">
             <EntityTypeMapping TypeName="MappingCatalogueModel.pf_colonne_csv">
               <MappingFragment StoreEntitySet="pf_colonne_csv">
+                <ScalarProperty Name="colonnewillemse" ColumnName="colonnewillemse" />
+                <ScalarProperty Name="id_fournisseur" ColumnName="id_fournisseur" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="id_csv" ColumnName="id_csv" />
                 <ScalarProperty Name="id_colonne" ColumnName="id_colonne" />
@@ -103,8 +108,8 @@
           <EntitySetMapping Name="pf_csv">
             <EntityTypeMapping TypeName="MappingCatalogueModel.pf_csv">
               <MappingFragment StoreEntitySet="pf_csv">
+                <ScalarProperty Name="fournisseur" ColumnName="fournisseur" />
                 <ScalarProperty Name="id_csv" ColumnName="id_csv" />
-                <ScalarProperty Name="founisseur" ColumnName="founisseur" />
                 <ScalarProperty Name="fichier" ColumnName="fichier" />
                 <ScalarProperty Name="date_fichier" ColumnName="date_fichier" />
               </MappingFragment>

@@ -18,5 +18,7 @@ namespace WebApplication6.Models
         public Nullable<int> id_csv { get; set; }
         public Nullable<int> id_colonne { get; set; }
         public string colonne { get; set; }
+        public string id_fournisseur { get; set; }
+        public string colonnewillemse { get; set; }
     }
 }

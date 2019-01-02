@@ -15,8 +15,8 @@ namespace WebApplication6.Models
     public partial class pf_csv
     {
         public int id_csv { get; set; }
-        public string founisseur { get; set; }
         public string fichier { get; set; }
         public Nullable<System.DateTime> date_fichier { get; set; }
+        public string fournisseur { get; set; }
     }
 }

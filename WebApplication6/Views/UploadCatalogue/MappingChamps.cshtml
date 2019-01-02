@@ -1,4 +1,5 @@
-﻿@model IEnumerable<WebApplication6.Models.pf_colonne_csv>
+﻿@model List<SelectListItem>
+@*IEnumerable<WebApplication6.Models.pf_colonne_csv>*@
 
 
 <!DOCTYPE html>
@@ -14,239 +15,372 @@
             <th>
                 Champs Willemse
             </th>
-            <th></th>
-            <th></th>
             <th>
                 Vos champs
             </th>
-
-
         </tr>
 
-        <tr>
-            <td>
-                Référence produit
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Libellé produit
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Prix de vente HT
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Frais de port
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Prix de vente conseillé TTC
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Catégorie
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Délais de livraison
-            </td>
-        <tr>
-            <td>
-                Date de délivrabilité
-            </td>
-        <tr>
-            <td>
-                Nombre de pièce par paquet
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Longueur du produit
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Dimensions
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Statut
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Code barres
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Poids brut
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Argumentaire commercial
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Slogan
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Couleur
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Qualité livrée
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Garantie
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Photo principale
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Photo 2
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Photo 3
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Photo 4
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Photo 5
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Photo 6
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Photo 8
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Photo 9
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Photo 10
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Feuillage persistant
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Parfumé oui ou non
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Arrosage
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Niveau de soin
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Distance de plantation
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Période de floraison
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Période de récolte
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Période de semis
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Période de plantation
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Climat
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Type de sol
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Type d’utilisation
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Ensoleillement
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Gélif
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Culture possible en pot
-            </td>
-        </tr>
-        @foreach (var item in Model)
+        @using (Html.BeginForm("SubmitMapping", "UploadCatalogue", FormMethod.Post))
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.colonne)
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    Référence produit <span style="color: red;">*</span>
+                </td>
+                <td>
+                    @Html.DropDownList("refproduit", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Libellé produit
+                </td>
+                <td>
+                    @Html.DropDownList("libproduit", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Prix de vente HT
+                </td>
+                <td>
+                    @Html.DropDownList("pvht", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Frais de port
+                </td>
+                <td>
+                    @Html.DropDownList("fport", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Prix de vente conseillé TTC
+                </td>
+                <td>
+                    @Html.DropDownList("pvttc", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Catégorie
+                </td>
+                <td>
+                    @Html.DropDownList("categorie", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Délais de livraison
+                </td>
+                <td>
+                    @Html.DropDownList("delailiv", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Date de délivrabilité
+                </td>
+                <td>
+                    @Html.DropDownList("datedelivr", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Nombre de pièce par paquet
+                </td>
+                <td>
+                    @Html.DropDownList("nbpiecepaquet", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Longueur du produit
+                </td>
+                <td>
+                    @Html.DropDownList("longueur", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Dimensions
+                </td>
+                <td>
+                    @Html.DropDownList("dimensions", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Statut
+                </td>
+                <td>
+                    @Html.DropDownList("statut", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Code barres
+                </td>
+                <td>
+                    @Html.DropDownList("codebarre", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Poids brut
+                </td>
+                <td>
+                    @Html.DropDownList("poids", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Argumentaire commercial
+                </td>
+                 <td>
+                    @Html.DropDownList("argcommercial", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Slogan
+                </td>
+                <td>
+                    @Html.DropDownList("slogan", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Couleur
+                </td>
+                <td>
+                    @Html.DropDownList("couleur", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Qualité livrée
+                </td>
+                <td>
+                    @Html.DropDownList("qualitelivree", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Garantie
+                </td>
+                <td>
+                    @Html.DropDownList("garantie", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Photo principale
+                </td>
+                <td>
+                    @Html.DropDownList("photo1", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Photo 2
+                </td>
+                <td>
+                    @Html.DropDownList("photo2", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Photo 3
+                </td>
+                <td>
+                    @Html.DropDownList("photo3", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Photo 4
+                </td>
+                <td>
+                    @Html.DropDownList("photo4", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Photo 5
+                </td>
+                <td>
+                    @Html.DropDownList("photo5", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Photo 6
+                </td>
+                <td>
+                    @Html.DropDownList("photo6", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Photo 7
+                </td>
+                <td>
+                    @Html.DropDownList("photo7", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Photo 8
+                </td>
+                <td>
+                    @Html.DropDownList("photo8", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Photo 9
+                </td>
+                <td>
+                    @Html.DropDownList("photo9", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Photo 10
+                </td>
+                <td>
+                    @Html.DropDownList("photo10", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Feuillage persistant
+                </td>
+                <td>
+                    @Html.DropDownList("feuillage", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Parfumé oui ou non
+                </td>
+                <td>
+                    @Html.DropDownList("parfume", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Arrosage
+                </td>
+                <td>
+                    @Html.DropDownList("arrosage", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Niveau de soin
+                </td>
+                <td>
+                    @Html.DropDownList("niveausoin", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Distance de plantation
+                </td>
+                <td>
+                    @Html.DropDownList("distanceplantation", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Période de floraison
+                </td>
+                <td>
+                    @Html.DropDownList("periodefloraison", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Période de récolte
+                </td>
+                <td>
+                    @Html.DropDownList("perioderecolte", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Période de semis
+                </td>
+                <td>
+                    @Html.DropDownList("periodesemis", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Période de plantation
+                </td>
+                <td>
+                    @Html.DropDownList("periodeplantation", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Climat
+                </td>
+                <td>
+                    @Html.DropDownList("climat", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Type de sol
+                </td>
+                <td>
+                    @Html.DropDownList("typesol", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Type d’utilisation
+                </td>
+                <td>
+                    @Html.DropDownList("typeutil", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Ensoleillement
+                </td>
+                <td>
+                    @Html.DropDownList("ensoleillement", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Gélif
+                </td>
+                <td>
+                    @Html.DropDownList("gelif", Model)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Culture possible en pot
+                </td>
+                <td>
+                    @Html.DropDownList("culturepot", Model)
+                </td>
+            </tr>
+
+
+
+
+
+            <input type="submit" value="Sauvegarder" />
         }
-
-
-
     </table>
 </body>
 </html>
