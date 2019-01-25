@@ -580,6 +580,7 @@
     <Content Include="Views\Admin\DetailsCommandeAdmin.cshtml" />
     <Content Include="Views\UploadCatalogue\Index.cshtml" />
     <Content Include="Views\UploadCatalogue\MappingChamps.cshtml" />
+    <Content Include="Views\UploadCatalogue\MappingCategories.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

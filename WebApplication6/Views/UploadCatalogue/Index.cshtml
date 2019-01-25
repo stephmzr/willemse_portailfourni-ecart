@@ -12,16 +12,16 @@
 <div class="row">
     <div class="col text-center" style="margin-top:10px">
         @using (Html.BeginForm("PostFichier", "UploadCatalogue", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <div class="form-group">
-        <input type="file" name="file" id="file" />
-        <p class="help-block">Format de fichier accepté : CSV</p>
-        <input type="submit" value="Envoyer" class="btn btn-success" />
-    </div>
-    <span style="color:green">@Html.Raw(ViewBag.Message)</span>
-    <span style="color:red">@Html.Raw(ViewBag.ErreurFormat)</span>
-    <span style="color:red">@Html.Raw(ViewBag.PasDeFichier)</span>
-}
+        {
+            <div class="form-group">
+                <input type="file" name="file" id="file" />
+                <p class="help-block">Format de fichier accepté : CSV</p>
+                <input type="submit" value="Envoyer" class="btn btn-success" />
+            </div>
+            <span style="color:green">@Html.Raw(ViewBag.Message)</span>
+            <span style="color:red">@Html.Raw(ViewBag.ErreurFormat)</span>
+            <span style="color:red">@Html.Raw(ViewBag.PasDeFichier)</span>
+        }
     </div>
 </div>
 
@@ -62,7 +62,24 @@
 
 <div class="row">
     <div class="col text-center" style="margin-top:10px">
-        <button type="button" class="btn btn-success"  onclick="location.href='@Url.Action("MappingChamps", "UploadCatalogue")'">Correspondance des champs</button>
+        <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("MappingChamps", "UploadCatalogue")'">Correspondance des champs</button>
+    </div>
+</div>
+
+<br/>
+
+<div class="panel panel-success ">
+    <div class="panel-heading text-center">
+        <h4>
+            <span class="badge" style="font-size:large">4</span>
+            Traitement des catégories
+        </h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col text-center" style="margin-top:10px">
+        <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("MappingCategories", "UploadCatalogue")'">Correspondance des catégories</button>
     </div>
 </div>
 

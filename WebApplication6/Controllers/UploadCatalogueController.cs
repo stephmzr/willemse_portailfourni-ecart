@@ -511,5 +511,11 @@ namespace WebApplication6.Controllers
             return View("Index");
         }
 
+
+        public ActionResult MappingCategories()
+        {
+
+            return View();
+        }
     }
 }

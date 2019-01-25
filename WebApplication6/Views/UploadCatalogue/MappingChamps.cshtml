@@ -32,7 +32,7 @@
             </tr>
             <tr>
                 <td>
-                    Libellé produit
+                    Libellé produit <span style="color: red;">*</span>
                 </td>
                 <td>
                     @Html.DropDownList("libproduit", Model)
@@ -40,7 +40,7 @@
             </tr>
             <tr>
                 <td>
-                    Prix de vente HT
+                    Prix de vente HT <span style="color: red;">*</span>
                 </td>
                 <td>
                     @Html.DropDownList("pvht", Model)
@@ -379,7 +379,8 @@
 
 
 
-            <input type="submit" value="Sauvegarder" />
+            <input type="submit" value="Sauvegarder" class="btn btn-success" />
+            
         }
     </table>
 </body>
