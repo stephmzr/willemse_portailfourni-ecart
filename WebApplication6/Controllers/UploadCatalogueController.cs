@@ -32,6 +32,7 @@ namespace WebApplication6.Controllers
             return View();
         }
 
+        //Poster fichier CSV + appel procédure stockée TELECHARGE_CSV
         [HttpPost]
         public ActionResult PostFichier(HttpPostedFileBase file)
         {
@@ -85,7 +86,7 @@ namespace WebApplication6.Controllers
             return View("Index");
         }
 
-
+        //Poster archive d'images et décompresse dans le dossier du fournisseur
         public ActionResult PostArchiveImg(HttpPostedFileBase imagesZip)
         {
             if (ModelState.IsValid)
@@ -130,6 +131,7 @@ namespace WebApplication6.Controllers
             return View("Index");
         }
 
+        //Page correspondance des champs
         public ActionResult MappingChamps()
         {
             var champs = mapping.pf_colonne_csv.ToList();
@@ -146,6 +148,7 @@ namespace WebApplication6.Controllers
             return View(colonnelist);
         }
 
+        //Action envoyer la correspondance des champs et les inscrit dans la table colonne_csv
         [HttpPost]
         public ActionResult SubmitMapping(string refproduit, string libproduit, string pvht, string fport, string pvttc, string categorie,
             string delailiv, string datedelivr, string nbpiecepaquet, string longueur, string dimensions, string statut, string codebarre, string poids, string argcommercial,
@@ -512,6 +515,7 @@ namespace WebApplication6.Controllers
         }
 
 
+        //Page correspondance des catégories
         public ActionResult MappingCategories()
         {
 

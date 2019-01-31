@@ -24,6 +24,7 @@ namespace WebApplication6.Controllers
             }
         }
 
+        //Fonction qui crée un fichier CSV à partir d'une commande
         public void ExportToCSV(string id)
         {
             StringWriter sw = new StringWriter();
@@ -91,7 +92,7 @@ namespace WebApplication6.Controllers
             Response.End();
         }
 
-
+        //Fonction pour générer les CSV de toutes les commandes d'un coup, utilisé seulement sur vtom
         public void GenererTousLesCSV()
 
         {
@@ -191,7 +192,7 @@ namespace WebApplication6.Controllers
 
 
 
-
+        //nouvelle fonction qui écrit toutes les commandes sur un seul CSV -> a remplacer l'autre par celle la
         //public void GenererTousLesCSV()
         ////public void GenererLesCsvParFournisseur()
         //{
