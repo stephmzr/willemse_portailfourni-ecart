@@ -136,7 +136,7 @@ namespace WebApplication6.Controllers
         {
             var champs = mapping.pf_colonne_csv.ToList();
 
-            List<SelectListItem> colonnelist = (from p in mapping.pf_colonne_csv.AsEnumerable()
+            List<SelectListItem> colonnelist = (from p in mapping.pf_colonne_csv.Where(x => x.id_fournisseur == CurrentUser.Id).AsEnumerable()
                                                  select new SelectListItem
                                                  {
                                                      Text = p.colonne,
@@ -518,8 +518,18 @@ namespace WebApplication6.Controllers
         //Page correspondance des catégories
         public ActionResult MappingCategories()
         {
+            var champs = mapping.pf_colonne_csv.ToList();
 
-            return View();
+            List<SelectListItem> colonnelist = (from p in mapping.pf_colonne_csv.AsEnumerable()
+                                                select new SelectListItem
+                                                {
+                                                    Text = p.colonne,
+                                                    Value = p.id.ToString()
+                                                }).ToList();
+
+            colonnelist.Insert(0, new SelectListItem { Text = "--Selectionnez les champs--", Value = "" });
+
+            return View(colonnelist);
         }
     }
 }
