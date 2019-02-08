@@ -1,1 +1,13 @@
-﻿
+﻿@model IEnumerable<WebApplication6.Models.pf_champ_willemse>
+
+<table>
+
+    @foreach (var categorie in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => categorie.colonne_willemse)
+        </td>
+    </tr>
+    }
+</table>

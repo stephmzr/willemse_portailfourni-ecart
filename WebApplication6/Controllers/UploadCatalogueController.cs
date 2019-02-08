@@ -485,7 +485,7 @@ namespace WebApplication6.Controllers
                     lacolonne.colonnewillemse = "Type d’utilisation";
                 }
             }
-            if (!string.IsNullOrEmpty(libproduit))
+            if (!string.IsNullOrEmpty(ensoleillement))
             {
                 var lacolonne = champs.SingleOrDefault(x => x.id == Int32.Parse(libproduit));
                 if (lacolonne != null)
@@ -518,18 +518,10 @@ namespace WebApplication6.Controllers
         //Page correspondance des catégories
         public ActionResult MappingCategories()
         {
-            var champs = mapping.pf_colonne_csv.ToList();
+            var champs = mapping.pf_champ_willemse.ToList();
 
-            List<SelectListItem> colonnelist = (from p in mapping.pf_colonne_csv.AsEnumerable()
-                                                select new SelectListItem
-                                                {
-                                                    Text = p.colonne,
-                                                    Value = p.id.ToString()
-                                                }).ToList();
+            return View(champs);
 
-            colonnelist.Insert(0, new SelectListItem { Text = "--Selectionnez les champs--", Value = "" });
-
-            return View(colonnelist);
         }
     }
 }

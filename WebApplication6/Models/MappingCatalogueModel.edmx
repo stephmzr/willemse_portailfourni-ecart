@@ -5,6 +5,20 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="MappingCatalogueModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Erreurs détectées durant la génération :
+avertissement 6013: Aucune clé primaire n'est définie pour la table/vue 'LISTE_CATALOGUE_ERP.dbo.hierarchie_be' ; en outre, aucune clé primaire valide n'a pu être déduite. Cette table/vue a été exclue. Pour utiliser l'entité, vous devez passer en revue votre schéma, ajouter les clés appropriées et supprimer le commentaire associé.
+        <EntityType Name="hierarchie_be">
+          <Property Name="niveau" Type="varchar" MaxLength="200" />
+          <Property Name="idniv1" Type="int" />
+          <Property Name="idniv2" Type="int" />
+          <Property Name="idniv3" Type="int" />
+          <Property Name="idniv4" Type="int" />
+          <Property Name="idniv5" Type="int" />
+          <Property Name="idniv6" Type="int" />
+          <Property Name="id" Type="int" />
+          <Property Name="niveauComplet" Type="varchar" MaxLength="500" />
+          <Property Name="nbproduit" Type="int" />
+        </EntityType>-->
         <EntityType Name="pf_colonne_csv">
           <Key>
             <PropertyRef Name="id" />

@@ -303,6 +303,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MappingCatalogueModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\pf_champ_willemse.cs">
+      <DependentUpon>MappingCatalogueModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\pf_colonne_csv.cs">
       <DependentUpon>MappingCatalogueModel.tt</DependentUpon>
     </Compile>
