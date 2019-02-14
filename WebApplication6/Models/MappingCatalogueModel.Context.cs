@@ -28,5 +28,6 @@ namespace WebApplication6.Models
         public virtual DbSet<pf_colonne_csv> pf_colonne_csv { get; set; }
         public virtual DbSet<pf_contenu_csv> pf_contenu_csv { get; set; }
         public virtual DbSet<pf_csv> pf_csv { get; set; }
+        public virtual DbSet<hierarchie_be> hierarchie_be { get; set; }
     }
 }

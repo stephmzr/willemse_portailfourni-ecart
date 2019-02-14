@@ -1,13 +1,23 @@
-﻿@model IEnumerable<WebApplication6.Models.pf_champ_willemse>
+﻿@model List<SelectListItem>
+@*@model WebApplication6.Models.hierarchie_be*@
 
-<table>
 
-    @foreach (var categorie in Model)
-    {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => categorie.colonne_willemse)
-        </td>
-    </tr>
-    }
-</table>
+<div class="col-lg-5">
+    <table>
+
+        @foreach (var categorie in Model)
+        {
+            <tr>
+                <td>
+                    @*@Html.DisplayFor(modelItem => categorie.niveau)*@
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+@using (Html.BeginForm("SubmitMappingCategories", "UploadCatalogue", FormMethod.Post))
+{
+    @Html.DropDownList("refproduit", Model)
+}

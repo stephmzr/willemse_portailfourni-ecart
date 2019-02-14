@@ -5,9 +5,11 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="MappingCatalogueModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Erreurs détectées durant la génération :
-avertissement 6013: Aucune clé primaire n'est définie pour la table/vue 'LISTE_CATALOGUE_ERP.dbo.hierarchie_be' ; en outre, aucune clé primaire valide n'a pu être déduite. Cette table/vue a été exclue. Pour utiliser l'entité, vous devez passer en revue votre schéma, ajouter les clés appropriées et supprimer le commentaire associé.
         <EntityType Name="hierarchie_be">
+          <Key>
+            <PropertyRef Name="id_table" />
+          </Key>
+          <Property Name="id_table" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="niveau" Type="varchar" MaxLength="200" />
           <Property Name="idniv1" Type="int" />
           <Property Name="idniv2" Type="int" />
@@ -18,7 +20,7 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue 'LISTE
           <Property Name="id" Type="int" />
           <Property Name="niveauComplet" Type="varchar" MaxLength="500" />
           <Property Name="nbproduit" Type="int" />
-        </EntityType>-->
+        </EntityType>
         <EntityType Name="pf_colonne_csv">
           <Key>
             <PropertyRef Name="id" />
@@ -49,6 +51,7 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue 'LISTE
           <Property Name="date_fichier" Type="datetime" />
         </EntityType>
         <EntityContainer Name="MappingCatalogueModelStoreContainer">
+          <EntitySet Name="hierarchie_be" EntityType="Self.hierarchie_be" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="pf_colonne_csv" EntityType="Self.pf_colonne_csv" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="pf_contenu_csv" EntityType="Self.pf_contenu_csv" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="pf_csv" EntityType="Self.pf_csv" Schema="dbo" store:Type="Tables" />
@@ -90,7 +93,24 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue 'LISTE
           <EntitySet Name="pf_colonne_csv" EntityType="Self.pf_colonne_csv" />
           <EntitySet Name="pf_contenu_csv" EntityType="Self.pf_contenu_csv" />
           <EntitySet Name="pf_csv" EntityType="Self.pf_csv" />
+          <EntitySet Name="hierarchie_be" EntityType="MappingCatalogueModel.hierarchie_be" />
         </EntityContainer>
+        <EntityType Name="hierarchie_be">
+          <Key>
+            <PropertyRef Name="id_table" />
+          </Key>
+          <Property Name="id_table" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="niveau" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="idniv1" Type="Int32" />
+          <Property Name="idniv2" Type="Int32" />
+          <Property Name="idniv3" Type="Int32" />
+          <Property Name="idniv4" Type="Int32" />
+          <Property Name="idniv5" Type="Int32" />
+          <Property Name="idniv6" Type="Int32" />
+          <Property Name="id" Type="Int32" />
+          <Property Name="niveauComplet" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="nbproduit" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -126,6 +146,23 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue 'LISTE
                 <ScalarProperty Name="id_csv" ColumnName="id_csv" />
                 <ScalarProperty Name="fichier" ColumnName="fichier" />
                 <ScalarProperty Name="date_fichier" ColumnName="date_fichier" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hierarchie_be">
+            <EntityTypeMapping TypeName="MappingCatalogueModel.hierarchie_be">
+              <MappingFragment StoreEntitySet="hierarchie_be">
+                <ScalarProperty Name="nbproduit" ColumnName="nbproduit" />
+                <ScalarProperty Name="niveauComplet" ColumnName="niveauComplet" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idniv6" ColumnName="idniv6" />
+                <ScalarProperty Name="idniv5" ColumnName="idniv5" />
+                <ScalarProperty Name="idniv4" ColumnName="idniv4" />
+                <ScalarProperty Name="idniv3" ColumnName="idniv3" />
+                <ScalarProperty Name="idniv2" ColumnName="idniv2" />
+                <ScalarProperty Name="idniv1" ColumnName="idniv1" />
+                <ScalarProperty Name="niveau" ColumnName="niveau" />
+                <ScalarProperty Name="id_table" ColumnName="id_table" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

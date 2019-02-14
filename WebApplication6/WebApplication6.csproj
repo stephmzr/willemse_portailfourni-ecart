@@ -242,6 +242,9 @@
     <Compile Include="Models\F_DOCLIGNE.cs">
       <DependentUpon>ListeCommandes.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\hierarchie_be.cs">
+      <DependentUpon>MappingCatalogueModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ListeCommandes.Context.cs">
       <AutoGen>True</AutoGen>
@@ -302,9 +305,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MappingCatalogueModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\pf_champ_willemse.cs">
-      <DependentUpon>MappingCatalogueModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\pf_colonne_csv.cs">
       <DependentUpon>MappingCatalogueModel.tt</DependentUpon>

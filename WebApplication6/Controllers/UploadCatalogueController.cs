@@ -137,11 +137,11 @@ namespace WebApplication6.Controllers
             var champs = mapping.pf_colonne_csv.ToList();
 
             List<SelectListItem> colonnelist = (from p in mapping.pf_colonne_csv.Where(x => x.id_fournisseur == CurrentUser.Id).AsEnumerable()
-                                                 select new SelectListItem
-                                                 {
-                                                     Text = p.colonne,
-                                                     Value = p.id.ToString()
-                                                 }).ToList();
+                                                select new SelectListItem
+                                                {
+                                                    Text = p.colonne,
+                                                    Value = p.id.ToString()
+                                                }).ToList();
 
             colonnelist.Insert(0, new SelectListItem { Text = "--Selectionnez les champs--", Value = "" });
 
@@ -154,13 +154,13 @@ namespace WebApplication6.Controllers
             string delailiv, string datedelivr, string nbpiecepaquet, string longueur, string dimensions, string statut, string codebarre, string poids, string argcommercial,
             string slogan, string couleur, string qualitelivree, string garantie, string photo1, string photo2, string photo3, string photo4, string photo5, string photo6, string photo7,
             string photo8, string photo9, string photo10, string feuillage, string parfume, string arrosage, string niveausoin, string distanceplantation, string periodefloraison,
-            string perioderecolte, string periodesemis, string periodeplantation, string climat, string typesol, string typeutil, string ensoleillement, string gelif, string culturepot )
+            string perioderecolte, string periodesemis, string periodeplantation, string climat, string typesol, string typeutil, string ensoleillement, string gelif, string culturepot)
         {
             var champs = mapping.pf_colonne_csv.ToList();
             if (!string.IsNullOrEmpty(refproduit))
             {
                 var lacolonne = champs.SingleOrDefault(x => x.id == Int32.Parse(refproduit));
-                if( lacolonne != null)
+                if (lacolonne != null)
                 {
                     lacolonne.colonnewillemse = "Référence produit";
                 }
@@ -518,9 +518,35 @@ namespace WebApplication6.Controllers
         //Page correspondance des catégories
         public ActionResult MappingCategories()
         {
-            var champs = mapping.pf_champ_willemse.ToList();
+            var champs = mapping.hierarchie_be.ToList().OrderBy(x => x.niveau);
+            var categoriesFourni = mapping.pf_colonne_csv.Where(x => x.id_fournisseur == CurrentUser.Id && x.colonne.Contains("Catégorie"));
+
+            List<SelectListItem> categorielist = (from p in mapping.pf_colonne_csv.Where(x => x.id_fournisseur == CurrentUser.Id && x.colonne.Contains("Catégorie"))
+                                                  select new SelectListItem
+                                                  {
+                                                      Text = p.colonne,
+                                                      Value = p.colonne.ToString()
+                                                  }).ToList();
+
+            categorielist.Insert(0, new SelectListItem { Text = "--Selectionnez les champs--", Value = "" });
 
             return View(champs);
+
+        }
+
+        [HttpPost]
+        public ActionResult SubmitMappingCategories(string refproduit)
+        {
+            var champs = mapping.pf_colonne_csv.ToList();
+            if (!string.IsNullOrEmpty(refproduit))
+            {
+                var lacolonne = champs.SingleOrDefault(x => x.id == Int32.Parse(refproduit));
+                if (lacolonne != null)
+                {
+                    lacolonne.colonnewillemse = "Référence produit";
+                }
+            }
+            return View("MappingCategories");
 
         }
     }
