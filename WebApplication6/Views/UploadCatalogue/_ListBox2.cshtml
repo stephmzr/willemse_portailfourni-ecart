@@ -1,0 +1,16 @@
+﻿@model List<SelectListItem>
+
+<div class="col-lg-6">
+</div>
+
+
+    @using (Html.BeginForm("SubmitMappingCategories", "UploadCatalogue", FormMethod.Post))
+    {
+        <tr>
+            <td>
+                @Html.DropDownList("refproduit", Model)
+            </td>
+        </tr>
+    }
+
+

@@ -2,7 +2,7 @@
 @*@model WebApplication6.Models.hierarchie_be*@
 
 
-<div class="col-lg-5">
+<div class="col-lg-6">
     <table>
 
         @foreach (var categorie in Model)
@@ -17,7 +17,20 @@
     </table>
 </div>
 
+@*@using (Html.BeginForm("SubmitMappingCategories", "UploadCatalogue", FormMethod.Post))
+    {
+        @Html.DropDownList("refproduit", Model)
+    }*@
+
 @using (Html.BeginForm("SubmitMappingCategories", "UploadCatalogue", FormMethod.Post))
 {
-    @Html.DropDownList("refproduit", Model)
+    <tr>
+        <td>
+            @Html.DropDownList("listbox1", Model)
+        </td>
+    </tr>
+}
+
+@{
+    Html.RenderPartial("_ListBox2");
 }

@@ -521,17 +521,24 @@ namespace WebApplication6.Controllers
             var champs = mapping.hierarchie_be.ToList().OrderBy(x => x.niveau);
             var categoriesFourni = mapping.pf_colonne_csv.Where(x => x.id_fournisseur == CurrentUser.Id && x.colonne.Contains("Catégorie"));
 
-            List<SelectListItem> categorielist = (from p in mapping.pf_colonne_csv.Where(x => x.id_fournisseur == CurrentUser.Id && x.colonne.Contains("Catégorie"))
+            List<SelectListItem> categorielist = (from p in mapping.hierarchie_be.Where(x => x.niveauComplet.Contains("Site Internet")).AsEnumerable()
                                                   select new SelectListItem
                                                   {
-                                                      Text = p.colonne,
-                                                      Value = p.colonne.ToString()
+                                                      Text = p.niveau,
+                                                      Value = p.id_table.ToString()
                                                   }).ToList();
 
             categorielist.Insert(0, new SelectListItem { Text = "--Selectionnez les champs--", Value = "" });
 
-            return View(champs);
+            return View(categorielist);
 
+        }
+
+        public ActionResult ListBox2()
+        {
+
+
+            return View();
         }
 
         [HttpPost]
