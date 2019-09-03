@@ -209,7 +209,6 @@
           <Property Name="CT_Langue" Type="Int16" />
           <Property Name="N_Expedition" Type="Int16" />
           <Property Name="N_Condition" Type="Int16" />
-          <Property Name="CT_DateCreate" Type="DateTime" Precision="3" />
           <Property Name="CT_Saut" Type="Int16" />
           <Property Name="CT_Lettrage" Type="Int16" />
           <Property Name="CT_ValidEch" Type="Int16" />
@@ -355,7 +354,6 @@
                 <ScalarProperty Name="CT_Langue" ColumnName="CT_Langue" />
                 <ScalarProperty Name="N_Expedition" ColumnName="N_Expedition" />
                 <ScalarProperty Name="N_Condition" ColumnName="N_Condition" />
-                <ScalarProperty Name="CT_DateCreate" ColumnName="CT_DateCreate" />
                 <ScalarProperty Name="CT_Saut" ColumnName="CT_Saut" />
                 <ScalarProperty Name="CT_Lettrage" ColumnName="CT_Lettrage" />
                 <ScalarProperty Name="CT_ValidEch" ColumnName="CT_ValidEch" />

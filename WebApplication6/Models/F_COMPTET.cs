@@ -68,7 +68,6 @@ namespace WebApplication6.Models
         public Nullable<short> CT_Langue { get; set; }
         public Nullable<short> N_Expedition { get; set; }
         public Nullable<short> N_Condition { get; set; }
-        public Nullable<System.DateTime> CT_DateCreate { get; set; }
         public Nullable<short> CT_Saut { get; set; }
         public Nullable<short> CT_Lettrage { get; set; }
         public Nullable<short> CT_ValidEch { get; set; }
