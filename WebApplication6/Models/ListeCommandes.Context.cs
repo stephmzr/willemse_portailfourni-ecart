@@ -27,5 +27,6 @@ namespace WebApplication6.Models
     
         public virtual DbSet<F_DOCENTETE> F_DOCENTETE { get; set; }
         public virtual DbSet<F_DOCLIGNE> F_DOCLIGNE { get; set; }
+        public virtual DbSet<P_DOSSIER> P_DOSSIER { get; set; }
     }
 }

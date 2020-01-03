@@ -164,5 +164,30 @@ namespace WebApplication6.Models
         public string MOTIFS_RMBT_RECL { get; set; }
         public string MOTIFS_RETOUR { get; set; }
         public string SAISON { get; set; }
+        public Nullable<System.DateTime> DATE_EXPEDITION_PLANIFIEE { get; set; }
+        public Nullable<System.DateTime> DATE_VALIDATION { get; set; }
+        public string MOTIF_DEP { get; set; }
+        public string MODE_LIVRAISON { get; set; }
+        public string MODE_LIVRAISON_WEB { get; set; }
+        public Nullable<System.DateTime> cbCreation { get; set; }
+        public Nullable<System.Guid> cbCreationUser { get; set; }
+        public Nullable<short> DO_Escompte { get; set; }
+        public Nullable<short> DO_DocType { get; set; }
+        public Nullable<short> DO_TypeCalcul { get; set; }
+        public Nullable<System.Guid> DO_FactureFile { get; set; }
+        public Nullable<decimal> DO_TotalHTNet { get; set; }
+        public Nullable<decimal> DO_TotalTTC { get; set; }
+        public Nullable<decimal> DO_NetAPayer { get; set; }
+        public Nullable<decimal> DO_MontantRegle { get; set; }
+        public Nullable<System.Guid> DO_RefPaiement { get; set; }
+        public string DO_AdressePaiement { get; set; }
+        public Nullable<short> DO_PaiementLigne { get; set; }
+        public Nullable<short> DO_MotifDevis { get; set; }
+        public byte[] cbHash { get; set; }
+        public Nullable<short> cbHashVersion { get; set; }
+        public Nullable<System.DateTime> cbHashDate { get; set; }
+        public Nullable<int> cbHashOrder { get; set; }
+        public string TYPE_MOUVEMENT { get; set; }
+        public string NUMERO_APPRO_EFFITRACE { get; set; }
     }
 }

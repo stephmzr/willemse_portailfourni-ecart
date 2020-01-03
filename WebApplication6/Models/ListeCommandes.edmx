@@ -4,15 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ListeCommandesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ListeCommandesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="F_DOCENTETE">
           <Key>
             <PropertyRef Name="cbMarq" />
           </Key>
           <Property Name="DO_Domaine" Type="smallint" />
           <Property Name="DO_Type" Type="smallint" />
-          <Property Name="DO_Piece" Type="varchar" MaxLength="9" />
-          <Property Name="cbDO_Piece" Type="varbinary" MaxLength="10" StoreGeneratedPattern="Computed" />
+          <Property Name="DO_Piece" Type="varchar" MaxLength="13" />
           <Property Name="DO_Date" Type="datetime" />
           <Property Name="DO_Ref" Type="varchar" MaxLength="17" />
           <Property Name="DO_Tiers" Type="varchar" MaxLength="17" />
@@ -62,7 +61,6 @@
           <Property Name="DO_Statut" Type="smallint" />
           <Property Name="DO_Heure" Type="char" MaxLength="9" />
           <Property Name="CA_No" Type="int" />
-          <Property Name="cbCA_No" Type="int" />
           <Property Name="CO_NoCaissier" Type="int" />
           <Property Name="cbCO_NoCaissier" Type="int" />
           <Property Name="DO_Transfere" Type="smallint" />
@@ -98,8 +96,7 @@
           <Property Name="DO_DateExpedition" Type="datetime" />
           <Property Name="DO_FactureFrs" Type="varchar" MaxLength="35" />
           <Property Name="cbDO_FactureFrs" Type="varbinary" MaxLength="36" StoreGeneratedPattern="Computed" />
-          <Property Name="DO_PieceOrig" Type="varchar" MaxLength="9" />
-          <Property Name="cbDO_PieceOrig" Type="varbinary" MaxLength="10" StoreGeneratedPattern="Computed" />
+          <Property Name="DO_PieceOrig" Type="varchar" MaxLength="13" />
           <Property Name="DO_GUID" Type="uniqueidentifier" />
           <Property Name="DO_EStatut" Type="smallint" />
           <Property Name="DO_DemandeRegul" Type="smallint" />
@@ -115,10 +112,10 @@
           <Property Name="cbProt" Type="smallint" />
           <Property Name="cbMarq" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="cbCreateur" Type="char" MaxLength="4" />
-          <Property Name="cbModification" Type="smalldatetime" />
+          <Property Name="cbModification" Type="datetime" />
           <Property Name="cbReplication" Type="int" />
           <Property Name="cbFlag" Type="smallint" />
-          <Property Name="URGENT" Type="varchar" MaxLength="21" />
+          <Property Name="URGENT" Type="varchar" MaxLength="35" />
           <Property Name="SOCIETE_FACTURATION" Type="varchar" MaxLength="69" />
           <Property Name="CIVILITE_FACTURATION" Type="varchar" MaxLength="69" />
           <Property Name="NOM_FACTURATION" Type="varchar" MaxLength="69" />
@@ -142,8 +139,8 @@
           <Property Name="CODE_POSTAL_LIVRAISON" Type="varchar" MaxLength="69" />
           <Property Name="VILLE_LIVRAISON" Type="varchar" MaxLength="69" />
           <Property Name="PAYS_LIVRAISON" Type="varchar" MaxLength="69" />
-          <Property Name="GESTION_COLIS" Type="varchar" MaxLength="21" />
-          <Property Name="GENERATION_CONTREMARQUE" Type="varchar" MaxLength="21" />
+          <Property Name="GESTION_COLIS" Type="varchar" MaxLength="35" />
+          <Property Name="GENERATION_CONTREMARQUE" Type="varchar" MaxLength="35" />
           <Property Name="LIEN_TRACKING_2" Type="varchar" MaxLength="69" />
           <Property Name="DATE_EXPEDITION" Type="smalldatetime" />
           <Property Name="NUMERO_TRACKING" Type="varchar" MaxLength="69" />
@@ -156,9 +153,37 @@
           <Property Name="TTC_TXM" Type="numeric" Precision="24" Scale="6" />
           <Property Name="LIEN_TRACKING_1" Type="varchar" MaxLength="69" />
           <Property Name="CODE_PARTENAIRE" Type="varchar" MaxLength="69" />
-          <Property Name="MOTIFS_RMBT_RECL" Type="varchar" MaxLength="21" />
-          <Property Name="MOTIFS_RETOUR" Type="varchar" MaxLength="21" />
+          <Property Name="MOTIFS_RMBT_RECL" Type="varchar" MaxLength="35" />
+          <Property Name="MOTIFS_RETOUR" Type="varchar" MaxLength="35" />
           <Property Name="SAISON" Type="varchar" MaxLength="4" />
+          <Property Name="DATE_EXPEDITION_PLANIFIEE" Type="smalldatetime" />
+          <Property Name="DATE_VALIDATION" Type="smalldatetime" />
+          <Property Name="MOTIF_DEP" Type="varchar" MaxLength="30" />
+          <Property Name="MODE_LIVRAISON" Type="varchar" MaxLength="20" />
+          <Property Name="MODE_LIVRAISON_WEB" Type="varchar" MaxLength="69" />
+          <Property Name="cbCreation" Type="datetime" />
+          <Property Name="cbCreationUser" Type="uniqueidentifier" />
+          <Property Name="DO_Escompte" Type="smallint" />
+          <Property Name="DO_DocType" Type="smallint" />
+          <Property Name="DO_TypeCalcul" Type="smallint" />
+          <Property Name="DO_FactureFile" Type="uniqueidentifier" />
+          <Property Name="DO_TotalHTNet" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="DO_TotalTTC" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="DO_NetAPayer" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="DO_MontantRegle" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="DO_RefPaiement" Type="uniqueidentifier" />
+          <Property Name="DO_AdressePaiement" Type="varchar" MaxLength="255" />
+          <Property Name="DO_PaiementLigne" Type="smallint" />
+          <Property Name="DO_MotifDevis" Type="smallint" />
+          <Property Name="cbHash" Type="varbinary" MaxLength="32" />
+          <Property Name="cbHashVersion" Type="smallint" />
+          <Property Name="cbHashDate" Type="datetime" />
+          <Property Name="cbHashOrder" Type="int" />
+          <Property Name="cbDO_Piece" Type="varbinary" MaxLength="14" StoreGeneratedPattern="Computed" />
+          <Property Name="cbCA_No" Type="int" />
+          <Property Name="cbDO_PieceOrig" Type="varbinary" MaxLength="14" StoreGeneratedPattern="Computed" />
+          <Property Name="TYPE_MOUVEMENT" Type="varchar" MaxLength="69" />
+          <Property Name="NUMERO_APPRO_EFFITRACE" Type="varchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="F_DOCLIGNE">
           <Key>
@@ -168,12 +193,9 @@
           <Property Name="DO_Type" Type="smallint" Nullable="false" />
           <Property Name="CT_Num" Type="varchar" MaxLength="17" />
           <Property Name="cbCT_Num" Type="varbinary" MaxLength="18" StoreGeneratedPattern="Computed" />
-          <Property Name="DO_Piece" Type="varchar" MaxLength="9" Nullable="false" />
-          <Property Name="cbDO_Piece" Type="varbinary" MaxLength="10" StoreGeneratedPattern="Computed" />
-          <Property Name="DL_PieceBC" Type="varchar" MaxLength="9" />
-          <Property Name="cbDL_PieceBC" Type="varbinary" MaxLength="10" StoreGeneratedPattern="Computed" />
-          <Property Name="DL_PieceBL" Type="varchar" MaxLength="9" />
-          <Property Name="cbDL_PieceBL" Type="varbinary" MaxLength="10" StoreGeneratedPattern="Computed" />
+          <Property Name="DO_Piece" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="DL_PieceBC" Type="varchar" MaxLength="13" />
+          <Property Name="DL_PieceBL" Type="varchar" MaxLength="13" />
           <Property Name="DO_Date" Type="datetime" />
           <Property Name="DL_DateBC" Type="datetime" />
           <Property Name="DL_DateBL" Type="datetime" />
@@ -216,7 +238,7 @@
           <Property Name="cbDT_No" Type="int" />
           <Property Name="AF_RefFourniss" Type="varchar" MaxLength="19" />
           <Property Name="cbAF_RefFourniss" Type="varbinary" MaxLength="20" StoreGeneratedPattern="Computed" />
-          <Property Name="EU_Enumere" Type="varchar" MaxLength="21" />
+          <Property Name="EU_Enumere" Type="varchar" MaxLength="35" />
           <Property Name="EU_Qte" Type="numeric" Precision="24" Scale="6" />
           <Property Name="DL_TTC" Type="smallint" />
           <Property Name="DE_No" Type="int" />
@@ -242,8 +264,7 @@
           <Property Name="DL_MontantTTC" Type="numeric" Precision="24" Scale="6" />
           <Property Name="DL_FactPoids" Type="smallint" />
           <Property Name="DL_Escompte" Type="smallint" />
-          <Property Name="DL_PiecePL" Type="varchar" MaxLength="9" />
-          <Property Name="cbDL_PiecePL" Type="varbinary" MaxLength="10" StoreGeneratedPattern="Computed" />
+          <Property Name="DL_PiecePL" Type="varchar" MaxLength="13" />
           <Property Name="DL_DatePL" Type="datetime" />
           <Property Name="DL_QtePL" Type="numeric" Precision="24" Scale="6" />
           <Property Name="DL_NoColis" Type="varchar" MaxLength="19" />
@@ -259,8 +280,7 @@
           <Property Name="DL_CodeTaxe2" Type="varchar" MaxLength="5" />
           <Property Name="DL_CodeTaxe3" Type="varchar" MaxLength="5" />
           <Property Name="DL_PieceOFProd" Type="int" />
-          <Property Name="DL_PieceDE" Type="varchar" MaxLength="9" />
-          <Property Name="cbDL_PieceDE" Type="varbinary" MaxLength="10" StoreGeneratedPattern="Computed" />
+          <Property Name="DL_PieceDE" Type="varchar" MaxLength="13" />
           <Property Name="DL_DateDE" Type="datetime" />
           <Property Name="DL_QteDE" Type="numeric" Precision="24" Scale="6" />
           <Property Name="DL_Operation" Type="varchar" MaxLength="11" />
@@ -268,10 +288,166 @@
           <Property Name="cbProt" Type="smallint" />
           <Property Name="cbMarq" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="cbCreateur" Type="char" MaxLength="4" />
-          <Property Name="cbModification" Type="smalldatetime" />
+          <Property Name="cbModification" Type="datetime" />
           <Property Name="cbReplication" Type="int" />
           <Property Name="cbFlag" Type="smallint" />
           <Property Name="PRIX_VENTE_TTC" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="DATE_EXPEDITION_PLANIFIEE" Type="smalldatetime" />
+          <Property Name="cbCreation" Type="datetime" />
+          <Property Name="cbCreationUser" Type="uniqueidentifier" />
+          <Property Name="CA_No" Type="int" />
+          <Property Name="cbCA_No" Type="int" />
+          <Property Name="DO_DocType" Type="smallint" />
+          <Property Name="cbHash" Type="varbinary" MaxLength="32" />
+          <Property Name="cbHashVersion" Type="smallint" />
+          <Property Name="cbHashDate" Type="datetime" />
+          <Property Name="cbHashOrder" Type="int" />
+          <Property Name="cbDO_Piece" Type="varbinary" MaxLength="14" StoreGeneratedPattern="Computed" />
+          <Property Name="cbDL_PieceBC" Type="varbinary" MaxLength="14" StoreGeneratedPattern="Computed" />
+          <Property Name="cbDL_PieceBL" Type="varbinary" MaxLength="14" StoreGeneratedPattern="Computed" />
+          <Property Name="cbDL_PiecePL" Type="varbinary" MaxLength="14" StoreGeneratedPattern="Computed" />
+          <Property Name="cbDL_PieceDE" Type="varbinary" MaxLength="14" StoreGeneratedPattern="Computed" />
+          <Property Name="TYPE_MOUVEMENT" Type="varchar" MaxLength="69" />
+        </EntityType>
+        <EntityType Name="P_DOSSIER">
+          <Key>
+            <PropertyRef Name="cbMarq" />
+          </Key>
+          <Property Name="D_RaisonSoc" Type="varchar" MaxLength="35" />
+          <Property Name="D_Profession" Type="varchar" MaxLength="35" />
+          <Property Name="D_Adresse" Type="varchar" MaxLength="35" />
+          <Property Name="D_Complement" Type="varchar" MaxLength="35" />
+          <Property Name="D_CodePostal" Type="varchar" MaxLength="9" />
+          <Property Name="D_Ville" Type="varchar" MaxLength="35" />
+          <Property Name="D_CodeRegion" Type="varchar" MaxLength="25" />
+          <Property Name="D_Pays" Type="varchar" MaxLength="35" />
+          <Property Name="D_Commentaire" Type="varchar" MaxLength="69" />
+          <Property Name="D_Siret" Type="varchar" MaxLength="15" />
+          <Property Name="D_Ape" Type="varchar" MaxLength="7" />
+          <Property Name="D_Identifiant" Type="varchar" MaxLength="25" />
+          <Property Name="D_DebutExo01" Type="datetime" />
+          <Property Name="D_DebutExo02" Type="datetime" />
+          <Property Name="D_DebutExo03" Type="datetime" />
+          <Property Name="D_DebutExo04" Type="datetime" />
+          <Property Name="D_DebutExo05" Type="datetime" />
+          <Property Name="D_FinExo01" Type="datetime" />
+          <Property Name="D_FinExo02" Type="datetime" />
+          <Property Name="D_FinExo03" Type="datetime" />
+          <Property Name="D_FinExo04" Type="datetime" />
+          <Property Name="D_FinExo05" Type="datetime" />
+          <Property Name="D_LgCg" Type="smallint" />
+          <Property Name="D_LgAn" Type="smallint" />
+          <Property Name="D_FormatQtes" Type="varchar" MaxLength="31" />
+          <Property Name="D_CodeTrait" Type="smallint" />
+          <Property Name="D_ConfSupp" Type="smallint" />
+          <Property Name="D_AnalyseGL01" Type="smallint" />
+          <Property Name="D_AnalyseGL02" Type="smallint" />
+          <Property Name="D_AnalyseGL03" Type="smallint" />
+          <Property Name="D_Delai" Type="smallint" />
+          <Property Name="D_OuvCompte" Type="smallint" />
+          <Property Name="D_Budget" Type="smallint" />
+          <Property Name="D_SuppEc" Type="smallint" />
+          <Property Name="D_RegTaxe" Type="smallint" />
+          <Property Name="D_Ventil" Type="smallint" />
+          <Property Name="D_Edi" Type="smallint" />
+          <Property Name="D_Archivage01" Type="smallint" />
+          <Property Name="D_Archivage02" Type="smallint" />
+          <Property Name="D_Archivage03" Type="smallint" />
+          <Property Name="D_Archivage04" Type="smallint" />
+          <Property Name="D_Archivage05" Type="smallint" />
+          <Property Name="D_RBSupp" Type="smallint" />
+          <Property Name="D_MajImport" Type="smallint" />
+          <Property Name="D_SaisCab" Type="smallint" />
+          <Property Name="D_TypeValid" Type="smallint" />
+          <Property Name="D_ImpressZero" Type="smallint" />
+          <Property Name="N_DeviseCompte" Type="smallint" />
+          <Property Name="N_DeviseEquival" Type="smallint" />
+          <Property Name="D_ANSais" Type="smallint" />
+          <Property Name="JO_NumAN" Type="varchar" MaxLength="7" />
+          <Property Name="CG_NumANOuv" Type="varchar" MaxLength="13" />
+          <Property Name="CG_NumANBenef" Type="varchar" MaxLength="13" />
+          <Property Name="CG_NumANPerte" Type="varchar" MaxLength="13" />
+          <Property Name="D_TVAEncReg" Type="smallint" />
+          <Property Name="D_TVAEncAffect" Type="smallint" />
+          <Property Name="D_DeviseEq" Type="smallint" />
+          <Property Name="D_AnAffect" Type="smallint" />
+          <Property Name="D_ReglPiece" Type="smallint" />
+          <Property Name="D_ExtNeg" Type="smallint" />
+          <Property Name="D_RapproDevise" Type="smallint" />
+          <Property Name="D_ImportEqJo" Type="smallint" />
+          <Property Name="D_ImportEqAn" Type="smallint" />
+          <Property Name="CG_NumImportDebit" Type="varchar" MaxLength="13" />
+          <Property Name="CG_NumImportCredit" Type="varchar" MaxLength="13" />
+          <Property Name="N_Analytique" Type="smallint" />
+          <Property Name="D_NumDoss" Type="varchar" MaxLength="9" />
+          <Property Name="D_EMail" Type="varchar" MaxLength="69" />
+          <Property Name="D_EMailExpert" Type="varchar" MaxLength="69" />
+          <Property Name="D_Expert" Type="varchar" MaxLength="35" />
+          <Property Name="D_Telephone" Type="varchar" MaxLength="21" />
+          <Property Name="D_Telecopie" Type="varchar" MaxLength="21" />
+          <Property Name="D_EMailSoc" Type="varchar" MaxLength="69" />
+          <Property Name="D_Site" Type="varchar" MaxLength="69" />
+          <Property Name="D_AppelTiers" Type="smallint" />
+          <Property Name="D_AppelSection" Type="smallint" />
+          <Property Name="D_ProtPiece" Type="smallint" />
+          <Property Name="D_NumCont" Type="smallint" />
+          <Property Name="D_DateClot" Type="datetime" />
+          <Property Name="D_CompteGTotal" Type="smallint" />
+          <Property Name="D_RapproRecherche" Type="smallint" />
+          <Property Name="D_RapproEcart" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="CG_NumRappro" Type="varchar" MaxLength="13" />
+          <Property Name="D_RapproContrepartie" Type="smallint" />
+          <Property Name="D_ComSens" Type="smallint" />
+          <Property Name="D_ComType" Type="smallint" />
+          <Property Name="D_ComMoyen" Type="smallint" />
+          <Property Name="D_ComSoft" Type="smallint" />
+          <Property Name="D_ComCodeExpert" Type="varchar" MaxLength="9" />
+          <Property Name="D_ComDateSynchro" Type="datetime" />
+          <Property Name="D_ComGUID" Type="uniqueidentifier" />
+          <Property Name="D_RapproTypeEcart" Type="smallint" />
+          <Property Name="D_RapproReport" Type="smallint" />
+          <Property Name="JO_NumRapproEscCl" Type="varchar" MaxLength="7" />
+          <Property Name="PI_NoRapproEscCl" Type="int" />
+          <Property Name="JO_NumRapproEscFr" Type="varchar" MaxLength="7" />
+          <Property Name="PI_NoRapproEscFr" Type="int" />
+          <Property Name="D_GestionIFRS" Type="smallint" />
+          <Property Name="D_SaisieIFRS" Type="smallint" />
+          <Property Name="N_AnalytiqueIFRS" Type="smallint" />
+          <Property Name="JA_NumAN" Type="varchar" MaxLength="7" />
+          <Property Name="JO_NumANIFRS" Type="varchar" MaxLength="7" />
+          <Property Name="JA_NumANIFRS" Type="varchar" MaxLength="7" />
+          <Property Name="D_RappelSoldeMin" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="D_ImportVentil" Type="smallint" />
+          <Property Name="D_PenalTaux" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="D_PenalImputation" Type="smallint" />
+          <Property Name="JO_NumPenal" Type="varchar" MaxLength="7" />
+          <Property Name="PI_NoPenal" Type="int" />
+          <Property Name="JO_NumImpayes" Type="varchar" MaxLength="7" />
+          <Property Name="PI_NoImpayes" Type="int" />
+          <Property Name="D_ImpressFactRef" Type="smallint" />
+          <Property Name="D_SeuilTVA" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="D_NotSaisieSommeil" Type="smallint" />
+          <Property Name="D_ArchivePeriod" Type="datetime" />
+          <Property Name="D_ECNoCloture01" Type="int" />
+          <Property Name="D_ECNoCloture02" Type="int" />
+          <Property Name="D_ECNoCloture03" Type="int" />
+          <Property Name="D_ECNoCloture04" Type="int" />
+          <Property Name="D_ECNoCloture05" Type="int" />
+          <Property Name="D_CloturePeriod" Type="datetime" />
+          <Property Name="D_MaterialPiece" Type="smallint" />
+          <Property Name="D_BudgetAn" Type="smallint" />
+          <Property Name="D_Capital" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="D_FormeJuridique" Type="varchar" MaxLength="35" />
+          <Property Name="D_ForfaitImpayes" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="D_CodeOctave" Type="varchar" MaxLength="21" />
+          <Property Name="cbMarq" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="D_Facebook" Type="varchar" MaxLength="35" />
+          <Property Name="D_LinkedIn" Type="varchar" MaxLength="35" />
+          <Property Name="D_UpdateDevise" Type="smallint" />
+          <Property Name="D_UpdateDeviseSaisie" Type="smallint" />
+          <Property Name="D_Laf" Type="smallint" />
+          <Property Name="D_PasEcriture" Type="numeric" Precision="24" Scale="6" />
+          <Property Name="D_Logo" Type="uniqueidentifier" />
         </EntityType>
         <!--Erreurs détectées durant la génération :
 avertissement 6035: La relation 'FKA_F_DOCLIGNE_DL_NoLink' a des colonnes qui ne font pas partie de la clé de la table du côté primaire de la relation. La relation a été exclue.
@@ -279,9 +455,9 @@ avertissement 6035: La relation 'FKA_F_DOCLIGNE_DL_NoLink' a des colonnes qui ne
         <EntityContainer Name="ListeCommandesModelStoreContainer">
           <EntitySet Name="F_DOCENTETE" EntityType="Self.F_DOCENTETE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="F_DOCLIGNE" EntityType="Self.F_DOCLIGNE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="P_DOSSIER" EntityType="Self.P_DOSSIER" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ListeCommandesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -291,8 +467,8 @@ avertissement 6035: La relation 'FKA_F_DOCLIGNE_DL_NoLink' a des colonnes qui ne
           </Key>
           <Property Name="DO_Domaine" Type="Int16" />
           <Property Name="DO_Type" Type="Int16" />
-          <Property Name="DO_Piece" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
-          <Property Name="cbDO_Piece" Type="Binary" MaxLength="10" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DO_Piece" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="cbDO_Piece" Type="Binary" MaxLength="14" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="DO_Date" Type="DateTime" Precision="3" />
           <Property Name="DO_Ref" Type="String" MaxLength="17" FixedLength="false" Unicode="false" />
           <Property Name="DO_Tiers" Type="String" MaxLength="17" FixedLength="false" Unicode="false" />
@@ -378,8 +554,8 @@ avertissement 6035: La relation 'FKA_F_DOCLIGNE_DL_NoLink' a des colonnes qui ne
           <Property Name="DO_DateExpedition" Type="DateTime" Precision="3" />
           <Property Name="DO_FactureFrs" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
           <Property Name="cbDO_FactureFrs" Type="Binary" MaxLength="36" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="DO_PieceOrig" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
-          <Property Name="cbDO_PieceOrig" Type="Binary" MaxLength="10" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DO_PieceOrig" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="cbDO_PieceOrig" Type="Binary" MaxLength="14" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="DO_GUID" Type="Guid" />
           <Property Name="DO_EStatut" Type="Int16" />
           <Property Name="DO_DemandeRegul" Type="Int16" />
@@ -395,10 +571,10 @@ avertissement 6035: La relation 'FKA_F_DOCLIGNE_DL_NoLink' a des colonnes qui ne
           <Property Name="cbProt" Type="Int16" />
           <Property Name="cbMarq" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="cbCreateur" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="cbModification" Type="DateTime" Precision="0" />
+          <Property Name="cbModification" Type="DateTime" Precision="3" />
           <Property Name="cbReplication" Type="Int32" />
           <Property Name="cbFlag" Type="Int16" />
-          <Property Name="URGENT" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="URGENT" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
           <Property Name="SOCIETE_FACTURATION" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
           <Property Name="CIVILITE_FACTURATION" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
           <Property Name="NOM_FACTURATION" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
@@ -422,8 +598,8 @@ avertissement 6035: La relation 'FKA_F_DOCLIGNE_DL_NoLink' a des colonnes qui ne
           <Property Name="CODE_POSTAL_LIVRAISON" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
           <Property Name="VILLE_LIVRAISON" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
           <Property Name="PAYS_LIVRAISON" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
-          <Property Name="GESTION_COLIS" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
-          <Property Name="GENERATION_CONTREMARQUE" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="GESTION_COLIS" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="GENERATION_CONTREMARQUE" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
           <Property Name="LIEN_TRACKING_2" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
           <Property Name="DATE_EXPEDITION" Type="DateTime" Precision="0" />
           <Property Name="NUMERO_TRACKING" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
@@ -436,9 +612,34 @@ avertissement 6035: La relation 'FKA_F_DOCLIGNE_DL_NoLink' a des colonnes qui ne
           <Property Name="TTC_TXM" Type="Decimal" Precision="24" Scale="6" />
           <Property Name="LIEN_TRACKING_1" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
           <Property Name="CODE_PARTENAIRE" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
-          <Property Name="MOTIFS_RMBT_RECL" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
-          <Property Name="MOTIFS_RETOUR" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="MOTIFS_RMBT_RECL" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="MOTIFS_RETOUR" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
           <Property Name="SAISON" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="DATE_EXPEDITION_PLANIFIEE" Type="DateTime" Precision="0" />
+          <Property Name="DATE_VALIDATION" Type="DateTime" Precision="0" />
+          <Property Name="MOTIF_DEP" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="MODE_LIVRAISON" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MODE_LIVRAISON_WEB" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
+          <Property Name="cbCreation" Type="DateTime" Precision="3" />
+          <Property Name="cbCreationUser" Type="Guid" />
+          <Property Name="DO_Escompte" Type="Int16" />
+          <Property Name="DO_DocType" Type="Int16" />
+          <Property Name="DO_TypeCalcul" Type="Int16" />
+          <Property Name="DO_FactureFile" Type="Guid" />
+          <Property Name="DO_TotalHTNet" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="DO_TotalTTC" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="DO_NetAPayer" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="DO_MontantRegle" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="DO_RefPaiement" Type="Guid" />
+          <Property Name="DO_AdressePaiement" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="DO_PaiementLigne" Type="Int16" />
+          <Property Name="DO_MotifDevis" Type="Int16" />
+          <Property Name="cbHash" Type="Binary" MaxLength="32" FixedLength="false" />
+          <Property Name="cbHashVersion" Type="Int16" />
+          <Property Name="cbHashDate" Type="DateTime" Precision="3" />
+          <Property Name="cbHashOrder" Type="Int32" />
+          <Property Name="TYPE_MOUVEMENT" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
+          <Property Name="NUMERO_APPRO_EFFITRACE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="F_DOCLIGNE">
           <Key>
@@ -448,12 +649,12 @@ avertissement 6035: La relation 'FKA_F_DOCLIGNE_DL_NoLink' a des colonnes qui ne
           <Property Name="DO_Type" Type="Int16" Nullable="false" />
           <Property Name="CT_Num" Type="String" MaxLength="17" FixedLength="false" Unicode="false" />
           <Property Name="cbCT_Num" Type="Binary" MaxLength="18" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="DO_Piece" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="cbDO_Piece" Type="Binary" MaxLength="10" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="DL_PieceBC" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
-          <Property Name="cbDL_PieceBC" Type="Binary" MaxLength="10" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="DL_PieceBL" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
-          <Property Name="cbDL_PieceBL" Type="Binary" MaxLength="10" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DO_Piece" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cbDO_Piece" Type="Binary" MaxLength="14" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DL_PieceBC" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="cbDL_PieceBC" Type="Binary" MaxLength="14" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DL_PieceBL" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="cbDL_PieceBL" Type="Binary" MaxLength="14" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="DO_Date" Type="DateTime" Precision="3" />
           <Property Name="DL_DateBC" Type="DateTime" Precision="3" />
           <Property Name="DL_DateBL" Type="DateTime" Precision="3" />
@@ -496,7 +697,7 @@ avertissement 6035: La relation 'FKA_F_DOCLIGNE_DL_NoLink' a des colonnes qui ne
           <Property Name="cbDT_No" Type="Int32" />
           <Property Name="AF_RefFourniss" Type="String" MaxLength="19" FixedLength="false" Unicode="false" />
           <Property Name="cbAF_RefFourniss" Type="Binary" MaxLength="20" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="EU_Enumere" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="EU_Enumere" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
           <Property Name="EU_Qte" Type="Decimal" Precision="24" Scale="6" />
           <Property Name="DL_TTC" Type="Int16" />
           <Property Name="DE_No" Type="Int32" />
@@ -522,8 +723,8 @@ avertissement 6035: La relation 'FKA_F_DOCLIGNE_DL_NoLink' a des colonnes qui ne
           <Property Name="DL_MontantTTC" Type="Decimal" Precision="24" Scale="6" />
           <Property Name="DL_FactPoids" Type="Int16" />
           <Property Name="DL_Escompte" Type="Int16" />
-          <Property Name="DL_PiecePL" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
-          <Property Name="cbDL_PiecePL" Type="Binary" MaxLength="10" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DL_PiecePL" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="cbDL_PiecePL" Type="Binary" MaxLength="14" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="DL_DatePL" Type="DateTime" Precision="3" />
           <Property Name="DL_QtePL" Type="Decimal" Precision="24" Scale="6" />
           <Property Name="DL_NoColis" Type="String" MaxLength="19" FixedLength="false" Unicode="false" />
@@ -539,8 +740,8 @@ avertissement 6035: La relation 'FKA_F_DOCLIGNE_DL_NoLink' a des colonnes qui ne
           <Property Name="DL_CodeTaxe2" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="DL_CodeTaxe3" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="DL_PieceOFProd" Type="Int32" />
-          <Property Name="DL_PieceDE" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
-          <Property Name="cbDL_PieceDE" Type="Binary" MaxLength="10" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DL_PieceDE" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="cbDL_PieceDE" Type="Binary" MaxLength="14" FixedLength="false" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="DL_DateDE" Type="DateTime" Precision="3" />
           <Property Name="DL_QteDE" Type="Decimal" Precision="24" Scale="6" />
           <Property Name="DL_Operation" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
@@ -548,15 +749,167 @@ avertissement 6035: La relation 'FKA_F_DOCLIGNE_DL_NoLink' a des colonnes qui ne
           <Property Name="cbProt" Type="Int16" />
           <Property Name="cbMarq" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="cbCreateur" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="cbModification" Type="DateTime" Precision="0" />
+          <Property Name="cbModification" Type="DateTime" Precision="3" />
           <Property Name="cbReplication" Type="Int32" />
           <Property Name="cbFlag" Type="Int16" />
           <Property Name="PRIX_VENTE_TTC" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="DATE_EXPEDITION_PLANIFIEE" Type="DateTime" Precision="0" />
+          <Property Name="cbCreation" Type="DateTime" Precision="3" />
+          <Property Name="cbCreationUser" Type="Guid" />
+          <Property Name="CA_No" Type="Int32" />
+          <Property Name="cbCA_No" Type="Int32" />
+          <Property Name="DO_DocType" Type="Int16" />
+          <Property Name="cbHash" Type="Binary" MaxLength="32" FixedLength="false" />
+          <Property Name="cbHashVersion" Type="Int16" />
+          <Property Name="cbHashDate" Type="DateTime" Precision="3" />
+          <Property Name="cbHashOrder" Type="Int32" />
+          <Property Name="TYPE_MOUVEMENT" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityContainer Name="ListeCommandesEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="F_DOCENTETE" EntityType="Self.F_DOCENTETE" />
           <EntitySet Name="F_DOCLIGNE" EntityType="Self.F_DOCLIGNE" />
+          <EntitySet Name="P_DOSSIER" EntityType="ListeCommandesModel.P_DOSSIER" />
         </EntityContainer>
+        <EntityType Name="P_DOSSIER">
+          <Key>
+            <PropertyRef Name="cbMarq" />
+          </Key>
+          <Property Name="D_RaisonSoc" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="D_Profession" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="D_Adresse" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="D_Complement" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="D_CodePostal" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="D_Ville" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="D_CodeRegion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="D_Pays" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="D_Commentaire" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
+          <Property Name="D_Siret" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="D_Ape" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="D_Identifiant" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="D_DebutExo01" Type="DateTime" Precision="3" />
+          <Property Name="D_DebutExo02" Type="DateTime" Precision="3" />
+          <Property Name="D_DebutExo03" Type="DateTime" Precision="3" />
+          <Property Name="D_DebutExo04" Type="DateTime" Precision="3" />
+          <Property Name="D_DebutExo05" Type="DateTime" Precision="3" />
+          <Property Name="D_FinExo01" Type="DateTime" Precision="3" />
+          <Property Name="D_FinExo02" Type="DateTime" Precision="3" />
+          <Property Name="D_FinExo03" Type="DateTime" Precision="3" />
+          <Property Name="D_FinExo04" Type="DateTime" Precision="3" />
+          <Property Name="D_FinExo05" Type="DateTime" Precision="3" />
+          <Property Name="D_LgCg" Type="Int16" />
+          <Property Name="D_LgAn" Type="Int16" />
+          <Property Name="D_FormatQtes" Type="String" MaxLength="31" FixedLength="false" Unicode="false" />
+          <Property Name="D_CodeTrait" Type="Int16" />
+          <Property Name="D_ConfSupp" Type="Int16" />
+          <Property Name="D_AnalyseGL01" Type="Int16" />
+          <Property Name="D_AnalyseGL02" Type="Int16" />
+          <Property Name="D_AnalyseGL03" Type="Int16" />
+          <Property Name="D_Delai" Type="Int16" />
+          <Property Name="D_OuvCompte" Type="Int16" />
+          <Property Name="D_Budget" Type="Int16" />
+          <Property Name="D_SuppEc" Type="Int16" />
+          <Property Name="D_RegTaxe" Type="Int16" />
+          <Property Name="D_Ventil" Type="Int16" />
+          <Property Name="D_Edi" Type="Int16" />
+          <Property Name="D_Archivage01" Type="Int16" />
+          <Property Name="D_Archivage02" Type="Int16" />
+          <Property Name="D_Archivage03" Type="Int16" />
+          <Property Name="D_Archivage04" Type="Int16" />
+          <Property Name="D_Archivage05" Type="Int16" />
+          <Property Name="D_RBSupp" Type="Int16" />
+          <Property Name="D_MajImport" Type="Int16" />
+          <Property Name="D_SaisCab" Type="Int16" />
+          <Property Name="D_TypeValid" Type="Int16" />
+          <Property Name="D_ImpressZero" Type="Int16" />
+          <Property Name="N_DeviseCompte" Type="Int16" />
+          <Property Name="N_DeviseEquival" Type="Int16" />
+          <Property Name="D_ANSais" Type="Int16" />
+          <Property Name="JO_NumAN" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="CG_NumANOuv" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="CG_NumANBenef" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="CG_NumANPerte" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="D_TVAEncReg" Type="Int16" />
+          <Property Name="D_TVAEncAffect" Type="Int16" />
+          <Property Name="D_DeviseEq" Type="Int16" />
+          <Property Name="D_AnAffect" Type="Int16" />
+          <Property Name="D_ReglPiece" Type="Int16" />
+          <Property Name="D_ExtNeg" Type="Int16" />
+          <Property Name="D_RapproDevise" Type="Int16" />
+          <Property Name="D_ImportEqJo" Type="Int16" />
+          <Property Name="D_ImportEqAn" Type="Int16" />
+          <Property Name="CG_NumImportDebit" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="CG_NumImportCredit" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="N_Analytique" Type="Int16" />
+          <Property Name="D_NumDoss" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="D_EMail" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
+          <Property Name="D_EMailExpert" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
+          <Property Name="D_Expert" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="D_Telephone" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="D_Telecopie" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="D_EMailSoc" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
+          <Property Name="D_Site" Type="String" MaxLength="69" FixedLength="false" Unicode="false" />
+          <Property Name="D_AppelTiers" Type="Int16" />
+          <Property Name="D_AppelSection" Type="Int16" />
+          <Property Name="D_ProtPiece" Type="Int16" />
+          <Property Name="D_NumCont" Type="Int16" />
+          <Property Name="D_DateClot" Type="DateTime" Precision="3" />
+          <Property Name="D_CompteGTotal" Type="Int16" />
+          <Property Name="D_RapproRecherche" Type="Int16" />
+          <Property Name="D_RapproEcart" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="CG_NumRappro" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="D_RapproContrepartie" Type="Int16" />
+          <Property Name="D_ComSens" Type="Int16" />
+          <Property Name="D_ComType" Type="Int16" />
+          <Property Name="D_ComMoyen" Type="Int16" />
+          <Property Name="D_ComSoft" Type="Int16" />
+          <Property Name="D_ComCodeExpert" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="D_ComDateSynchro" Type="DateTime" Precision="3" />
+          <Property Name="D_ComGUID" Type="Guid" />
+          <Property Name="D_RapproTypeEcart" Type="Int16" />
+          <Property Name="D_RapproReport" Type="Int16" />
+          <Property Name="JO_NumRapproEscCl" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="PI_NoRapproEscCl" Type="Int32" />
+          <Property Name="JO_NumRapproEscFr" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="PI_NoRapproEscFr" Type="Int32" />
+          <Property Name="D_GestionIFRS" Type="Int16" />
+          <Property Name="D_SaisieIFRS" Type="Int16" />
+          <Property Name="N_AnalytiqueIFRS" Type="Int16" />
+          <Property Name="JA_NumAN" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="JO_NumANIFRS" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="JA_NumANIFRS" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="D_RappelSoldeMin" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="D_ImportVentil" Type="Int16" />
+          <Property Name="D_PenalTaux" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="D_PenalImputation" Type="Int16" />
+          <Property Name="JO_NumPenal" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="PI_NoPenal" Type="Int32" />
+          <Property Name="JO_NumImpayes" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="PI_NoImpayes" Type="Int32" />
+          <Property Name="D_ImpressFactRef" Type="Int16" />
+          <Property Name="D_SeuilTVA" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="D_NotSaisieSommeil" Type="Int16" />
+          <Property Name="D_ArchivePeriod" Type="DateTime" Precision="3" />
+          <Property Name="D_ECNoCloture01" Type="Int32" />
+          <Property Name="D_ECNoCloture02" Type="Int32" />
+          <Property Name="D_ECNoCloture03" Type="Int32" />
+          <Property Name="D_ECNoCloture04" Type="Int32" />
+          <Property Name="D_ECNoCloture05" Type="Int32" />
+          <Property Name="D_CloturePeriod" Type="DateTime" Precision="3" />
+          <Property Name="D_MaterialPiece" Type="Int16" />
+          <Property Name="D_BudgetAn" Type="Int16" />
+          <Property Name="D_Capital" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="D_FormeJuridique" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="D_ForfaitImpayes" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="D_CodeOctave" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="cbMarq" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="D_Facebook" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="D_LinkedIn" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="D_UpdateDevise" Type="Int16" />
+          <Property Name="D_UpdateDeviseSaisie" Type="Int16" />
+          <Property Name="D_Laf" Type="Int16" />
+          <Property Name="D_PasEcriture" Type="Decimal" Precision="24" Scale="6" />
+          <Property Name="D_Logo" Type="Guid" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -566,6 +919,31 @@ avertissement 6035: La relation 'FKA_F_DOCLIGNE_DL_NoLink' a des colonnes qui ne
           <EntitySetMapping Name="F_DOCENTETE">
             <EntityTypeMapping TypeName="ListeCommandesModel.F_DOCENTETE">
               <MappingFragment StoreEntitySet="F_DOCENTETE">
+                <ScalarProperty Name="NUMERO_APPRO_EFFITRACE" ColumnName="NUMERO_APPRO_EFFITRACE" />
+                <ScalarProperty Name="TYPE_MOUVEMENT" ColumnName="TYPE_MOUVEMENT" />
+                <ScalarProperty Name="cbHashOrder" ColumnName="cbHashOrder" />
+                <ScalarProperty Name="cbHashDate" ColumnName="cbHashDate" />
+                <ScalarProperty Name="cbHashVersion" ColumnName="cbHashVersion" />
+                <ScalarProperty Name="cbHash" ColumnName="cbHash" />
+                <ScalarProperty Name="DO_MotifDevis" ColumnName="DO_MotifDevis" />
+                <ScalarProperty Name="DO_PaiementLigne" ColumnName="DO_PaiementLigne" />
+                <ScalarProperty Name="DO_AdressePaiement" ColumnName="DO_AdressePaiement" />
+                <ScalarProperty Name="DO_RefPaiement" ColumnName="DO_RefPaiement" />
+                <ScalarProperty Name="DO_MontantRegle" ColumnName="DO_MontantRegle" />
+                <ScalarProperty Name="DO_NetAPayer" ColumnName="DO_NetAPayer" />
+                <ScalarProperty Name="DO_TotalTTC" ColumnName="DO_TotalTTC" />
+                <ScalarProperty Name="DO_TotalHTNet" ColumnName="DO_TotalHTNet" />
+                <ScalarProperty Name="DO_FactureFile" ColumnName="DO_FactureFile" />
+                <ScalarProperty Name="DO_TypeCalcul" ColumnName="DO_TypeCalcul" />
+                <ScalarProperty Name="DO_DocType" ColumnName="DO_DocType" />
+                <ScalarProperty Name="DO_Escompte" ColumnName="DO_Escompte" />
+                <ScalarProperty Name="cbCreationUser" ColumnName="cbCreationUser" />
+                <ScalarProperty Name="cbCreation" ColumnName="cbCreation" />
+                <ScalarProperty Name="MODE_LIVRAISON_WEB" ColumnName="MODE_LIVRAISON_WEB" />
+                <ScalarProperty Name="MODE_LIVRAISON" ColumnName="MODE_LIVRAISON" />
+                <ScalarProperty Name="MOTIF_DEP" ColumnName="MOTIF_DEP" />
+                <ScalarProperty Name="DATE_VALIDATION" ColumnName="DATE_VALIDATION" />
+                <ScalarProperty Name="DATE_EXPEDITION_PLANIFIEE" ColumnName="DATE_EXPEDITION_PLANIFIEE" />
                 <ScalarProperty Name="DO_Domaine" ColumnName="DO_Domaine" />
                 <ScalarProperty Name="DO_Type" ColumnName="DO_Type" />
                 <ScalarProperty Name="DO_Piece" ColumnName="DO_Piece" />
@@ -722,6 +1100,17 @@ avertissement 6035: La relation 'FKA_F_DOCLIGNE_DL_NoLink' a des colonnes qui ne
           <EntitySetMapping Name="F_DOCLIGNE">
             <EntityTypeMapping TypeName="ListeCommandesModel.F_DOCLIGNE">
               <MappingFragment StoreEntitySet="F_DOCLIGNE">
+                <ScalarProperty Name="TYPE_MOUVEMENT" ColumnName="TYPE_MOUVEMENT" />
+                <ScalarProperty Name="cbHashOrder" ColumnName="cbHashOrder" />
+                <ScalarProperty Name="cbHashDate" ColumnName="cbHashDate" />
+                <ScalarProperty Name="cbHashVersion" ColumnName="cbHashVersion" />
+                <ScalarProperty Name="cbHash" ColumnName="cbHash" />
+                <ScalarProperty Name="DO_DocType" ColumnName="DO_DocType" />
+                <ScalarProperty Name="cbCA_No" ColumnName="cbCA_No" />
+                <ScalarProperty Name="CA_No" ColumnName="CA_No" />
+                <ScalarProperty Name="cbCreationUser" ColumnName="cbCreationUser" />
+                <ScalarProperty Name="cbCreation" ColumnName="cbCreation" />
+                <ScalarProperty Name="DATE_EXPEDITION_PLANIFIEE" ColumnName="DATE_EXPEDITION_PLANIFIEE" />
                 <ScalarProperty Name="DO_Domaine" ColumnName="DO_Domaine" />
                 <ScalarProperty Name="DO_Type" ColumnName="DO_Type" />
                 <ScalarProperty Name="CT_Num" ColumnName="CT_Num" />
@@ -830,6 +1219,147 @@ avertissement 6035: La relation 'FKA_F_DOCLIGNE_DL_NoLink' a des colonnes qui ne
                 <ScalarProperty Name="cbReplication" ColumnName="cbReplication" />
                 <ScalarProperty Name="cbFlag" ColumnName="cbFlag" />
                 <ScalarProperty Name="PRIX_VENTE_TTC" ColumnName="PRIX_VENTE_TTC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="P_DOSSIER">
+            <EntityTypeMapping TypeName="ListeCommandesModel.P_DOSSIER">
+              <MappingFragment StoreEntitySet="P_DOSSIER">
+                <ScalarProperty Name="D_Logo" ColumnName="D_Logo" />
+                <ScalarProperty Name="D_PasEcriture" ColumnName="D_PasEcriture" />
+                <ScalarProperty Name="D_Laf" ColumnName="D_Laf" />
+                <ScalarProperty Name="D_UpdateDeviseSaisie" ColumnName="D_UpdateDeviseSaisie" />
+                <ScalarProperty Name="D_UpdateDevise" ColumnName="D_UpdateDevise" />
+                <ScalarProperty Name="D_LinkedIn" ColumnName="D_LinkedIn" />
+                <ScalarProperty Name="D_Facebook" ColumnName="D_Facebook" />
+                <ScalarProperty Name="cbMarq" ColumnName="cbMarq" />
+                <ScalarProperty Name="D_CodeOctave" ColumnName="D_CodeOctave" />
+                <ScalarProperty Name="D_ForfaitImpayes" ColumnName="D_ForfaitImpayes" />
+                <ScalarProperty Name="D_FormeJuridique" ColumnName="D_FormeJuridique" />
+                <ScalarProperty Name="D_Capital" ColumnName="D_Capital" />
+                <ScalarProperty Name="D_BudgetAn" ColumnName="D_BudgetAn" />
+                <ScalarProperty Name="D_MaterialPiece" ColumnName="D_MaterialPiece" />
+                <ScalarProperty Name="D_CloturePeriod" ColumnName="D_CloturePeriod" />
+                <ScalarProperty Name="D_ECNoCloture05" ColumnName="D_ECNoCloture05" />
+                <ScalarProperty Name="D_ECNoCloture04" ColumnName="D_ECNoCloture04" />
+                <ScalarProperty Name="D_ECNoCloture03" ColumnName="D_ECNoCloture03" />
+                <ScalarProperty Name="D_ECNoCloture02" ColumnName="D_ECNoCloture02" />
+                <ScalarProperty Name="D_ECNoCloture01" ColumnName="D_ECNoCloture01" />
+                <ScalarProperty Name="D_ArchivePeriod" ColumnName="D_ArchivePeriod" />
+                <ScalarProperty Name="D_NotSaisieSommeil" ColumnName="D_NotSaisieSommeil" />
+                <ScalarProperty Name="D_SeuilTVA" ColumnName="D_SeuilTVA" />
+                <ScalarProperty Name="D_ImpressFactRef" ColumnName="D_ImpressFactRef" />
+                <ScalarProperty Name="PI_NoImpayes" ColumnName="PI_NoImpayes" />
+                <ScalarProperty Name="JO_NumImpayes" ColumnName="JO_NumImpayes" />
+                <ScalarProperty Name="PI_NoPenal" ColumnName="PI_NoPenal" />
+                <ScalarProperty Name="JO_NumPenal" ColumnName="JO_NumPenal" />
+                <ScalarProperty Name="D_PenalImputation" ColumnName="D_PenalImputation" />
+                <ScalarProperty Name="D_PenalTaux" ColumnName="D_PenalTaux" />
+                <ScalarProperty Name="D_ImportVentil" ColumnName="D_ImportVentil" />
+                <ScalarProperty Name="D_RappelSoldeMin" ColumnName="D_RappelSoldeMin" />
+                <ScalarProperty Name="JA_NumANIFRS" ColumnName="JA_NumANIFRS" />
+                <ScalarProperty Name="JO_NumANIFRS" ColumnName="JO_NumANIFRS" />
+                <ScalarProperty Name="JA_NumAN" ColumnName="JA_NumAN" />
+                <ScalarProperty Name="N_AnalytiqueIFRS" ColumnName="N_AnalytiqueIFRS" />
+                <ScalarProperty Name="D_SaisieIFRS" ColumnName="D_SaisieIFRS" />
+                <ScalarProperty Name="D_GestionIFRS" ColumnName="D_GestionIFRS" />
+                <ScalarProperty Name="PI_NoRapproEscFr" ColumnName="PI_NoRapproEscFr" />
+                <ScalarProperty Name="JO_NumRapproEscFr" ColumnName="JO_NumRapproEscFr" />
+                <ScalarProperty Name="PI_NoRapproEscCl" ColumnName="PI_NoRapproEscCl" />
+                <ScalarProperty Name="JO_NumRapproEscCl" ColumnName="JO_NumRapproEscCl" />
+                <ScalarProperty Name="D_RapproReport" ColumnName="D_RapproReport" />
+                <ScalarProperty Name="D_RapproTypeEcart" ColumnName="D_RapproTypeEcart" />
+                <ScalarProperty Name="D_ComGUID" ColumnName="D_ComGUID" />
+                <ScalarProperty Name="D_ComDateSynchro" ColumnName="D_ComDateSynchro" />
+                <ScalarProperty Name="D_ComCodeExpert" ColumnName="D_ComCodeExpert" />
+                <ScalarProperty Name="D_ComSoft" ColumnName="D_ComSoft" />
+                <ScalarProperty Name="D_ComMoyen" ColumnName="D_ComMoyen" />
+                <ScalarProperty Name="D_ComType" ColumnName="D_ComType" />
+                <ScalarProperty Name="D_ComSens" ColumnName="D_ComSens" />
+                <ScalarProperty Name="D_RapproContrepartie" ColumnName="D_RapproContrepartie" />
+                <ScalarProperty Name="CG_NumRappro" ColumnName="CG_NumRappro" />
+                <ScalarProperty Name="D_RapproEcart" ColumnName="D_RapproEcart" />
+                <ScalarProperty Name="D_RapproRecherche" ColumnName="D_RapproRecherche" />
+                <ScalarProperty Name="D_CompteGTotal" ColumnName="D_CompteGTotal" />
+                <ScalarProperty Name="D_DateClot" ColumnName="D_DateClot" />
+                <ScalarProperty Name="D_NumCont" ColumnName="D_NumCont" />
+                <ScalarProperty Name="D_ProtPiece" ColumnName="D_ProtPiece" />
+                <ScalarProperty Name="D_AppelSection" ColumnName="D_AppelSection" />
+                <ScalarProperty Name="D_AppelTiers" ColumnName="D_AppelTiers" />
+                <ScalarProperty Name="D_Site" ColumnName="D_Site" />
+                <ScalarProperty Name="D_EMailSoc" ColumnName="D_EMailSoc" />
+                <ScalarProperty Name="D_Telecopie" ColumnName="D_Telecopie" />
+                <ScalarProperty Name="D_Telephone" ColumnName="D_Telephone" />
+                <ScalarProperty Name="D_Expert" ColumnName="D_Expert" />
+                <ScalarProperty Name="D_EMailExpert" ColumnName="D_EMailExpert" />
+                <ScalarProperty Name="D_EMail" ColumnName="D_EMail" />
+                <ScalarProperty Name="D_NumDoss" ColumnName="D_NumDoss" />
+                <ScalarProperty Name="N_Analytique" ColumnName="N_Analytique" />
+                <ScalarProperty Name="CG_NumImportCredit" ColumnName="CG_NumImportCredit" />
+                <ScalarProperty Name="CG_NumImportDebit" ColumnName="CG_NumImportDebit" />
+                <ScalarProperty Name="D_ImportEqAn" ColumnName="D_ImportEqAn" />
+                <ScalarProperty Name="D_ImportEqJo" ColumnName="D_ImportEqJo" />
+                <ScalarProperty Name="D_RapproDevise" ColumnName="D_RapproDevise" />
+                <ScalarProperty Name="D_ExtNeg" ColumnName="D_ExtNeg" />
+                <ScalarProperty Name="D_ReglPiece" ColumnName="D_ReglPiece" />
+                <ScalarProperty Name="D_AnAffect" ColumnName="D_AnAffect" />
+                <ScalarProperty Name="D_DeviseEq" ColumnName="D_DeviseEq" />
+                <ScalarProperty Name="D_TVAEncAffect" ColumnName="D_TVAEncAffect" />
+                <ScalarProperty Name="D_TVAEncReg" ColumnName="D_TVAEncReg" />
+                <ScalarProperty Name="CG_NumANPerte" ColumnName="CG_NumANPerte" />
+                <ScalarProperty Name="CG_NumANBenef" ColumnName="CG_NumANBenef" />
+                <ScalarProperty Name="CG_NumANOuv" ColumnName="CG_NumANOuv" />
+                <ScalarProperty Name="JO_NumAN" ColumnName="JO_NumAN" />
+                <ScalarProperty Name="D_ANSais" ColumnName="D_ANSais" />
+                <ScalarProperty Name="N_DeviseEquival" ColumnName="N_DeviseEquival" />
+                <ScalarProperty Name="N_DeviseCompte" ColumnName="N_DeviseCompte" />
+                <ScalarProperty Name="D_ImpressZero" ColumnName="D_ImpressZero" />
+                <ScalarProperty Name="D_TypeValid" ColumnName="D_TypeValid" />
+                <ScalarProperty Name="D_SaisCab" ColumnName="D_SaisCab" />
+                <ScalarProperty Name="D_MajImport" ColumnName="D_MajImport" />
+                <ScalarProperty Name="D_RBSupp" ColumnName="D_RBSupp" />
+                <ScalarProperty Name="D_Archivage05" ColumnName="D_Archivage05" />
+                <ScalarProperty Name="D_Archivage04" ColumnName="D_Archivage04" />
+                <ScalarProperty Name="D_Archivage03" ColumnName="D_Archivage03" />
+                <ScalarProperty Name="D_Archivage02" ColumnName="D_Archivage02" />
+                <ScalarProperty Name="D_Archivage01" ColumnName="D_Archivage01" />
+                <ScalarProperty Name="D_Edi" ColumnName="D_Edi" />
+                <ScalarProperty Name="D_Ventil" ColumnName="D_Ventil" />
+                <ScalarProperty Name="D_RegTaxe" ColumnName="D_RegTaxe" />
+                <ScalarProperty Name="D_SuppEc" ColumnName="D_SuppEc" />
+                <ScalarProperty Name="D_Budget" ColumnName="D_Budget" />
+                <ScalarProperty Name="D_OuvCompte" ColumnName="D_OuvCompte" />
+                <ScalarProperty Name="D_Delai" ColumnName="D_Delai" />
+                <ScalarProperty Name="D_AnalyseGL03" ColumnName="D_AnalyseGL03" />
+                <ScalarProperty Name="D_AnalyseGL02" ColumnName="D_AnalyseGL02" />
+                <ScalarProperty Name="D_AnalyseGL01" ColumnName="D_AnalyseGL01" />
+                <ScalarProperty Name="D_ConfSupp" ColumnName="D_ConfSupp" />
+                <ScalarProperty Name="D_CodeTrait" ColumnName="D_CodeTrait" />
+                <ScalarProperty Name="D_FormatQtes" ColumnName="D_FormatQtes" />
+                <ScalarProperty Name="D_LgAn" ColumnName="D_LgAn" />
+                <ScalarProperty Name="D_LgCg" ColumnName="D_LgCg" />
+                <ScalarProperty Name="D_FinExo05" ColumnName="D_FinExo05" />
+                <ScalarProperty Name="D_FinExo04" ColumnName="D_FinExo04" />
+                <ScalarProperty Name="D_FinExo03" ColumnName="D_FinExo03" />
+                <ScalarProperty Name="D_FinExo02" ColumnName="D_FinExo02" />
+                <ScalarProperty Name="D_FinExo01" ColumnName="D_FinExo01" />
+                <ScalarProperty Name="D_DebutExo05" ColumnName="D_DebutExo05" />
+                <ScalarProperty Name="D_DebutExo04" ColumnName="D_DebutExo04" />
+                <ScalarProperty Name="D_DebutExo03" ColumnName="D_DebutExo03" />
+                <ScalarProperty Name="D_DebutExo02" ColumnName="D_DebutExo02" />
+                <ScalarProperty Name="D_DebutExo01" ColumnName="D_DebutExo01" />
+                <ScalarProperty Name="D_Identifiant" ColumnName="D_Identifiant" />
+                <ScalarProperty Name="D_Ape" ColumnName="D_Ape" />
+                <ScalarProperty Name="D_Siret" ColumnName="D_Siret" />
+                <ScalarProperty Name="D_Commentaire" ColumnName="D_Commentaire" />
+                <ScalarProperty Name="D_Pays" ColumnName="D_Pays" />
+                <ScalarProperty Name="D_CodeRegion" ColumnName="D_CodeRegion" />
+                <ScalarProperty Name="D_Ville" ColumnName="D_Ville" />
+                <ScalarProperty Name="D_CodePostal" ColumnName="D_CodePostal" />
+                <ScalarProperty Name="D_Complement" ColumnName="D_Complement" />
+                <ScalarProperty Name="D_Adresse" ColumnName="D_Adresse" />
+                <ScalarProperty Name="D_Profession" ColumnName="D_Profession" />
+                <ScalarProperty Name="D_RaisonSoc" ColumnName="D_RaisonSoc" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

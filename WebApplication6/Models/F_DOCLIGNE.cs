@@ -122,5 +122,16 @@ namespace WebApplication6.Models
         public Nullable<int> cbReplication { get; set; }
         public Nullable<short> cbFlag { get; set; }
         public Nullable<decimal> PRIX_VENTE_TTC { get; set; }
+        public Nullable<System.DateTime> DATE_EXPEDITION_PLANIFIEE { get; set; }
+        public Nullable<System.DateTime> cbCreation { get; set; }
+        public Nullable<System.Guid> cbCreationUser { get; set; }
+        public Nullable<int> CA_No { get; set; }
+        public Nullable<int> cbCA_No { get; set; }
+        public Nullable<short> DO_DocType { get; set; }
+        public byte[] cbHash { get; set; }
+        public Nullable<short> cbHashVersion { get; set; }
+        public Nullable<System.DateTime> cbHashDate { get; set; }
+        public Nullable<int> cbHashOrder { get; set; }
+        public string TYPE_MOUVEMENT { get; set; }
     }
 }
