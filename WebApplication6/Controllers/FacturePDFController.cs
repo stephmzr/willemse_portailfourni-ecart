@@ -20,7 +20,6 @@ public class FacturePDFController : Controller
     private ApplicationDbContext dbA = new ApplicationDbContext();
     private ListeCommandesEntities DB = new ListeCommandesEntities();
 
-
     private ApplicationUser CurrentUser
     {
         get
@@ -34,16 +33,23 @@ public class FacturePDFController : Controller
     {
         string pdfTemplate = @"C:\TPL\templatedelivraisonOK3.pdf";
 
-        var dateCommande = new DateTime(2020, 1, 1);
-        var F_DOCENTETE = DB.F_DOCENTETE.Where(d => d.DO_Domaine == 0 && !d.DO_Ref.Equals("") && d.DO_Date >= dateCommande && d.DO_Type == 7
-                                                    || d.DO_Domaine == 0 && !d.DO_Ref.Equals("") && d.DO_Date >= dateCommande && d.DO_Type == 6 ).ToList();
+        string dateString = Id;
+        DateTime dateCommande = DateTime.Parse(dateString);
+
+
+        //var dateCommande = new DateTime(2020, 1, 1);
+        //toutes les commandes appartenant a do_domaine = 0 et do_type = 6 ou 7 et à partir du 01/01/2020
+        var F_DOCENTETE = DB.F_DOCENTETE.Where(d => d.DO_Domaine == 0 && !d.DO_Ref.Equals("") && d.DO_Date == dateCommande && d.DO_Type == 7
+                                                    || d.DO_Domaine == 0 && !d.DO_Ref.Equals("") && d.DO_Date == dateCommande && d.DO_Type == 6 ).ToList();
+        //table qui contient les informations de la société(nom, adresse, activité, etc)
         var P_DOSSIER = DB.P_DOSSIER.ToList();
 
 
         foreach (var infoclient in F_DOCENTETE)
         {
 
-            string newFile = @"C:\BL\" + infoclient.DO_Piece + ".pdf";
+            string newFile = @"C:\FACTUREPDF\" + infoclient.DO_Piece + ".pdf";
+            //sélectionner chaque ligne de commande
             var F_DOCLIGNE = DB.F_DOCLIGNE.Where(ligne => ligne.DO_Piece.Contains(infoclient.DO_Piece)).ToList();
 
 
