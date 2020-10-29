@@ -8,9 +8,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using WebApplication6.Models;
+using PortailFournisseur.Models;
 
-namespace WebApplication6.Controllers
+namespace PortailFournisseur.Controllers
 {
 
 

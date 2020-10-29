@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebApplication6.Models
+namespace PortailFournisseur.Models
 {
     using System;
     using System.Collections.Generic;

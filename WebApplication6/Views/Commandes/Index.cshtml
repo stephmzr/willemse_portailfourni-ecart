@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<WebApplication6.Models.F_DOCENTETE>
+﻿@model PagedList.IPagedList<PortailFournisseur.Models.F_DOCENTETE>
 @using PagedList.Mvc
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -102,7 +102,7 @@
 
                 </td>
                 @*<td>
-            @WebApplication6.Controllers.CommandesController.StatusCommande(Html.DisplayFor(modelItem => item.DO_Type).ToString())
+            @PortailFournisseur.Controllers.CommandesController.StatusCommande(Html.DisplayFor(modelItem => item.DO_Type).ToString())
                 </td>*@
                 <td style="cursor: pointer;" onclick="location.href='@(Url.Action("SuiviCommandes", new { id = item.DO_Piece }))'">
                     @Html.DisplayFor(modelItem => item.DO_TotalHT)

@@ -1,4 +1,4 @@
-﻿// La génération de code T4 est activée pour le modèle 'C:\Users\SM\source\Portail fournisseur Willemse France\WebApplication6\Models\ListeCommandes.edmx'. 
+﻿// La génération de code T4 est activée pour le modèle 'C:\Users\SM\source\Portail fournisseur Willemse France\PortailFournisseur\Models\ListeCommandes.edmx'. 
 // Pour activer la génération de code héritée, définissez la valeur de la propriété
 // du concepteur 'Stratégie de génération de code' sur 'ObjectContext hérité'. Cette propriété est disponible dans la fenêtre Propriétés lorsque le modèle
 //  est ouvert dans le concepteur.

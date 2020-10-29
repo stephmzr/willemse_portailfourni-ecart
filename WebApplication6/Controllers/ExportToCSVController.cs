@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using WebApplication6.Models;
+using PortailFournisseur.Models;
 
-namespace WebApplication6.Controllers
+namespace PortailFournisseur.Controllers
 {
     public class ExportToCSVController : Controller
     {

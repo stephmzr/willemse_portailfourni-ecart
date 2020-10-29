@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace WebApplication6.Models
+namespace PortailFournisseur.Models
 {
 
     public class LoginViewModel

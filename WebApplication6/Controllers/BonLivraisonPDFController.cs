@@ -10,7 +10,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
-using WebApplication6.Models;
+using PortailFournisseur.Models;
 using System.Text;
 
 public class BonLivraisonPDFController : Controller

@@ -6,12 +6,12 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebApplication6.Models;
+using PortailFournisseur.Models;
 using System.IO.Compression;
 using System.Data.SqlClient;
 using System.Data;
 
-namespace WebApplication6.Controllers
+namespace PortailFournisseur.Controllers
 {
     public class UploadCatalogueController : Controller
     {

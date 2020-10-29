@@ -7,14 +7,14 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using WebApplication6.Models;
+using PortailFournisseur.Models;
 using System.Net;
 using PagedList;
 using System.Data.SqlClient;
 using System.Data;
 using System.IO;
 
-namespace WebApplication6.Controllers
+namespace PortailFournisseur.Controllers
 {
     [Authorize]
     public class ProduitsController : Controller

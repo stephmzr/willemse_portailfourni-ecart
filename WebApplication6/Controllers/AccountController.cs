@@ -8,9 +8,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using WebApplication6.Models;
+using PortailFournisseur.Models;
 
-namespace WebApplication6.Controllers
+namespace PortailFournisseur.Controllers
 {
     [Authorize]
     public class AccountController : Controller
